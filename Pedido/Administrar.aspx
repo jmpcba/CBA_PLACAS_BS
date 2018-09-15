@@ -1,8 +1,26 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Administrar.aspx.vb" Inherits="CBA_PLACAS_BS.Administrar" theme="default"%>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2 class="text-center">Pedidos En Produccion</h2>
-    <hr />
+     <script type="text/javascript">
+         $(document).ready(function () {
+             var display = false;
+             $("[id*=zoom]").click(function () {
+                 if (display) {
+                     $(this).attr("src", "../images/zoom_in.png");
+                     $(this).closest("tr").next().remove();
+                     display = false;
+                 } else {
+                     $(this).closest("tr").after("<tr><td></td><td colspan = '999'>" + $(this).next().html() + "</td></tr>");
+                     $(this).attr("src", "../images/cancel.png");
+                     display=true
+                 }
+                 
+             });
+         });   
+</script>
+    <div class="page-header">
+        <h1 class="text-center">Pedidos En Produccion</h1>
+    </div>
     <asp:Panel ID="pnlPedidos" runat="server" CssClass="row">
         <div class="row">
             <div class="col-md-3 col-md-offset-3">
@@ -62,102 +80,49 @@
             <hr />
         </div>
         <div class="row">
-            <div class="panel-group" id="accordion">
-                  <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#detalle">
-                    Detalle</a>
-                  </h4>
-                </div>
-                <div id="detalle" class="panel-collapse collapse in">
-                  <div class="panel-body">
-                      <asp:GridView ID="grDetalle" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
-                        <Columns>
-                            <asp:TemplateField HeaderText="#">
-                                <ItemTemplate>
-                                    <%# Container.DataItemIndex + 1 %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
-                            <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
-                            <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
-                            <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
-                            <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
-                            <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                            <asp:BoundField DataField="CANT" HeaderText="CANT" >
-                            <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCols" />
-                            </asp:BoundField>
-                        </Columns>
-                        <EmptyDataTemplate>
-                            <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
-                        </EmptyDataTemplate>
-                    </asp:GridView>
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#stock">
-                    Stock</a>
-                  </h4>
-                </div>
-                <div id="stock" class="panel-collapse collapse">
-                  <div class="panel-body">
-                      <asp:GridView ID="grStock" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
-                        <Columns>
-                            <asp:TemplateField HeaderText="#">
-                                <ItemTemplate>
-                                    <%# Container.DataItemIndex + 1 %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
-                            <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
-                            <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
-                            <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
-                            <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
-                            <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                            <asp:BoundField DataField="CANT" HeaderText="CANT" >
-                            <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCols" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="CANT" HeaderText="CANT" >
-                            <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCols" />
-                            </asp:BoundField>
-                        </Columns>
-                        <EmptyDataTemplate>
-                            <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
-                        </EmptyDataTemplate>
-                    </asp:GridView>
-                  </div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#materiales">
-                    Materiales</a>
-                  </h4>
-                </div>
-                <div id="materiales" class="panel-collapse collapse">
-                  <div class="panel-body">CONTENIDO MATERIALES</div>
-                </div>
-              </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#deposito">
-                    Deposito</a>
-                  </h4>
-                </div>
-                <div id="deposito" class="panel-collapse collapse">
-                  <div class="panel-body">CONTENIDO DEPOSITO</div>
-                </div>
-              </div>
-            </div>  
+            <asp:GridView ID="grDetalle" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table" DataKeyNames="ID_ITEM">
+                <Columns>
+                    <asp:BoundField DataField="ID_ITEM" HeaderText="ITEM">
+                    <ControlStyle CssClass="hiddencol" />
+                    <FooterStyle CssClass="hiddencol" />
+                    <HeaderStyle CssClass="hiddencol" />
+                    <ItemStyle CssClass="hiddencol" />
+                    </asp:BoundField>
+                    <asp:TemplateField>
+                        <ItemTemplate>
+                            <img id="zoom" alt="" style="cursor: pointer" src="../images/zoom_in.png" class="imageButtons"/>
+                                <asp:Panel ID="Panel1" Style="display: none" runat="server">
+                                    <asp:GridView ID="grDatos" runat="server" AutoGenerateColumns="False">
+                                        <Columns>
+                                            <asp:BoundField DataField="STOCK" HeaderText="DEL STOCK" />
+                                            <asp:BoundField DataField="STOCK_PROD" HeaderText="STOCK PRODUCTO" />
+                                            <asp:BoundField DataField="ENSAMBLADAS" HeaderText="ENSAMBLADAS" />
+                                            <asp:BoundField DataField="DEPOSITO" HeaderText="EN DEPOSITO" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </asp:Panel>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="#">
+                        <ItemTemplate>
+                            <%# Container.DataItemIndex + 1 %>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                    <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                    <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                    <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                    <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                    <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                    <asp:BoundField DataField="CANT" HeaderText="CANT" >
+                    <ControlStyle Font-Bold="True" />
+                    <ItemStyle Font-Bold="True" CssClass="numCols" />
+                    </asp:BoundField>
+                </Columns>
+                <EmptyDataTemplate>
+                    <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
+                </EmptyDataTemplate>
+            </asp:GridView>
         </div>
     </asp:Panel>
 </asp:Content>

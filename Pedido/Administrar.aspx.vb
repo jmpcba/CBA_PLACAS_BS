@@ -26,4 +26,13 @@
 
         grPedidos.SelectedIndex = -1
     End Sub
+
+    Protected Sub grDetalle_RowDataBound(sender As Object, e As GridViewRowEventArgs) Handles grDetalle.RowDataBound
+        If e.Row.RowType = DataControlRowType.DataRow Then
+            Dim idItem As Integer = Convert.ToInt32(grDetalle.DataKeys(e.Row.RowIndex).Value)
+            Dim grDatos As GridView = e.Row.FindControl("grDatos")
+            grDatos.DataSource = gd.getItem(idItem)
+            grDatos.DataBind()
+        End If
+    End Sub
 End Class

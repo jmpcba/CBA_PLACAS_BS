@@ -138,13 +138,4 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grDetalle As Global.System.Web.UI.WebControls.GridView
-    
-    '''<summary>
-    '''Control grStock.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents grStock As Global.System.Web.UI.WebControls.GridView
 End Class

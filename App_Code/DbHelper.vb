@@ -67,6 +67,20 @@ Public Class DbHelper
         End Try
     End Sub
 
+    Friend Function getItem(_idItem As Integer) As DataTable
+        Dim query = "SELECT * FROM VW_ITEMS WHERE ID_ITEM=" & _idItem
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "ITEM")
+            Return ds.Tables("ITEM")
+        Catch ex As Exception
+            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Function
+
     Friend Sub actualizarDespiece(_idProducto As Integer, _idPieza As Integer, _consumo As Decimal)
         Try
             cmd.Connection = cnn

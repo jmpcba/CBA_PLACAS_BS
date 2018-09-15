@@ -72,10 +72,24 @@ Public Class GestorDatos
 
     End Function
 
+    Friend Function getItem(_idItem As Integer) As DataTable
+        Try
+            Dim db = New DbHelper
+            Return db.getItem(_idItem)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Friend Sub getCliente(_idCliente As Integer, _dv As DetailsView)
-        Dim cliente = New Cliente(_idCliente)
-        _dv.DataSource = cliente.datos
-        _dv.DataBind()
+        Try
+            Dim cliente = New Cliente(_idCliente)
+            _dv.DataSource = cliente.datos
+            _dv.DataBind()
+        Catch ex As Exception
+            Throw
+        End Try
+
     End Sub
 
     Friend Function getDespiece(_prod As Producto) As DataTable
