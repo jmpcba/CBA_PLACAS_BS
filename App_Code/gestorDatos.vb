@@ -293,9 +293,15 @@ Public Class GestorDatos
 
     Public Function getItems(_idPedido As Integer, _tipo As tipoItems) As DataTable
         Dim db = New DbHelper()
+        Dim dt As DataTable
+        dt = New DataTable
+
         If _tipo = tipoItems.busqueda Then
-            Return db.getItemsBusqueda(_idPedido)
+            dt = db.getItemsBusqueda(_idPedido)
         End If
+
+        Return dt
+
     End Function
 
     Public Function getItems(_pedido As Integer) As DataTable

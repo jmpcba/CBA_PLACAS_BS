@@ -1,5 +1,4 @@
 ﻿Imports System.Data
-Imports cordobaPlacas
 
 Public Class GestorPedidos
     Public pedido As Pedido

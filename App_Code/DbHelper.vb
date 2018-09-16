@@ -1,7 +1,7 @@
 ﻿Imports System.Data
 
 Imports System.Data.SqlClient
-Imports cordobaPlacas
+
 
 Public Class DbHelper
     Private cnn As SqlConnection
@@ -97,6 +97,7 @@ Public Class DbHelper
 
     Friend Function getReporte(_idPedido As String, _tipo As GestorDatos.reportes, Optional _stock As Integer = 0) As DataTable
         Dim query As String
+        query = ""
         cmd.CommandType = CommandType.Text
 
         If _tipo = GestorDatos.reportes.remito Then

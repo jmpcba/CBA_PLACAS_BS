@@ -14,6 +14,33 @@ Option Explicit On
 Partial Public Class Administrar
     
     '''<summary>
+    '''Control lblSubtitulo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblSubtitulo As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblMessage.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblMessage As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control HFMsg.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFMsg As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control pnlPedidos.
     '''</summary>
     '''<remarks>
@@ -104,15 +131,6 @@ Partial Public Class Administrar
     Protected WithEvents btnVolver As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
-    '''Control Button2.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
     '''Control Button3.
     '''</summary>
     '''<remarks>
@@ -147,4 +165,58 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grStock As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control HFMat.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFMat As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control grMateriales.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grMateriales As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control grDeposito.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grDeposito As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control grEnviarProd.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grEnviarProd As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control vsNvos.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents vsNvos As Global.System.Web.UI.WebControls.ValidationSummary
+    
+    '''<summary>
+    '''Control btnEnviarProd.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnEnviarProd As Global.System.Web.UI.WebControls.Button
 End Class

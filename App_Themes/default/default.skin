@@ -15,7 +15,7 @@ no se permite que haya varios SkinId por tipo de control en el mismo tema.
 --%>
 
 <%--GRIDVIEW--%>
-<asp:GridView runat="server" CellPadding="4" ForeColor="#333333" GridLines="none" HorizontalAlign="Center" BorderStyle="Solid" BorderWidth="1px" AllowPaging="False" AllowSorting="True">
+<asp:GridView runat="server" CssClass="table-responsive table table-striped table-bordered table-hover table-condensed" CellPadding="4" ForeColor="#333333" GridLines="none" HorizontalAlign="Center" BorderStyle="Solid" BorderWidth="1px" AllowPaging="False" AllowSorting="True">
     <AlternatingRowStyle BackColor="White" />
     <EditRowStyle BackColor="#2461BF" />
     <FooterStyle BackColor="#428BCA" Font-Bold="True" ForeColor="White" />
@@ -27,6 +27,7 @@ no se permite que haya varios SkinId por tipo de control en el mismo tema.
     <SortedAscendingHeaderStyle BackColor="#6D95E1" />
     <SortedDescendingCellStyle BackColor="#E9EBEF" />
     <SortedDescendingHeaderStyle BackColor="#4870BE" />
+    <HeaderStyle HorizontalAlign="Center" />
 </asp:GridView>
 
 <%--BOTON--%>
@@ -92,3 +93,5 @@ no se permite que haya varios SkinId por tipo de control en el mismo tema.
         <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
         <RowStyle BackColor="#EFF3FB" />
 </asp:DetailsView>
+<%--DROPDOWN--%>
+<asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
