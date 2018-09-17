@@ -25,7 +25,7 @@
             Session("gp") = gp
 
             validar(gp)
-            llenarGrillasDetalle(idPedido)
+            llenarGrillasDetalle(gp.pedido)
 
             For Each r As GridViewRow In grEnviarProd.Rows
                 'Dim numUpDown As AjaxControlToolkit.NumericUpDownExtender
@@ -90,29 +90,30 @@
             sb.write(String.Format("Pedido {0} enviado a produccion", gp.pedido.id))
             HFCrystal.Value = "orden"
 
-            llenarGrillasDetalle(gp.pedido.id)
+            llenarGrillasDetalle(gp.pedido)
             validar(gp)
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
     End Sub
 
-    Public Sub llenarGrillasDetalle(_idPedido)
+    Public Sub llenarGrillasDetalle(_pedido As Pedido)
         Dim items As DataTable
         Dim materiales As Boolean
-        items = gd.getItems(_idPedido)
+        items = gd.getItems(_pedido.id)
 
-        grDetalle.DataSource = Items
-        grStock.DataSource = Items
-        grDeposito.DataSource = Items
-        grEnviarProd.DataSource = Items
+        grDetalle.DataSource = items
+        grStock.DataSource = items
+        grDeposito.DataSource = items
+        grEnviarProd.DataSource = items
 
         grDetalle.DataBind()
         grStock.DataBind()
         grDeposito.DataBind()
         grEnviarProd.DataBind()
 
-        materiales = gd.calcularMateriales(gp.pedido, grMateriales)
+        materiales = gd.calcularMateriales(_pedido, grMateriales)
+
         If materiales Then
             HFMat.Value = "True"
             lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
@@ -123,5 +124,17 @@
             lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
             btnEnviar.Visible = False
         End If
+
+        gd.obtenerRegistro(_pedido, grLog)
+        lblnroPedidoDet.Text = _pedido.id.ToString
+        lblEstadoDet.Text = _pedido.estado.nombre
+        lblCantDet.Text = _pedido.cantTotal.ToString
+        lblRecibidoDet.Text = _pedido.recibido.ToShortDateString
+        If _pedido.modificado <> DateTime.MinValue Then
+            lblModificadoDet.Text = _pedido.modificado.ToShortDateString
+        Else
+            lblModificadoDet.Text = ""
+        End If
+
     End Sub
 End Class

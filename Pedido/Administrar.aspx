@@ -142,8 +142,8 @@
         <div class="row">
             <div class="btn-group" role="group" aria-label="...">
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-                <input id="btnEnviarProd" class="btn btn-primary" type="button" value="Ordenes De Trabajo" data-toggle="modal" data-target="#enviarProd" />
-                <input id="btnProd" class="btn btn-primary" type="button" value="Produccion" data-toggle="modal" data-target="#enviarProd" />
+                <input id="btnEnviarProd" class="btn btn-primary" type="button" value="Enviar a Produccion" data-toggle="modal" data-target="#enviarProd" />
+                <input id="btnProd" class="btn btn-primary" type="button" value="Produccion" data-toggle="modal" data-target="#mdlProd" />
                 <input id="btnDepo" class="btn btn-primary" type="button" value="Deposito" data-toggle="modal" data-target="#enviarProd" />
             </div>
         </div>
@@ -163,6 +163,7 @@
                         <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                         <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                         <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" />
                         <asp:BoundField DataField="CANT" HeaderText="CANT" >
                         <ControlStyle Font-Bold="True" />
                         <ItemStyle Font-Bold="True" CssClass="numCol" />
@@ -184,6 +185,22 @@
         </div>
         <div class="row">
             <div class="panel-group" id="accordion">
+                <div class="panel panel-default panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#detalle">Detalle</a>
+                        </h4>
+                    </div>
+                    <div id="detalle" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h5>Numero: <small><asp:Label ID="lblnroPedidoDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5>Estado: <small><asp:Label ID="lblEstadoDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5>Cantidad: <small><asp:Label ID="lblCantDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5>Recibido: <small><asp:Label ID="lblRecibidoDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5>Modificado: <small><asp:Label ID="lblModificadoDet" runat="server" Text=""></asp:Label></small></h5>
+                        </div>
+                    </div>
+                </div>
             <div class="panel panel-default panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -312,9 +329,24 @@
                 </div>
             </div>
             </div>
+            <div class="panel panel-default panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#log">Registro De Cambios</a>
+                    </h4>
+                </div>
+                <div id="log" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <button class="btn btn-primary" data-target="#mdlRegistro" data-toggle="modal" type="button">
+                            <span class="glyphicon glyphicon-list-alt"></span> Mostrar Registro
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>  
     </div>
     </asp:Panel>
+    <!--MODAL ENVIAR A PRODUCCION-->
     <div class="modal fade" id="enviarProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -380,7 +412,94 @@
           </div>
           <div class="modal-footer">
             <asp:Button ID="btnEnviar" runat="server" Text="Enviar" ValidationGroup="vgStock" />
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MODAL REGISTRO HISTORICO-->
+    <div class="modal fade" id="mdlRegistro" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="registroLabel">Registro Actividad</h4>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+                <asp:GridView ID="grLog" runat="server"></asp:GridView>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MODAL PRODUCCION-->
+    <div class="modal fade" id="mdlProd" tabindex="-1" role="dialog" aria-labelledby="prodLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="prodLabel">Estado De Produccion</h4>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+                <asp:GridView ID="grDetalleEnCurso" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido">
+                    <Columns>
+                        <asp:TemplateField HeaderText="#">
+                                <ItemTemplate>
+                                    <%# Container.DataItemIndex + 1 %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                            <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                            <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                            <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                            <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                            <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                            <asp:BoundField DataField="CANT" HeaderText="CANT" >
+                            <ControlStyle Font-Bold="True" />
+                            <ItemStyle Font-Bold="True" CssClass="numCols" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="STOCK" HeaderText="DE STOCK" >
+                            <HeaderStyle Font-Bold="True" />
+                            <ItemStyle Font-Bold="True" CssClass="numCol" />
+                            </asp:BoundField>
+                            <asp:TemplateField HeaderText="HOJAS TERMINADAS">
+                                <ItemTemplate>
+                                    <div class="form-group">
+                                        <asp:TextBox ID="txtHojasTerminadas" runat="server" Text='<%# Bind("HOJAS_TER") %>' ToolTip="Hojas fabricadas" CssClass="form-control"></asp:TextBox>
+                                        <asp:RangeValidator ID="rvHojasTer" runat="server" MinimumValue="0" MaximumValue='<%#Eval("CANT") - Eval("STOCK") %>' BorderStyle="None" ControlToValidate="txtHojasTerminadas" ErrorMessage="El Maximo no puede ser mayor a CANT - STOCK" ForeColor="Red" ValidationGroup="vgEnCurso" Type="Integer">*</asp:RangeValidator>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="MARCOS TERMINADOS">
+                                <ItemTemplate>
+                                    <div class="form-group">
+                                        <asp:TextBox ID="txtMarcosTerminados" runat="server" Text='<%# Bind("MARCO_TER") %>' ToolTip="marcos fabricados" CssClass="form-control"></asp:TextBox>
+                                        <asp:RangeValidator ID="rvMarcosTer" runat="server" ControlToValidate="txtMarcosTerminados" MinimumValue="0" MaximumValue='<%#Eval("CANT") - Eval("STOCK") %>' ErrorMessage="El Maximo no puede ser mayor a CANT - STOCK" ForeColor="Red" Type="Integer" ValidationGroup="vgEnCurso">*</asp:RangeValidator>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="ENSAMBLADAS">
+                                <ItemTemplate>
+                                    <div class="form-group">
+                                        <asp:TextBox ID="txtEnsambladas" runat="server" Text='<%# Bind("ENSAMBLADOS") %>' ToolTip="Puertas terminadas" CssClass="form-control"></asp:TextBox>
+                                        <asp:RangeValidator ID="rvEnsambladas" runat="server" ControlToValidate="txtEnsambladas" MinimumValue="0" MaximumValue='<%#Eval("CANT") - Eval("STOCK") %>' ErrorMessage="El Maximo no puede ser mayor a CANT - STOCK" ForeColor="Red" ValidationGroup="vgEnCurso" Type="Integer">*</asp:RangeValidator>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                    </Columns>
+                    <EmptyDataTemplate>
+                        <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
+                    </EmptyDataTemplate>
+                </asp:GridView>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>

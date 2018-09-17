@@ -185,6 +185,51 @@ Partial Public Class Administrar
     Protected WithEvents grDetalle As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
+    '''Control lblnroPedidoDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblnroPedidoDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblEstadoDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblEstadoDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblCantDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblCantDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblRecibidoDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblRecibidoDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblModificadoDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblModificadoDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Control grStock.
     '''</summary>
     '''<remarks>
@@ -264,4 +309,22 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnEnviar As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control grLog.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grLog As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control grDetalleEnCurso.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grDetalleEnCurso As Global.System.Web.UI.WebControls.GridView
 End Class
