@@ -27,14 +27,54 @@
                 console.log("no hay materiales");
                 $("#pnlMat").removeClass("panel-primary")
                 $("#pnlMat").addClass("panel-warning")
+
+                $("#pnlMatOrden").removeClass("panel-sucess")
+                $("#pnlMatOrden").addClass("panel-warning")
+
             } else if (mat == "True") {
                 $("#pnlMat").removeClass("panel-warning")
                 $("#pnlMat").addClass("panel-primary")
+
+                $("#pnlMatOrden").removeClass("panel-warning")
+                $("#pnlMatOrden").addClass("panel-success")
+
                 console.log("hay materiales");
             }
 
+            //DESACTIVAR BOTON ORDENES DE TRABAJO
+            if ($("#" + '<%= HFBtnOrden.ClientID %>').val() == "disabled") {
+                $("#btnEnviarProd").prop("disabled", true);
+                console.log("DESACTIVANDO BOTON ORDENES");
+            } else {
+                $("#btnEnviarProd").prop("disabled", false);
+                console.log("activando BOTON ORDENES");
+
+            }
+
+            //DESACTIVAR BOTON PRODUCCION
+            if ($("#" + '<%= HFBtnProd.ClientID %>').val() == "disabled") {
+                $("#btnProd").prop("disabled", true);
+                console.log("DESACTIVANDO BOTON prod");
+            } else {
+                $("#btnProd").prop("disabled", false);
+            }
+
+            //DESACTIVAR BOTON DEPOSITO
+            if ($("#" + '<%= HFBtnDepo.ClientID %>').val() == "disabled") {
+                $("#btnDepo").prop("disabled", true);
+                console.log("DESACTIVANDO BOTON depo");
+            } else {
+                $("#btnDepo").prop("disabled", false);
+            }
+
             //IMPRIMIR ORDENES
+            if ($("#" + '<%= HFCrystal.ClientID %>').val() == "orden") {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
+                newWindow.blur();
+                window.focus()
+            }
         })
+
     </script>
     <div class="page-header">
         <h1 class="text-center">Administracion de Pedidos <br /><small>
@@ -94,12 +134,17 @@
         </div>
     </asp:Panel>
     <asp:Panel ID="pnlDetalle" CssClass="row" runat="server" Visible="false">
+        <asp:HiddenField ID="HFIDPedido" runat="server" />
+        <asp:HiddenField ID="HFBtnOrden" runat="server" />
+        <asp:HiddenField ID="HFBtnProd" runat="server" />
+        <asp:HiddenField ID="HFBtnDepo" runat="server" />
+        <asp:HiddenField ID="HFCrystal" runat="server" />
         <div class="row">
             <div class="btn-group" role="group" aria-label="...">
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-                <input id="btnEnviarPRod" class="btn btn-primary" type="button" value="Ordenes De Trabajo" data-toggle="modal" data-target="#enviarProd" />
-                <asp:Button ID="Button3" runat="server" Text="Produccion" />
-                <asp:Button ID="Button4" runat="server" Text="Deposito" />
+                <input id="btnEnviarProd" class="btn btn-primary" type="button" value="Ordenes De Trabajo" data-toggle="modal" data-target="#enviarProd" />
+                <input id="btnProd" class="btn btn-primary" type="button" value="Produccion" data-toggle="modal" data-target="#enviarProd" />
+                <input id="btnDepo" class="btn btn-primary" type="button" value="Deposito" data-toggle="modal" data-target="#enviarProd" />
             </div>
         </div>
         <div class="row">
@@ -162,10 +207,6 @@
                             <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                             <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                             <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                            <asp:BoundField DataField="CANT" HeaderText="CANT" >
-                            <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCol" />
-                            </asp:BoundField>
                             <asp:BoundField DataField="STOCK_PROD" HeaderText="STOCK DISPONIBLE" >
                             <ControlStyle Font-Bold="True" />
                             <ItemStyle Font-Bold="True" CssClass="numCol" />
@@ -279,45 +320,67 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Desea cubrir este pedido con stock existente?</h4>
+            <h4 class="modal-title" id="myModalLabel">Enviar Pedido a Produccion</h4>
           </div>
           <div class="modal-body">
-            <div class="table-responsive">
-                  <asp:GridView ID="grEnviarProd" runat="server" AutoGenerateColumns="False" ToolTip="Detalles del Pedido">
-                        <Columns>
-                            <asp:TemplateField HeaderText="#">
-                                <ItemTemplate>
-                                    <%# Container.DataItemIndex + 1 %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField HeaderText="LINEA" DataField="LINEA" />
-                            <asp:BoundField HeaderText="MADERA" DataField="MADERA" />
-                            <asp:BoundField HeaderText="HOJA" DataField="HOJA" />
-                            <asp:BoundField HeaderText="MARCO" DataField="MARCO" />
-                            <asp:BoundField HeaderText="CHAPA" DataField="CHAPA" />
-                            <asp:BoundField HeaderText="MANO" DataField="MANO" />
-                            <asp:BoundField HeaderText="CANT" DataField="CANT" >
-                            <ItemStyle CssClass="numCol" />
-                            </asp:BoundField>
-                            <asp:BoundField HeaderText="STOCK DISP" DataField="STOCK_PROD" >
-                            <ItemStyle CssClass="numCol" />
-                            </asp:BoundField>
-                            <asp:TemplateField HeaderText="USAR STOCK">
-                                <ItemTemplate>
-                                    <div class="form-group">
-                                        <asp:TextBox ID="txtStockRow" runat="server" ValidationGroup="vgStock" ToolTip="Seleccione cuantas puertas cubrir con stock existente" CssClass="form-control"></asp:TextBox>
-                                        <asp:RangeValidator ID="rvStockNvo" runat="server" ControlToValidate="txtStockRow" ErrorMessage="No puede superar Stock o Cantidad" ForeColor="Red" MinimumValue="0" ValidationGroup="vgStock" Type="Integer" MaximumValue="0" Text="0">*</asp:RangeValidator>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                    <asp:ValidationSummary ID="vsNvos" runat="server" ValidationGroup="vgStock" DisplayMode="List" ForeColor="Red" />
+            <div  class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Desea Utilizar Stock existente?</h3>
                 </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                      <asp:GridView ID="grEnviarProd" runat="server" AutoGenerateColumns="False" ToolTip="Detalles del Pedido" DataKeyNames="ID_ITEM">
+                            <Columns>
+                                <asp:TemplateField HeaderText="#">
+                                    <ItemTemplate>
+                                        <%# Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField HeaderText="LINEA" DataField="LINEA" />
+                                <asp:BoundField HeaderText="MADERA" DataField="MADERA" />
+                                <asp:BoundField HeaderText="HOJA" DataField="HOJA" />
+                                <asp:BoundField HeaderText="MARCO" DataField="MARCO" />
+                                <asp:BoundField HeaderText="CHAPA" DataField="CHAPA" />
+                                <asp:BoundField HeaderText="MANO" DataField="MANO" />
+                                <asp:BoundField HeaderText="CANT" DataField="CANT" >
+                                <ItemStyle CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField HeaderText="STOCK DISP" DataField="STOCK_PROD" >
+                                <ItemStyle CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="USAR STOCK">
+                                    <ItemTemplate>
+                                        <div class="form-group">
+                                            <asp:TextBox ID="txtStockRow" runat="server" ValidationGroup="vgStock" ToolTip="Seleccione cuantas puertas cubrir con stock existente" CssClass="form-control"></asp:TextBox>
+                                            <asp:RangeValidator ID="rvStockNvo" runat="server" ControlToValidate="txtStockRow" ErrorMessage="No puede superar Stock o Cantidad" ForeColor="Red" MinimumValue="0" ValidationGroup="vgStock" Type="Integer" MaximumValue="0" Text="0">*</asp:RangeValidator>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                            </Columns>
+                        </asp:GridView>
+                        <asp:ValidationSummary ID="vsNvos" runat="server" ValidationGroup="vgStock" DisplayMode="List" ForeColor="Red" />
+                    </div>
+                </div>
+            </div>
+            <div id="pnlMatOrden" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Materiales</h3>
+                </div>
+                <div class="panel-body">
+                    <asp:Label ID="lblMatModalOrden" runat="server"></asp:Label>
+                    <asp:Button ID="btnImprimirCompra" runat="server" Text="Imprimir Orden De Compra" />
+                </div>
+            </div>
           </div>
           <div class="modal-footer">
+            <asp:Button ID="btnEnviar" runat="server" Text="Enviar" ValidationGroup="vgStock" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <asp:Button ID="btnEnviarProd" runat="server" Text="Enviar" ValidationGroup="vgStock" />
           </div>
         </div>
       </div>

@@ -122,6 +122,51 @@ Partial Public Class Administrar
     Protected WithEvents pnlDetalle As Global.System.Web.UI.WebControls.Panel
     
     '''<summary>
+    '''Control HFIDPedido.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFIDPedido As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control HFBtnOrden.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFBtnOrden As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control HFBtnProd.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFBtnProd As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control HFBtnDepo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFBtnDepo As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control HFCrystal.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFCrystal As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control btnVolver.
     '''</summary>
     '''<remarks>
@@ -129,24 +174,6 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnVolver As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control Button3.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Button3 As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control Button4.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents Button4 As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
     '''Control grDetalle.
@@ -212,11 +239,29 @@ Partial Public Class Administrar
     Protected WithEvents vsNvos As Global.System.Web.UI.WebControls.ValidationSummary
     
     '''<summary>
-    '''Control btnEnviarProd.
+    '''Control lblMatModalOrden.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents btnEnviarProd As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents lblMatModalOrden As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control btnImprimirCompra.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnImprimirCompra As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btnEnviar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnEnviar As Global.System.Web.UI.WebControls.Button
 End Class

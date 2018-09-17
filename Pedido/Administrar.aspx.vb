@@ -9,12 +9,11 @@
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
         lblSubtitulo.Text = ""
+        HFCrystal.Value = ""
     End Sub
 
     Protected Sub grNvos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
         Dim idPedido As Integer
-        Dim items As DataTable
-        Dim materiales As Boolean
 
         Try
             pnlPedidos.Visible = False
@@ -22,26 +21,11 @@
 
             idPedido = Convert.ToInt32(grPedidos.SelectedDataKey.Value)
             gp = New GestorPedidos(idPedido)
-            Session("gestorPedidos") = gp
+            HFIDPedido.Value = gp.pedido.id.ToString
+            Session("gp") = gp
 
-            items = gd.getItems(idPedido)
-
-            grDetalle.DataSource = items
-            grStock.DataSource = items
-            grDeposito.DataSource = items
-            grEnviarProd.DataSource = items
-
-            materiales = gd.calcularMateriales(gp.pedido, grMateriales)
-            If materiales Then
-                HFMat.Value = "True"
-            Else
-                HFMat.Value = "False"
-            End If
-
-            grDetalle.DataBind()
-            grStock.DataBind()
-            grDeposito.DataBind()
-            grEnviarProd.DataBind()
+            validar(gp)
+            llenarGrillasDetalle(idPedido)
 
             For Each r As GridViewRow In grEnviarProd.Rows
                 'Dim numUpDown As AjaxControlToolkit.NumericUpDownExtender
@@ -71,9 +55,73 @@
         End Try
     End Sub
 
+    Private Sub validar(_gp As GestorPedidos)
+
+        If _gp.pedido.estado.id > Estado.estados.entregado Then
+            HFBtnDepo.Value = "disabled"
+        Else
+            HFBtnDepo.Value = ""
+        End If
+
+        If _gp.pedido.estado.id >= Estado.estados.deposito Then
+            HFBtnProd.Value = "disabled"
+        Else
+            HFBtnProd.Value = ""
+        End If
+
+        If _gp.pedido.estado.id > Estado.estados.recibido Then
+            HFBtnOrden.Value = "disabled"
+        Else
+            HFBtnOrden.Value = ""
+        End If
+    End Sub
+
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
         pnlDetalle.Visible = False
         pnlPedidos.Visible = True
         grPedidos.DataBind()
+    End Sub
+
+    Protected Sub btnEnviarProd_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
+        Try
+
+            gp = Session("gp")
+            gp.EnviarProduccion(grEnviarProd)
+            sb.write(String.Format("Pedido {0} enviado a produccion", gp.pedido.id))
+            HFCrystal.Value = "orden"
+
+            llenarGrillasDetalle(gp.pedido.id)
+            validar(gp)
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub llenarGrillasDetalle(_idPedido)
+        Dim items As DataTable
+        Dim materiales As Boolean
+        items = gd.getItems(_idPedido)
+
+        grDetalle.DataSource = Items
+        grStock.DataSource = Items
+        grDeposito.DataSource = Items
+        grEnviarProd.DataSource = Items
+
+        grDetalle.DataBind()
+        grStock.DataBind()
+        grDeposito.DataBind()
+        grEnviarProd.DataBind()
+
+        materiales = gd.calcularMateriales(gp.pedido, grMateriales)
+        If materiales Then
+            HFMat.Value = "True"
+            lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
+            btnImprimirCompra.Visible = False
+            btnEnviar.Visible = True
+        Else
+            HFMat.Value = "False"
+            lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
+            btnEnviar.Visible = False
+        End If
     End Sub
 End Class

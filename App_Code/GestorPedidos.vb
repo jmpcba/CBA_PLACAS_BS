@@ -124,12 +124,18 @@ Public Class GestorPedidos
         Dim flag = True
         'ACTUALIZAR STOCK EN CADA ITEM DEL PEDIDO
         For Each r As GridViewRow In _gr.Rows
-            Dim index = pedido.itemIndex(r.Cells(0).Text)
+            Dim idItem = Convert.ToInt32(_gr.DataKeys(r.RowIndex).Value)
+            Dim index = pedido.itemIndex(idItem)
             Dim txstockGridView As TextBox
             Dim stock As Integer
 
             txstockGridView = r.FindControl("txtStockRow")
-            stock = txstockGridView.Text.Trim
+            Dim txtVal = txstockGridView.Text.Trim
+            If txtVal <> "" Then
+                stock = txtVal
+            Else
+                stock = 0
+            End If
             pedido.items(index).setStock(stock)
 
 
