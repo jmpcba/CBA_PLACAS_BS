@@ -230,6 +230,15 @@ Partial Public Class Administrar
     Protected WithEvents lblModificadoDet As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control grDeposito.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grDeposito As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
     '''Control grStock.
     '''</summary>
     '''<remarks>
@@ -255,15 +264,6 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grMateriales As Global.System.Web.UI.WebControls.GridView
-    
-    '''<summary>
-    '''Control grDeposito.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents grDeposito As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
     '''Control grEnviarProd.
@@ -320,11 +320,29 @@ Partial Public Class Administrar
     Protected WithEvents grLog As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
-    '''Control grDetalleEnCurso.
+    '''Control grEnCurso.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents grDetalleEnCurso As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents grEnCurso As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control vsEnCurso.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents vsEnCurso As Global.System.Web.UI.WebControls.ValidationSummary
+    
+    '''<summary>
+    '''Control btnActualizarProd.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnActualizarProd As Global.System.Web.UI.WebControls.Button
 End Class

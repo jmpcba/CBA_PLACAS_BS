@@ -46,21 +46,30 @@ Public Class GestorPedidos
         Dim cambio = False
 
         For Each r As GridViewRow In _gr.Rows
-            Dim index = pedido.itemIndex(r.Cells(0).Text)
+            Dim idItem = Convert.ToInt32(_gr.DataKeys(r.RowIndex).Value)
+            Dim index = pedido.itemIndex(idItem)
             Dim txtHojasGridView As TextBox
             Dim txtMarcosGridView As TextBox
             Dim txtEnsamGridView As TextBox
-            Dim hojas As Integer
-            Dim marcos As Integer
-            Dim ensamblados As Integer
+            Dim hojas As Integer = 0
+            Dim marcos As Integer = 0
+            Dim ensamblados As Integer = 0
 
             txtHojasGridView = r.FindControl("txtHojasTerminadas")
             txtMarcosGridView = r.FindControl("txtMarcosTerminados")
             txtEnsamGridView = r.FindControl("txtEnsambladas")
 
-            hojas = txtHojasGridView.Text.Trim
-            marcos = txtMarcosGridView.Text.Trim
-            ensamblados = txtEnsamGridView.Text.Trim
+            If txtHojasGridView.Text.Trim <> "" Then
+                hojas = txtHojasGridView.Text.Trim
+            End If
+
+            If txtMarcosGridView.Text.Trim <> "" Then
+                marcos = txtMarcosGridView.Text.Trim
+            End If
+
+            If txtEnsamGridView.Text.Trim <> "" Then
+                ensamblados = txtEnsamGridView.Text.Trim
+            End If
 
             If hojas <> pedido.items(index).hojasTerminadas Then
                 pedido.items(index).hojasTerminadas = hojas

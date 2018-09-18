@@ -106,11 +106,13 @@
         grStock.DataSource = items
         grDeposito.DataSource = items
         grEnviarProd.DataSource = items
+        grEnCurso.DataSource = gd.getItems(_pedido.id, _enCurso:=True)
 
         grDetalle.DataBind()
         grStock.DataBind()
         grDeposito.DataBind()
         grEnviarProd.DataBind()
+        grEnCurso.DataBind()
 
         materiales = gd.calcularMateriales(_pedido, grMateriales)
 
@@ -130,11 +132,26 @@
         lblEstadoDet.Text = _pedido.estado.nombre
         lblCantDet.Text = _pedido.cantTotal.ToString
         lblRecibidoDet.Text = _pedido.recibido.ToShortDateString
+
         If _pedido.modificado <> DateTime.MinValue Then
             lblModificadoDet.Text = _pedido.modificado.ToShortDateString
         Else
             lblModificadoDet.Text = ""
         End If
 
+    End Sub
+
+    Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click
+        Try
+            gp = Session("gp")
+            gp.actualizarEnCurso(grEnCurso)
+            validar(gp)
+            llenarGrillasDetalle(gp.pedido)
+            Session("gp") = gp
+
+            sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class

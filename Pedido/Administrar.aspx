@@ -134,12 +134,14 @@
         </div>
     </asp:Panel>
     <asp:Panel ID="pnlDetalle" CssClass="row" runat="server" Visible="false">
+        <!--hidden fields -->
         <asp:HiddenField ID="HFIDPedido" runat="server" />
         <asp:HiddenField ID="HFBtnOrden" runat="server" />
         <asp:HiddenField ID="HFBtnProd" runat="server" />
         <asp:HiddenField ID="HFBtnDepo" runat="server" />
         <asp:HiddenField ID="HFCrystal" runat="server" />
         <div class="row">
+            <!--botones grupo -->
             <div class="btn-group" role="group" aria-label="...">
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
                 <input id="btnEnviarProd" class="btn btn-primary" type="button" value="Enviar a Produccion" data-toggle="modal" data-target="#enviarProd" />
@@ -150,6 +152,7 @@
         <div class="row">
             <br />
             <div class="table-responsive">
+                <!--tabla detalle-->
                 <asp:GridView ID="grDetalle" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
                     <Columns>
                         <asp:TemplateField HeaderText="#">
@@ -184,7 +187,9 @@
             </div>
         </div>
         <div class="row">
+            <!--acordeon-->
             <div class="panel-group" id="accordion">
+                <!--panel detalle-->
                 <div class="panel panel-default panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -201,75 +206,12 @@
                         </div>
                     </div>
                 </div>
-            <div class="panel panel-default panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#stock">
-                Stock Disponible</a>
-                </h4>
-            </div>
-            <div id="stock" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <asp:GridView ID="grStock" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table-bordered">
-                        <Columns>
-                            <asp:TemplateField HeaderText="#">
-                                <ItemTemplate>
-                                    <%# Container.DataItemIndex + 1 %>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
-                            <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
-                            <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
-                            <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
-                            <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
-                            <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                            <asp:BoundField DataField="STOCK_PROD" HeaderText="STOCK DISPONIBLE" >
-                            <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCol" />
-                            </asp:BoundField>
-                        </Columns>
-                        <EmptyDataTemplate>
-                            <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
-                        </EmptyDataTemplate>
-                    </asp:GridView>
-                </div>
-                </div>
-            </div>
-            </div>
-            <div id="pnlMat" class="panel panel-default panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#materiales">
-                Materiales</a>
-                </h4>
-            </div>
-            <div id="materiales" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <asp:HiddenField ID="HFMat" runat="server" />
-                    <asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False">
-                        <Columns>
-                            <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
-                            <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
-                            <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
-                            <ItemStyle CssClass="numCols" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
-                            <ItemStyle CssClass="numCols" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
-                            <ItemStyle CssClass="numCols" />
-                            </asp:BoundField>
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </div>
-            </div>
-            <div class="panel panel-default panel-primary">
+                <!--panel deposito-->
+                <div class="panel panel-default panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#deposito">
-                Deposito</a>
+                Deposito & Produccion</a>
                 </h4>
             </div>
             <div id="deposito" class="panel-collapse collapse">
@@ -329,7 +271,74 @@
                 </div>
             </div>
             </div>
-            <div class="panel panel-default panel-primary">
+                <!--panel stock-->
+                <div class="panel panel-default panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#stock">
+                Stock Disponible</a>
+                </h4>
+            </div>
+            <div id="stock" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <asp:GridView ID="grStock" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table-bordered">
+                        <Columns>
+                            <asp:TemplateField HeaderText="#">
+                                <ItemTemplate>
+                                    <%# Container.DataItemIndex + 1 %>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                            <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                            <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                            <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                            <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                            <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                            <asp:BoundField DataField="STOCK_PROD" HeaderText="STOCK DISPONIBLE" >
+                            <ControlStyle Font-Bold="True" />
+                            <ItemStyle Font-Bold="True" CssClass="numCol" />
+                            </asp:BoundField>
+                        </Columns>
+                        <EmptyDataTemplate>
+                            <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
+                        </EmptyDataTemplate>
+                    </asp:GridView>
+                </div>
+                </div>
+            </div>
+            </div>
+                <!--panel materiales-->
+                <div id="pnlMat" class="panel panel-default panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#materiales">
+                Materiales</a>
+                </h4>
+            </div>
+            <div id="materiales" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <asp:HiddenField ID="HFMat" runat="server" />
+                    <asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
+                            <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
+                            <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
+                            <ItemStyle CssClass="numCols" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
+                            <ItemStyle CssClass="numCols" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
+                            <ItemStyle CssClass="numCols" />
+                            </asp:BoundField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </div>
+            </div>
+                <!--panel registro-->
+                <div class="panel panel-default panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#log">Registro De Cambios</a>
@@ -343,8 +352,8 @@
                     </div>
                 </div>
             </div>
-        </div>  
-    </div>
+            </div>  
+        </div>
     </asp:Panel>
     <!--MODAL ENVIAR A PRODUCCION-->
     <div class="modal fade" id="enviarProd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -446,7 +455,7 @@
           </div>
           <div class="modal-body">
             <div class="table-responsive">
-                <asp:GridView ID="grDetalleEnCurso" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido">
+                <asp:GridView ID="grEnCurso" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" DataKeyNames="ITEM">
                     <Columns>
                         <asp:TemplateField HeaderText="#">
                                 <ItemTemplate>
@@ -467,7 +476,7 @@
                             <HeaderStyle Font-Bold="True" />
                             <ItemStyle Font-Bold="True" CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:TemplateField HeaderText="HOJAS TERMINADAS">
+                            <asp:TemplateField HeaderText="HOJAS TER">
                                 <ItemTemplate>
                                     <div class="form-group">
                                         <asp:TextBox ID="txtHojasTerminadas" runat="server" Text='<%# Bind("HOJAS_TER") %>' ToolTip="Hojas fabricadas" CssClass="form-control"></asp:TextBox>
@@ -475,7 +484,7 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="MARCOS TERMINADOS">
+                            <asp:TemplateField HeaderText="MARCOS TER">
                                 <ItemTemplate>
                                     <div class="form-group">
                                         <asp:TextBox ID="txtMarcosTerminados" runat="server" Text='<%# Bind("MARCO_TER") %>' ToolTip="marcos fabricados" CssClass="form-control"></asp:TextBox>
@@ -491,15 +500,23 @@
                                     </div>
                                 </ItemTemplate>
                             </asp:TemplateField>
+                            <asp:BoundField DataField="ITEM" HeaderText="ITEM" SortExpression="ITEM" >
+                                <ControlStyle CssClass="hiddencol" />
+                                <FooterStyle CssClass="hiddencol" />
+                                <HeaderStyle CssClass="hiddencol" />
+                                <ItemStyle CssClass="hiddencol" />
+                            </asp:BoundField>
                     </Columns>
                     <EmptyDataTemplate>
                         <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
                     </EmptyDataTemplate>
                 </asp:GridView>
+                <asp:ValidationSummary ID="vsEnCurso" runat="server" DisplayMode="List" ForeColor="Red" ValidationGroup="vgEnCurso"/>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <asp:Button ID="btnActualizarProd" runat="server" Text="Actualizar" ValidationGroup="vgEnCurso" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
