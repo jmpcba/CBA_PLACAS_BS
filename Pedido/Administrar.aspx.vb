@@ -25,7 +25,7 @@
             Session("gp") = gp
 
             validar(gp)
-            llenarGrillasDetalle(gp.pedido)
+            llenarGrillasDetalle(gp)
 
             For Each r As GridViewRow In grEnviarProd.Rows
                 'Dim numUpDown As AjaxControlToolkit.NumericUpDownExtender
@@ -73,6 +73,8 @@
             HFBtnOrden.Value = "disabled"
         Else
             HFBtnOrden.Value = ""
+            HFBtnProd.Value = "disabled"
+            HFBtnDepo.Value = "disabled"
         End If
     End Sub
 
@@ -90,23 +92,23 @@
             sb.write(String.Format("Pedido {0} enviado a produccion", gp.pedido.id))
             HFCrystal.Value = "orden"
 
-            llenarGrillasDetalle(gp.pedido)
+            llenarGrillasDetalle(gp)
             validar(gp)
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
     End Sub
 
-    Public Sub llenarGrillasDetalle(_pedido As Pedido)
+    Public Sub llenarGrillasDetalle(_gp As GestorPedidos)
         Dim items As DataTable
         Dim materiales As Boolean
-        items = gd.getItems(_pedido.id)
+        items = gd.getItems(_gp.pedido.id)
 
         grDetalle.DataSource = items
         grStock.DataSource = items
         grDeposito.DataSource = items
         grEnviarProd.DataSource = items
-        grEnCurso.DataSource = gd.getItems(_pedido.id, _enCurso:=True)
+        grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
 
         grDetalle.DataBind()
         grStock.DataBind()
@@ -114,27 +116,37 @@
         grEnviarProd.DataBind()
         grEnCurso.DataBind()
 
-        materiales = gd.calcularMateriales(_pedido, grMateriales)
+        materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
 
-        If materiales Then
-            HFMat.Value = "True"
-            lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
-            btnImprimirCompra.Visible = False
-            btnEnviar.Visible = True
-        Else
-            HFMat.Value = "False"
-            lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
-            btnEnviar.Visible = False
+        If gp.pedido.estado.id = Estado.estados.recibido Then
+            If materiales Then
+                HFMat.Value = "True"
+                lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
+                btnImprimirCompra.Visible = False
+                btnEnviar.Visible = True
+            Else
+                HFMat.Value = "False"
+                lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
+                btnEnviar.Visible = False
+                btnImprimirCompra.Visible = True
+            End If
         End If
 
-        gd.obtenerRegistro(_pedido, grLog)
-        lblnroPedidoDet.Text = _pedido.id.ToString
-        lblEstadoDet.Text = _pedido.estado.nombre
-        lblCantDet.Text = _pedido.cantTotal.ToString
-        lblRecibidoDet.Text = _pedido.recibido.ToShortDateString
+        gd.obtenerRegistro(_gp.pedido, grLog)
+        lblnroPedidoDet.Text = _gp.pedido.id.ToString
+        lblEstadoDet.Text = _gp.pedido.estado.nombre
+        lblCantDet.Text = _gp.pedido.cantTotal.ToString
+        lblRecibidoDet.Text = _gp.pedido.recibido.ToShortDateString
 
-        If _pedido.modificado <> DateTime.MinValue Then
-            lblModificadoDet.Text = _pedido.modificado.ToShortDateString
+
+        bltPendientes.Items.Clear()
+
+        For Each msg As String In gp.pendientes(HFExIcon)
+            bltPendientes.Items.Add(msg)
+        Next
+
+        If _gp.pedido.modificado <> DateTime.MinValue Then
+            lblModificadoDet.Text = _gp.pedido.modificado.ToShortDateString
         Else
             lblModificadoDet.Text = ""
         End If
@@ -146,12 +158,22 @@
             gp = Session("gp")
             gp.actualizarEnCurso(grEnCurso)
             validar(gp)
-            llenarGrillasDetalle(gp.pedido)
+            llenarGrillasDetalle(gp)
             Session("gp") = gp
 
             sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Protected Sub btnRefrescar_Click(sender As Object, e As EventArgs) Handles btnRefrescar.Click
+        gp = Session("gp")
+        llenarGrillasDetalle(gp)
+        validar(gp)
+    End Sub
+
+    Protected Sub btnImprimirCompra_Click(sender As Object, e As EventArgs) Handles btnImprimirCompra.Click
+        HFCrystal.Value = "compra"
     End Sub
 End Class

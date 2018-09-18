@@ -232,4 +232,49 @@ Public Class GestorPedidos
             Throw
         End Try
     End Sub
+
+    Public Function pendientes(_hf As HiddenField) As List(Of String)
+        Dim ret = New List(Of String)
+        Dim enviarAProdMsg = "Enviar a Produccion e imprimir ordenes de trabajo"
+        Dim fabPendMsg = "Fabricar los productos faltantes"
+        Dim recDepoMsg = "Hay productos pendientes de ser recibidos en el deposito"
+        Dim enviarMsg = "Enviar productos al cliente"
+        Dim confMsg = "Confirmar recepcion con el cliente"
+        Dim fabPendFlag As Boolean = True
+        Dim recDepoFlag As Boolean = True
+
+        If pedido.estado.id = Estado.estados.recibido Then
+            ret.Add(enviarAProdMsg)
+            _hf.Value = "enviarProd"
+        ElseIf pedido.estado.id = Estado.estados.deposito Then
+            ret.Add(enviarMsg)
+            _hf.Value = "depo"
+        ElseIf pedido.estado.id = Estado.estados.enviado Then
+            ret.Add(confMsg)
+            _hf.Value = "depo"
+        Else
+            For Each i As Item In pedido.items
+                If fabPendFlag Then
+                    If i.getCant - i.stock - i.getEnsamblados > 0 Then
+                        ret.Add(fabPendMsg)
+                        fabPendFlag = False
+                        _hf.Value = "prod"
+                    End If
+                End If
+
+                If recDepoFlag Then
+                    If i.getEnsamblados - i.getEnDeposito > 0 Then
+                        ret.Add(recDepoMsg)
+                        recDepoFlag = False
+                        _hf.Value = "depo"
+                    End If
+                End If
+            Next
+
+            If fabPendFlag = False And recDepoFlag = False Then
+                _hf.Value = "prod-depo"
+            End If
+        End If
+        Return ret
+    End Function
 End Class

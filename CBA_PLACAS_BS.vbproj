@@ -256,6 +256,7 @@
     <Content Include="images\almacen.png" />
     <Content Include="images\arrow_left-512.png" />
     <Content Include="images\cancel.png" />
+    <Content Include="images\cargando.gif" />
     <Content Include="images\cbaPlacasLogo.jpg" />
     <Content Include="images\checked-checkbox.png" />
     <Content Include="images\config.png" />

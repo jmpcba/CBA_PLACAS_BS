@@ -72,9 +72,37 @@
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()
+            } else if ($("#" + '<%= HFCrystal.ClientID %>').val() == "compra") {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=compra&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
+                newWindow.blur();
+                window.focus()
+            }
+                
+
+            //SIGNOS DE EXCLAMACION EN BOTONES SEGUN TAREAS PENDIENTES
+            if ($("#" + '<%= HFExIcon.ClientID %>').val() == "enviarProd") {
+                $("#spBtnEnviarProd").addClass("glyphicon-exclamation-sign")
+                $("#spLblPend").addClass("glyphicon-exclamation-sign")
+
+            } else if ($("#" + '<%= HFExIcon.ClientID %>').val() == "prod") {
+                $("#spBtnProd").addClass("glyphicon-exclamation-sign")
+                $("#spLblPend").addClass("glyphicon-exclamation-sign")
+            
+            } else if ($("#" + '<%= HFExIcon.ClientID %>').val() == "depo"){
+                $("#spBtnDepo").addClass("glyphicon-exclamation-sign")
+                $("#spLblPend").addClass("glyphicon-exclamation-sign")
+
+            } else if ($("#" + '<%= HFExIcon.ClientID %>').val() == "prod-depo") {
+                $("#spBtnProd").addClass("glyphicon-exclamation-sign")
+                $("#spBtnDepo").addClass("glyphicon-exclamation-sign")
+                $("#spLblPend").addClass("glyphicon-exclamation-sign")
+            } else {
+                $("#spBtnProd").removeClass("glyphicon-exclamation-sign")
+                $("#spBtnDepo").removeClass("glyphicon-exclamation-sign")
+                $("#spLblPend").removeClass("glyphicon-exclamation-sign")
             }
         })
-
+        spLblPend
     </script>
     <div class="page-header">
         <h1 class="text-center">Administracion de Pedidos <br /><small>
@@ -140,13 +168,21 @@
         <asp:HiddenField ID="HFBtnProd" runat="server" />
         <asp:HiddenField ID="HFBtnDepo" runat="server" />
         <asp:HiddenField ID="HFCrystal" runat="server" />
+        <asp:HiddenField ID="HFExIcon" runat="server" />
         <div class="row">
             <!--botones grupo -->
             <div class="btn-group" role="group" aria-label="...">
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-                <input id="btnEnviarProd" class="btn btn-primary" type="button" value="Enviar a Produccion" data-toggle="modal" data-target="#enviarProd" />
-                <input id="btnProd" class="btn btn-primary" type="button" value="Produccion" data-toggle="modal" data-target="#mdlProd" />
-                <input id="btnDepo" class="btn btn-primary" type="button" value="Deposito" data-toggle="modal" data-target="#enviarProd" />
+                <button id="btnEnviarProd" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#enviarProd">
+                    Enviar a Produccion <span id="spBtnEnviarProd" class="glyphicon" aria-hidden="true"></span>
+                </button>
+                <button id="btnProd" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlProd">
+                    Produccion <span id="spBtnProd" class="glyphicon" aria-hidden="true"></span>
+                </button>
+                 <button id="btnDepo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlProd">
+                    Deposito <span id="spBtnDepo" class="glyphicon" aria-hidden="true"></span>
+                </button>
+                <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
             </div>
         </div>
         <div class="row">
@@ -193,7 +229,7 @@
                 <div class="panel panel-default panel-primary">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#detalle">Detalle</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#detalle">Detalle Del Pedido & Tareas Pendientes</a>
                         </h4>
                     </div>
                     <div id="detalle" class="panel-collapse collapse">
@@ -203,6 +239,10 @@
                             <h5>Cantidad: <small><asp:Label ID="lblCantDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Recibido: <small><asp:Label ID="lblRecibidoDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Modificado: <small><asp:Label ID="lblModificadoDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5><strong>Pendientes: <span id="spLblPend" class="glyphicon" aria-hidden="true"></span></strong>
+                                <asp:BulletedList ID="bltPendientes" runat="server" BulletStyle="Square"></asp:BulletedList>
+                                <h5></h5>
+                            </h5>
                         </div>
                     </div>
                 </div>

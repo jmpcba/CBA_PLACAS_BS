@@ -167,6 +167,15 @@ Partial Public Class Administrar
     Protected WithEvents HFCrystal As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFExIcon.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFExIcon As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control btnVolver.
     '''</summary>
     '''<remarks>
@@ -174,6 +183,15 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnVolver As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btnRefrescar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnRefrescar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
     '''Control grDetalle.
@@ -228,6 +246,15 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lblModificadoDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control bltPendientes.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents bltPendientes As Global.System.Web.UI.WebControls.BulletedList
     
     '''<summary>
     '''Control grDeposito.

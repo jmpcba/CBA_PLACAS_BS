@@ -12,6 +12,8 @@ Public Class impresion
 
         If rpt = "orden" Then
             rptType = GestorDatos.reportes.ordenTrabajo
+        ElseIf rpt = "compra" Then
+            rptType = GestorDatos.reportes.compras
         End If
 
         crystalReport(rptType, idPedido)
@@ -44,7 +46,7 @@ Public Class impresion
         Try
             If _rpt = GestorDatos.reportes.compras Then
                 Dim rowsToDelete = New List(Of DataRow)
-                gp = Session("gestorPedidos")
+                gp = Session("gp")
 
                 dt = gp.pedido.despiece
 

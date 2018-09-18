@@ -11,6 +11,8 @@
     <form id="form1" runat="server">
     <div>
     
+        <asp:Image ID="Image1" runat="server" CssClass="loading" ImageUrl="~/images/cargando.gif" />
+    
     </div>
     </form>
 </body>
