@@ -108,6 +108,7 @@
         grStock.DataSource = items
         grDeposito.DataSource = items
         grEnviarProd.DataSource = items
+        grAlmc.DataSource = items
         grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
 
         grDetalle.DataBind()
@@ -115,6 +116,7 @@
         grDeposito.DataBind()
         grEnviarProd.DataBind()
         grEnCurso.DataBind()
+        grAlmc.DataBind()
 
         materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
 
@@ -138,7 +140,17 @@
         lblCantDet.Text = _gp.pedido.cantTotal.ToString
         lblRecibidoDet.Text = _gp.pedido.recibido.ToShortDateString
 
+        'BOTON MODAL DEPOSITO
+        If gp.pedido.getPAlmacenar > 0 Then
+            btnAccionDepo.Text = "Almacenar"
+        ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
+            btnAccionDepo.Text = "Enviar a Cliente"
+        ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
+            btnAccionDepo.Text = "Confirmar Recepcion"
+        End If
 
+
+        'PEDIENTES
         bltPendientes.Items.Clear()
 
         For Each msg As String In gp.pendientes(HFExIcon)
@@ -175,5 +187,35 @@
 
     Protected Sub btnImprimirCompra_Click(sender As Object, e As EventArgs) Handles btnImprimirCompra.Click
         HFCrystal.Value = "compra"
+    End Sub
+
+    Protected Sub btnAccionDepo_Click(sender As Object, e As EventArgs) Handles btnAccionDepo.Click
+
+        Try
+            gp = Session("gp")
+
+            If gp.pedido.getPAlmacenar > 0 Then
+                gp.enviarDeposito()
+                HFCrystal.Value = "almc"
+                sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
+
+            ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
+                gp.actualizarEstado(New Estado(Estado.estados.enviado))
+                HFCrystal.Value = "remito"
+                sb.write(String.Format("Pedido {0} - ENVIADO A CLIENTE: {1}", gp.pedido.id, gp.pedido.cliente.nombre))
+
+            ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
+                gp.actualizarEstado(New Estado(Estado.estados.entregado))
+                sb.write(String.Format("Pedido {0} - ENTREGADO", gp.pedido.id))
+            End If
+
+            validar(gp)
+            llenarGrillasDetalle(gp)
+            Session("gp") = gp
+
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+
     End Sub
 End Class

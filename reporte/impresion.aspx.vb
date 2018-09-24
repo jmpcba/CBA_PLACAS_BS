@@ -14,6 +14,10 @@ Public Class impresion
             rptType = GestorDatos.reportes.ordenTrabajo
         ElseIf rpt = "compra" Then
             rptType = GestorDatos.reportes.compras
+        ElseIf rpt = "almc" Then
+            rptType = GestorDatos.reportes.etiquetaDeposito
+        ElseIf rpt = "remito" Then
+            rptType = GestorDatos.reportes.remito
         End If
 
         crystalReport(rptType, idPedido)

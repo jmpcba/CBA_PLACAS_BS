@@ -176,6 +176,15 @@ Partial Public Class Administrar
     Protected WithEvents HFExIcon As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFDepo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFDepo As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control btnVolver.
     '''</summary>
     '''<remarks>
@@ -372,4 +381,22 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnActualizarProd As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control grAlmc.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grAlmc As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control btnAccionDepo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnAccionDepo As Global.System.Web.UI.WebControls.Button
 End Class

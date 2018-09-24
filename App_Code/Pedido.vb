@@ -178,6 +178,16 @@ Public Class Pedido
             cantTotal += i.getCant()
             precioTotal += i.monto
         Next
-
     End Sub
+
+    Public Function getPAlmacenar() As Integer
+        Dim cont As Integer
+
+        For Each i As Item In items
+            cont = i.getEnsamblados - i.getEnDeposito
+        Next
+
+        Return cont
+
+    End Function
 End Class
