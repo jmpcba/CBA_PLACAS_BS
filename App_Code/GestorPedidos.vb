@@ -240,6 +240,7 @@ Public Class GestorPedidos
         Dim recDepoMsg = "Hay productos pendientes de ser recibidos en el deposito"
         Dim enviarMsg = "Enviar productos al cliente"
         Dim confMsg = "Confirmar recepcion con el cliente"
+        Dim entregadoMsg = "Sin Pendientes"
         Dim fabPendFlag As Boolean = True
         Dim recDepoFlag As Boolean = True
 
@@ -252,6 +253,9 @@ Public Class GestorPedidos
         ElseIf pedido.estado.id = Estado.estados.enviado Then
             ret.Add(confMsg)
             _hf.Value = "depo"
+        ElseIf pedido.estado.id = Estado.estados.entregado Then
+            ret.Add(entregadoMsg)
+            _hf.Value = "entregado"
         Else
             For Each i As Item In pedido.items
                 If fabPendFlag Then

@@ -95,29 +95,47 @@ Public Class DbHelper
         ds = New DataSet()
     End Sub
 
-    Friend Function getReporte(_idPedido As String, _tipo As GestorDatos.reportes, Optional _stock As Integer = 0) As DataTable
+    Friend Function getReporte(_pedido As Pedido, _tipo As GestorDatos.reportes, Optional _stock As Integer = 0) As DataTable
         Dim query As String
         query = ""
         cmd.CommandType = CommandType.Text
 
         If _tipo = GestorDatos.reportes.remito Then
-            query = "SELECT * FROM VW_REMITOS WHERE PEDIDO=" & _idPedido
+            query = "SELECT * FROM VW_REMITOS WHERE PEDIDO=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.ordenTrabajo Then
-            query = "SELECT * FROM VW_ORDENES WHERE PEDIDO=" & _idPedido
+            query = "SELECT * FROM VW_ORDENES WHERE PEDIDO=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDeposito Then
-            query = "SELECT * FROM VW_ETIQUETAS WHERE ID=" & _idPedido
+            query = "SELECT * FROM VW_ETIQUETAS WHERE ID=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDepositoUnica Then
-            query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID=" & _idPedido
+            query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID=" & _pedido.id.ToString
         ElseIf GestorDatos.reportes.etiquetaDepositoInterna Then
-            query = "SELECT * FROM VW_ETIQUETAS_INTERNAS WHERE ID=" & _idPedido
+            query = "SELECT * FROM VW_ETIQUETAS_INTERNAS WHERE ID=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDepositoStock Then
-            query = "SELECT * FROM VW_ETIQUETAS_STOCK WHERE ID=" & _idPedido
+            query = "SELECT * FROM VW_ETIQUETAS_STOCK WHERE ID=" & _pedido.id.ToString
         End If
 
         cmd.CommandText = query
 
         Try
             da.Fill(ds, "REMITO")
+
+            If _tipo = GestorDatos.reportes.etiquetaDeposito Then
+                Try
+                    cmd.CommandType = CommandType.Text
+
+                    cnn.Open()
+                    For Each i As Item In _pedido.items
+                        cmd.CommandText = "UPDATE ITEMS SET P_IMPRIMIR=0 WHERE ID=" & i.id.ToString
+                        cmd.ExecuteNonQuery()
+                    Next
+
+                Catch ex As Exception
+                    Throw
+                Finally
+                    cnn.Close()
+                End Try
+            End If
+
             Return ds.Tables("REMITO")
         Catch ex As Exception
             Throw New Exception("ERROR DE BASE DE DATOS:  " & ex.Message)

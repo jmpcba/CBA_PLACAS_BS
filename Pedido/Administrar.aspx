@@ -5,12 +5,10 @@
         $(document).ready(function () {
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
-            console.log(err)
             if (err == "error") {
                 $("#msg").removeClass("alert-success");
                 $("#msg").addClass("alert-danger");
                 $("#msg").show()
-                console.log("error");
             } else if (err == "success") {
                 $("#msg").addClass("alert-success");
                 $("#msg").removeClass("alert-danger");
@@ -61,23 +59,31 @@
             }
 
             //IMPRIMIR ORDENES
-            if ($("#" + '<%= HFCrystal.ClientID %>').val() == "orden") {
+            if ($("#" + '<%= HFCrystal.ClientID%>').val() == "orden") {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()
-            } else if ($("#" + '<%= HFCrystal.ClientID %>').val() == "compra") {
+
+            } else if ($("#" + '<%= HFCrystal.ClientID%>').val() == "compra") {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=compra&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()
-            //} else if ($("#" + '<%= HFCrystal.ClientID %>').val() == "almc") {
-              //  var newWindow = window.open("../reporte/impresion.aspx?rpt=almc&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
-              //  newWindow.blur();
-              //  window.focus()
-            }else if ($("#" + '<%= HFCrystal.ClientID %>').val() == "remito") {
+            
+            }else if ($("#" + '<%= HFCrystal.ClientID%>').val() == "remito") {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=remito&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()
             }
+            //IMPRIMIR ETIQUETAS DE DEPOSITO ANTES DE QUE EL SERVIDOR HAGA POSTBACK Y PROCESE LA ACTUALZIACION
+            $("#<%= btnAccionDepo.ClientID%>").click(function () {
+                if ($("#" + '<%= HFDepo.ClientID%>').val() == "almc") {
+                    console.log("CLICK EN BOTON DEPO");
+                    var newWindow = window.open("../reporte/impresion.aspx?rpt=almc&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
+                    newWindow.blur();
+                    window.focus()
+                    return true
+                }
+            })
 
             //SIGNOS DE EXCLAMACION EN BOTONES SEGUN TAREAS PENDIENTES
             if ($("#" + '<%= HFExIcon.ClientID %>').val() == "enviarProd") {
@@ -101,17 +107,6 @@
                 $("#spBtnDepo").removeClass("glyphicon-exclamation-sign")
                 $("#spLblPend").removeClass("glyphicon-exclamation-sign")
             }
-
-            $("#<%= btnAccionDepo.ClientID%>").click(function () {
-            console.log("CLICK EN BOTON DEPO");
-                if ($("#<%= HFCrystal.ClientID %>").val() == "almc") {
-                    var newWindow = window.open("../reporte/impresion.aspx?rpt=almc&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
-                    newWindow.blur();
-                    window.focus()
-                    return true
-                }
-            })
-
         })
 
 
@@ -245,7 +240,7 @@
                             <a data-toggle="collapse" data-parent="#accordion" href="#detalle">Detalle Del Pedido & Tareas Pendientes</a>
                         </h4>
                     </div>
-                    <div id="detalle" class="panel-collapse collapse">
+                    <div id="detalle" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <h5>Numero: <small><asp:Label ID="lblnroPedidoDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Estado: <small><asp:Label ID="lblEstadoDet" runat="server" Text=""></asp:Label></small></h5>

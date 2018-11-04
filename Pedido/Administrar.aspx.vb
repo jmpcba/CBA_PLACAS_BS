@@ -57,10 +57,12 @@
 
     Private Sub validar(_gp As GestorPedidos)
 
-        If _gp.pedido.estado.id > Estado.estados.entregado Then
-            HFBtnDepo.Value = "disabled"
+        If _gp.pedido.estado.id > Estado.estados.recibido Then
+            HFBtnOrden.Value = "disabled"
         Else
-            HFBtnDepo.Value = ""
+            HFBtnOrden.Value = ""
+            HFBtnProd.Value = "disabled"
+            HFBtnDepo.Value = "disabled"
         End If
 
         If _gp.pedido.estado.id >= Estado.estados.deposito Then
@@ -69,12 +71,11 @@
             HFBtnProd.Value = ""
         End If
 
-        If _gp.pedido.estado.id > Estado.estados.recibido Then
-            HFBtnOrden.Value = "disabled"
-        Else
-            HFBtnOrden.Value = ""
-            HFBtnProd.Value = "disabled"
+        If _gp.pedido.estado.id = Estado.estados.entregado Then
             HFBtnDepo.Value = "disabled"
+            HFBtnProd.Value = "disabled"
+        Else
+            HFBtnDepo.Value = ""
         End If
     End Sub
 
@@ -143,10 +144,15 @@
         'BOTON MODAL DEPOSITO
         If gp.pedido.getPAlmacenar > 0 Then
             btnAccionDepo.Text = "Almacenar"
+            HFDepo.Value = "almc"
+
         ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
             btnAccionDepo.Text = "Enviar a Cliente"
+            HFDepo.Value = "remito"
+
         ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
             btnAccionDepo.Text = "Confirmar Recepcion"
+            HFDepo.Value = "recepcion"
         End If
 
 
@@ -196,7 +202,6 @@
 
             If gp.pedido.getPAlmacenar > 0 Then
                 gp.enviarDeposito()
-                HFCrystal.Value = "almc"
                 sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
 
             ElseIf gp.pedido.estado.id = Estado.estados.deposito Then

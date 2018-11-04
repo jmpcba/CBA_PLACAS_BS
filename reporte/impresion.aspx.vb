@@ -30,6 +30,7 @@ Public Class impresion
         Dim gp = New GestorPedidos(_idPedido)
         Dim gd = New GestorDatos
         Dim exFormat As ExportFormatType
+        Dim ped = New Pedido(_idPedido)
 
         exFormat = ExportFormatType.PortableDocFormat
 
@@ -64,7 +65,7 @@ Public Class impresion
                     dt.Rows.Remove(r)
                 Next
             Else
-                dt = gd.getReporte(_idPedido, _rpt)
+                dt = gd.getReporte(ped, _rpt)
             End If
 
             rd.Load(Server.MapPath(rptPath))
@@ -76,6 +77,7 @@ Public Class impresion
                 Thread.ResetAbort()
             End Try
         Catch ex As Exception
+            Throw
         End Try
     End Sub
 

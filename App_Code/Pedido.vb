@@ -184,7 +184,7 @@ Public Class Pedido
         Dim cont As Integer
 
         For Each i As Item In items
-            cont = i.getEnsamblados - i.getEnDeposito
+            cont += i.getEnsamblados - i.getEnDeposito
         Next
 
         Return cont
