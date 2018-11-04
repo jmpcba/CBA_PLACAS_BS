@@ -55,30 +55,10 @@ Public Class GestorPedidos
             Dim marcos As Integer = 0
             Dim ensamblados As Integer = 0
 
-            txtHojasGridView = r.FindControl("txtHojasTerminadas")
-            txtMarcosGridView = r.FindControl("txtMarcosTerminados")
             txtEnsamGridView = r.FindControl("txtEnsambladas")
-
-            If txtHojasGridView.Text.Trim <> "" Then
-                hojas = txtHojasGridView.Text.Trim
-            End If
-
-            If txtMarcosGridView.Text.Trim <> "" Then
-                marcos = txtMarcosGridView.Text.Trim
-            End If
 
             If txtEnsamGridView.Text.Trim <> "" Then
                 ensamblados = txtEnsamGridView.Text.Trim
-            End If
-
-            If hojas <> pedido.items(index).hojasTerminadas Then
-                pedido.items(index).hojasTerminadas = hojas
-                cambio = True
-            End If
-
-            If marcos <> pedido.items(index).marcosTerminados Then
-                pedido.items(index).marcosTerminados = marcos
-                cambio = True
             End If
 
             If ensamblados <> pedido.items(index).getEnsamblados() Then

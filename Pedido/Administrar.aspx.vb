@@ -57,18 +57,21 @@
 
     Private Sub validar(_gp As GestorPedidos)
 
-        If _gp.pedido.estado.id > Estado.estados.recibido Then
-            HFBtnOrden.Value = "disabled"
-        Else
-            HFBtnOrden.Value = ""
-            HFBtnProd.Value = "disabled"
-            HFBtnDepo.Value = "disabled"
-        End If
-
         If _gp.pedido.estado.id >= Estado.estados.deposito Then
             HFBtnProd.Value = "disabled"
+
+            If _gp.pedido.estado.id = Estado.estados.deposito Then
+                lblModalDepo.Text = "El Pedido esta listo para ser enviado"
+
+            ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
+                lblModalDepo.Text = "Pedido en camino. confirmar recepcion con el cliente"
+
+            ElseIf _gp.pedido.estado.id = Estado.estados.entregado Then
+                lblModalDepo.Text = "Pedido entregado al cliente"
+            End If
         Else
             HFBtnProd.Value = ""
+            lblModalDepo.Text = "El Pedido NO esta listo para ser enviado"
         End If
 
         If _gp.pedido.estado.id = Estado.estados.entregado Then
@@ -77,6 +80,17 @@
         Else
             HFBtnDepo.Value = ""
         End If
+
+        If _gp.pedido.estado.id > Estado.estados.recibido Then
+            HFBtnOrden.Value = "disabled"
+        Else
+            HFBtnOrden.Value = ""
+            HFBtnProd.Value = "disabled"
+            HFBtnDepo.Value = "disabled"
+        End If
+
+        HFEstado.Value = _gp.pedido.estado.id
+
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click

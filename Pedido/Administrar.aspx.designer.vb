@@ -185,6 +185,15 @@ Partial Public Class Administrar
     Protected WithEvents HFDepo As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFEstado.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFEstado As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control btnVolver.
     '''</summary>
     '''<remarks>
@@ -390,6 +399,15 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grAlmc As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control lblModalDepo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblModalDepo As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''Control btnAccionDepo.

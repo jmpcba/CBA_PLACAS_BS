@@ -23,7 +23,7 @@
                 $("#pnlMat").removeClass("panel-primary")
                 $("#pnlMat").addClass("panel-warning")
 
-                $("#pnlMatOrden").removeClass("panel-sucess")
+                $("#pnlMatOrden").removeClass("panel-success")
                 $("#pnlMatOrden").addClass("panel-warning")
 
             } else if (mat == "True") {
@@ -107,6 +107,14 @@
                 $("#spBtnDepo").removeClass("glyphicon-exclamation-sign")
                 $("#spLblPend").removeClass("glyphicon-exclamation-sign")
             }
+
+            if ($("#" + '<%= HFEstado.ClientID%>').val() >= 3) {
+                $("#pnlMsgDepo").removeClass("panel-danger")
+                $("#pnlMsgDepo").addClass("panel-success")}
+            else{
+                $("#pnlMsgDepo").removeClass("panel-success")
+                $("#pnlMsgDepo").addClass("panel-danger")
+            }
         })
 
 
@@ -177,6 +185,7 @@
         <asp:HiddenField ID="HFCrystal" runat="server" />
         <asp:HiddenField ID="HFExIcon" runat="server" />
         <asp:HiddenField ID="HFDepo" runat="server" Value="almc" />
+        <asp:HiddenField ID="HFEstado" runat="server" />
         <div class="row">
             <!--botones grupo -->
             <div class="btn-group" role="group" aria-label="...">
@@ -291,15 +300,7 @@
                                 <ControlStyle Font-Bold="True" />
                                 <ItemStyle Font-Bold="True" CssClass="numCol" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="MARCO_TER" HeaderText="MARCOS TER" >
-                                <ControlStyle Font-Bold="True" />
-                                <ItemStyle Font-Bold="True" CssClass="numCol" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="HOJAS_TER" HeaderText="HOJAS TER" >
-                                <ControlStyle Font-Bold="True" />
-                                <ItemStyle Font-Bold="True" CssClass="numCol" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="ENSAMBLADAS" HeaderText="ENSAMBLADAS" >
+                                <asp:BoundField DataField="ENSAMBLADAS" HeaderText="TERMINADAS" >
                                 <ControlStyle Font-Bold="True" />
                                 <ItemStyle Font-Bold="True" CssClass="numCol" />
                                 </asp:BoundField>
@@ -307,7 +308,7 @@
                                 <ControlStyle Font-Bold="True" />
                                 <ItemStyle Font-Bold="True" CssClass="numCol" />
                                 </asp:BoundField>
-                                <asp:BoundField DataField="P_ALM" HeaderText="P/ALMACENAR" >
+                                <asp:BoundField DataField="P_ALM" HeaderText="POR ALMACENAR" >
                                 <ControlStyle Font-Bold="True" />
                                 <ItemStyle Font-Bold="True" CssClass="numCol" />
                                 </asp:BoundField>
@@ -525,23 +526,7 @@
                             <HeaderStyle Font-Bold="True" />
                             <ItemStyle Font-Bold="True" CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:TemplateField HeaderText="HOJAS TER">
-                                <ItemTemplate>
-                                    <div class="form-group">
-                                        <asp:TextBox ID="txtHojasTerminadas" runat="server" Text='<%# Bind("HOJAS_TER") %>' ToolTip="Hojas fabricadas" CssClass="form-control"></asp:TextBox>
-                                        <asp:RangeValidator ID="rvHojasTer" runat="server" MinimumValue="0" MaximumValue='<%#Eval("CANT") - Eval("STOCK") %>' BorderStyle="None" ControlToValidate="txtHojasTerminadas" ErrorMessage="El Maximo no puede ser mayor a CANT - STOCK" ForeColor="Red" ValidationGroup="vgEnCurso" Type="Integer">*</asp:RangeValidator>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="MARCOS TER">
-                                <ItemTemplate>
-                                    <div class="form-group">
-                                        <asp:TextBox ID="txtMarcosTerminados" runat="server" Text='<%# Bind("MARCO_TER") %>' ToolTip="marcos fabricados" CssClass="form-control"></asp:TextBox>
-                                        <asp:RangeValidator ID="rvMarcosTer" runat="server" ControlToValidate="txtMarcosTerminados" MinimumValue="0" MaximumValue='<%#Eval("CANT") - Eval("STOCK") %>' ErrorMessage="El Maximo no puede ser mayor a CANT - STOCK" ForeColor="Red" Type="Integer" ValidationGroup="vgEnCurso">*</asp:RangeValidator>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="ENSAMBLADAS">
+                            <asp:TemplateField HeaderText="TERMINADAS">
                                 <ItemTemplate>
                                     <div class="form-group">
                                         <asp:TextBox ID="txtEnsambladas" runat="server" Text='<%# Bind("ENSAMBLADOS") %>' ToolTip="Puertas terminadas" CssClass="form-control"></asp:TextBox>
@@ -580,7 +565,7 @@
           </div>
           <div class="modal-body">
               <!--PANEL RECIBIR EN DEPOSITO-->
-            <div  class="panel panel-primary">
+                <div  class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Productos pendientes de ser almacenados en deposito</h3>
                 </div>
@@ -614,6 +599,14 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+                </div>
+            </div>
+                <div id="pnlMsgDepo" class="panel panel-danger">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Envio a Cliente</h3>
+                </div>
+                <div class="panel-body">
+                    <asp:Label ID="lblModalDepo" Text="El Pedido NO esta listo para ser enviado" runat="server"></asp:Label>
                 </div>
             </div>
           </div>
