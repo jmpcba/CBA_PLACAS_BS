@@ -53,7 +53,6 @@
             //DESACTIVAR BOTON DEPOSITO
             if ($("#" + '<%= HFBtnDepo.ClientID %>').val() == "disabled") {
                 $("#btnDepo").prop("disabled", true);
-                console.log("DESACTIVANDO BOTON depo");
             } else {
                 $("#btnDepo").prop("disabled", false);
             }
@@ -77,7 +76,6 @@
             //IMPRIMIR ETIQUETAS DE DEPOSITO ANTES DE QUE EL SERVIDOR HAGA POSTBACK Y PROCESE LA ACTUALZIACION
             $("#<%= btnAccionDepo.ClientID%>").click(function () {
                 if ($("#" + '<%= HFDepo.ClientID%>').val() == "almc") {
-                    console.log("CLICK EN BOTON DEPO");
                     var newWindow = window.open("../reporte/impresion.aspx?rpt=almc&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                     newWindow.blur();
                     window.focus()
@@ -114,6 +112,18 @@
             else{
                 $("#pnlMsgDepo").removeClass("panel-success")
                 $("#pnlMsgDepo").addClass("panel-danger")
+            }
+
+            if ($("#" + '<%= HFEstado.ClientID%>').val() >= 2) {
+                
+                $("#aOrden").removeClass("disabled")
+                $("#aEtiqueta").removeClass("disabled")
+                console.log("activando orden y etiqeuta")
+            }
+
+            if ($("#" + '<%= HFEstado.ClientID%>').val() >= 4){
+                $("#aRemito").removeClass("disabled")
+                console.log("activando remito")
             }
         })
 
@@ -199,6 +209,16 @@
                  <button id="btnDepo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlDepo">
                     Deposito <span id="spBtnDepo" class="glyphicon" aria-hidden="true"></span>
                 </button>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Imprimir <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li id="aOrden" class="disabled"><a href="#">Orden De Trabajo</a></li>
+                    <li id="aEtiqueta" class="disabled"><a href="#mdlImprimir" data-toggle="modal">Etiqueta De Deposito</a></li>
+                    <li id="aRemito" class="disabled"><a href="#">Remito</a></li>
+                  </ul>
+                </div>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
             </div>
         </div>
@@ -604,6 +624,25 @@
           </div>
           <div class="modal-footer">
             <asp:Button ID="btnAccionDepo" runat="server" Text="Almacenar" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MODAL IMPRIMIR-->
+    <div class="modal fade" id="mdlImprimir" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="ImprimirLabel">Registro Actividad</h4>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+                <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+            </div>
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
