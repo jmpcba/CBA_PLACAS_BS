@@ -93,6 +93,10 @@
             HFBtnDepo.Value = "disabled"
         End If
 
+        If _gp.pedido.estado.id = Estado.estados.enProduccion And _gp.pedido.getPAlmacenar = 0 Then
+            HFBtnDepo.Value = "disabled"
+        End If
+
         HFEstado.Value = _gp.pedido.estado.id
 
     End Sub
