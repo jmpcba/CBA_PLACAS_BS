@@ -89,6 +89,10 @@
             HFBtnDepo.Value = "disabled"
         End If
 
+        If _gp.pedido.estado.id = Estado.estados.enCola Then
+            HFBtnDepo.Value = "disabled"
+        End If
+
         HFEstado.Value = _gp.pedido.estado.id
 
     End Sub

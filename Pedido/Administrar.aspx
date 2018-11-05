@@ -219,16 +219,7 @@
                         <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                         <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                         <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                        <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" />
                         <asp:BoundField DataField="CANT" HeaderText="CANT" >
-                        <ControlStyle Font-Bold="True" />
-                        <ItemStyle Font-Bold="True" CssClass="numCol" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="STOCK" HeaderText="DE STOCK" >
-                        <ControlStyle Font-Bold="True" />
-                        <ItemStyle Font-Bold="True" CssClass="numCol" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="P_FAB" HeaderText="PARA FABRICAR" >
                         <ControlStyle Font-Bold="True" />
                         <ItemStyle Font-Bold="True" CssClass="numCol" />
                         </asp:BoundField>
@@ -288,6 +279,7 @@
                                 <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                                 <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                                 <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                                <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" />
                                 <asp:BoundField DataField="CANT" HeaderText="CANT" >
                                 <ControlStyle Font-Bold="True" />
                                 <ItemStyle Font-Bold="True" CssClass="numCol" />
