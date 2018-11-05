@@ -113,6 +113,10 @@ Public Class Item
         getDespiece()
         db.consumirMateriales(despiece, _val - ensamblados, True)
         ensamblados = _val
+
+        If estado.id = Estado.estados.enCola And ensamblados <> 0 Then
+            estado.id = Estado.estados.enProduccion
+        End If
     End Sub
 
     Public Sub insertar()
