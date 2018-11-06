@@ -275,13 +275,13 @@
                     <div id="detalle" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <h5>Numero: <small><asp:Label ID="lblnroPedidoDet" runat="server" Text=""></asp:Label></small></h5>
+                            <h5>Cliente: <small><asp:Label ID="lblClienteDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Estado: <small><asp:Label ID="lblEstadoDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Cantidad: <small><asp:Label ID="lblCantDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Recibido: <small><asp:Label ID="lblRecibidoDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5>Modificado: <small><asp:Label ID="lblModificadoDet" runat="server" Text=""></asp:Label></small></h5>
                             <h5><strong>Pendientes: <span id="spLblPend" class="glyphicon" aria-hidden="true"></span></strong>
                                 <asp:BulletedList ID="bltPendientes" runat="server" BulletStyle="Square"></asp:BulletedList>
-                                <h5></h5>
                                 <h5></h5>
                             </h5>
                         </div>
@@ -625,6 +625,7 @@
                     </div>
                 </div>
             </div>
+              <!-- PANEL MENSAJE DE DEPOSITO-->
                 <div id="pnlMsgDepo" class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title">Envio a Cliente</h3>
@@ -647,14 +648,45 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="ImprimirLabel">Registro Actividad</h4>
+            <h4 class="modal-title" id="ImprimirLabel">Imprimir Etiquetas de Deposito</h4>
           </div>
           <div class="modal-body">
-            <div class="table-responsive">
-                <asp:GridView ID="GridView1" runat="server"></asp:GridView>
+              <!--PANEL GRILLA IMPRIMIR-->
+              <div id="pnlGrillaImprimir" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Para que items desea imprimir etiquetas?</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                <asp:GridView ID="grImprimir" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
+                    <Columns>
+                        <asp:TemplateField HeaderText="#">
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:CheckBox ID="chPrint" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                    <EmptyDataTemplate>
+                        <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
+                    </EmptyDataTemplate>
+                </asp:GridView>
+            </div>  
+                </div>
             </div>
           </div>
           <div class="modal-footer">
+              <asp:Button ID="btnImprimirEtiquetas" runat="server" Text="Imprimir" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

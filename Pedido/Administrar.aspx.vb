@@ -133,6 +133,7 @@
         grEnviarProd.DataSource = items
         grAlmc.DataSource = items
         grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
+        grImprimir.DataSource = items
 
         grDetalle.DataBind()
         grStock.DataBind()
@@ -140,7 +141,7 @@
         grEnviarProd.DataBind()
         grEnCurso.DataBind()
         grAlmc.DataBind()
-
+        grImprimir.DataBind()
         materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
 
         If gp.pedido.estado.id = Estado.estados.recibido Then
@@ -162,6 +163,7 @@
         lblEstadoDet.Text = _gp.pedido.estado.nombre
         lblCantDet.Text = _gp.pedido.cantTotal.ToString
         lblRecibidoDet.Text = _gp.pedido.recibido.ToShortDateString
+        lblClienteDet.Text = _gp.pedido.cliente.nombre.ToUpper
 
         'BOTON MODAL DEPOSITO
         If gp.pedido.getPAlmacenar > 0 Then

@@ -230,6 +230,15 @@ Partial Public Class Administrar
     Protected WithEvents lblnroPedidoDet As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control lblClienteDet.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblClienteDet As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Control lblEstadoDet.
     '''</summary>
     '''<remarks>
@@ -419,11 +428,20 @@ Partial Public Class Administrar
     Protected WithEvents btnAccionDepo As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
-    '''Control GridView1.
+    '''Control grImprimir.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents GridView1 As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents grImprimir As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control btnImprimirEtiquetas.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnImprimirEtiquetas As Global.System.Web.UI.WebControls.Button
 End Class
