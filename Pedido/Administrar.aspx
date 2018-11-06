@@ -116,15 +116,27 @@
 
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 2) {
                 
-                $("#aOrden").removeClass("disabled")
-                $("#aEtiqueta").removeClass("disabled")
-                console.log("activando orden y etiqeuta")
+                $("#liOrden").removeClass("disabled")
+                $("#liEtiqueta").removeClass("disabled")
             }
 
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 4){
-                $("#aRemito").removeClass("disabled")
+                $("#liRemito").removeClass("disabled")
                 console.log("activando remito")
             }
+
+            $("#aOrden").click(function () {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
+                newWindow.blur();
+                window.focus()
+                console.log("activando remito")
+            })
+
+            $("#aRemito").click(function () {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=remito&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
+                newWindow.blur();
+                window.focus()
+            })
         })
 
 
@@ -214,9 +226,9 @@
                     Imprimir <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li id="aOrden" class="disabled"><a href="#">Orden De Trabajo</a></li>
-                    <li id="aEtiqueta" class="disabled"><a href="#mdlImprimir" data-toggle="modal">Etiqueta De Deposito</a></li>
-                    <li id="aRemito" class="disabled"><a href="#">Remito</a></li>
+                    <li id="liOrden" class="disabled"><a id="aOrden" href="#">Orden De Trabajo</a></li>
+                    <li id="liEtiqueta" class="disabled"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Etiqueta De Deposito</a></li>
+                    <li id="liRemito" class="disabled"><a id="aRemito" href="#">Remito</a></li>
                   </ul>
                 </div>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
@@ -386,13 +398,13 @@
                             <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
                             <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
-                            <ItemStyle CssClass="numCols" />
+                            <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                             <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
-                            <ItemStyle CssClass="numCols" />
+                            <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                             <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
-                            <ItemStyle CssClass="numCols" />
+                            <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                         </Columns>
                     </asp:GridView>
@@ -532,7 +544,7 @@
                             <asp:BoundField DataField="MANO" HeaderText="MANO" />
                             <asp:BoundField DataField="CANT" HeaderText="CANT" >
                             <ControlStyle Font-Bold="True" />
-                            <ItemStyle Font-Bold="True" CssClass="numCols" />
+                            <ItemStyle Font-Bold="True" CssClass="numCol" />
                             </asp:BoundField>
                             <asp:BoundField DataField="STOCK" HeaderText="DE STOCK" >
                             <HeaderStyle Font-Bold="True" />

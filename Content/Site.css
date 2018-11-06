@@ -47,6 +47,7 @@ input[type="select"] {
 
 .numCol{
     text-align: right;
+    font-weight: bold;
 }
 
 .loading{
