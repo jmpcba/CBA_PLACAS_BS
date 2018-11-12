@@ -106,6 +106,7 @@
                 $("#spLblPend").removeClass("glyphicon-exclamation-sign")
             }
 
+            //COLOR DEL PANEL MENSAJE DEPOSITO
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 3) {
                 $("#pnlMsgDepo").removeClass("panel-danger")
                 $("#pnlMsgDepo").addClass("panel-success")}
@@ -114,6 +115,7 @@
                 $("#pnlMsgDepo").addClass("panel-danger")
             }
 
+            //ACTIVAR - DESACTIVAR OPCIONES EN EL DROPDOWN IMPRIMIR
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 2) {
                 
                 $("#liOrden").removeClass("disabled")
@@ -122,9 +124,13 @@
 
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 4){
                 $("#liRemito").removeClass("disabled")
-                console.log("activando remito")
             }
 
+            if ($("#" + '<%= HFEstado.ClientID%>').val() >= 5){
+                $("#btnReImprimir").addClass("disabled")
+            }
+
+            //RE-IMPRESION ORDEN DE TRABAJO
             $("#aOrden").click(function () {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
                 newWindow.blur();
@@ -132,8 +138,19 @@
                 console.log("activando remito")
             })
 
+            //RE-IMPRESION REMITO
             $("#aRemito").click(function () {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=remito&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
+                newWindow.blur();
+                window.focus()
+            })
+            //APERTURA DE MODAL PARA IMPRIMIR ETIQUETAS DE PRODUCTOS CUBIERTOS CON STOCK INTERNO
+            if ($("#" + '<%= HFStock.ClientID %>').val() == "y"){
+                $('#mdlImprimirEtiquetaDepo').modal()
+            }
+            //IMPRESION DE ETIQUETAS PARA STOCK
+            $("#btnEtiquetasStock").click(function () {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=stock&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
                 newWindow.blur();
                 window.focus()
             })
@@ -200,14 +217,24 @@
     </asp:Panel>
     <asp:Panel ID="pnlDetalle" CssClass="row" runat="server" Visible="false">
         <!--hidden fields -->
+        <!--numero de pedido-->
         <asp:HiddenField ID="HFIDPedido" runat="server" />
+        <!--indica activar o desactivar el boton enviar a produccion-->
         <asp:HiddenField ID="HFBtnOrden" runat="server" />
+        <!--indica activar o desactivar el boton produccion-->
         <asp:HiddenField ID="HFBtnProd" runat="server" />
+        <!--indica activar o desactivar el boton enviar a deposito-->
         <asp:HiddenField ID="HFBtnDepo" runat="server" />
+        <!--indica si se va a ejecutar un crystal report-->
         <asp:HiddenField ID="HFCrystal" runat="server" />
+        <!--indica donde colocar el glyph-icon de exclamacion-->
         <asp:HiddenField ID="HFExIcon" runat="server" />
+        <!--indica si el modal deposito va a mostrar el mensaje almacenar o enviar a cliente-->
         <asp:HiddenField ID="HFDepo" runat="server" Value="almc" />
-        <asp:HiddenField ID="HFEstado" runat="server" />
+        <!--id estado del pedido-->
+        <asp:HiddenField ID="HFEstado" runat="server"/>
+        <!--indica si se acaba de enviar a prod el pedido y si se cubrio parte del pedido con stock-->
+        <asp:HiddenField ID="HFStock" runat="server"/>
         <div class="row">
             <!--botones grupo -->
             <div class="btn-group" role="group" aria-label="...">
@@ -222,7 +249,7 @@
                     Deposito <span id="spBtnDepo" class="glyphicon" aria-hidden="true"></span>
                 </button>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button id="btnReImprimir" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Imprimir <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
@@ -528,7 +555,12 @@
             <h4 class="modal-title" id="prodLabel">Estado De Produccion</h4>
           </div>
           <div class="modal-body">
-            <div class="table-responsive">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Actualice aqui la cantidad de productos terminados</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
                 <asp:GridView ID="grEnCurso" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" DataKeyNames="ITEM">
                     <Columns>
                         <asp:TemplateField HeaderText="#">
@@ -570,6 +602,8 @@
                     </EmptyDataTemplate>
                 </asp:GridView>
                 <asp:ValidationSummary ID="vsEnCurso" runat="server" DisplayMode="List" ForeColor="Red" ValidationGroup="vgEnCurso"/>
+            </div>
+                </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -688,6 +722,50 @@
           <div class="modal-footer">
               <asp:Button ID="btnImprimirEtiquetas" runat="server" Text="Imprimir" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MODAL IMPRIMIR ETIQUETA DE DEPOSITO -->
+    <div class="modal fade" id="mdlImprimirEtiquetaDepo" tabindex="-1" role="dialog" aria-labelledby="lblDepo">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="lblImprimirEtiquetaDepo">Se cubrio parte del pedido con stock interno</h4>
+          </div>
+          <div class="modal-body">
+              <div id="pnlEtiquetasStock" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Desea Imprimir etiquetas de deposito para estos items ahora?</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                <asp:GridView ID="grEtiquetasStock" runat="server" AutoGenerateColumns="False" CssClass="table">
+                    <Columns>
+                        <asp:TemplateField HeaderText="#">
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:BoundField DataField="STOCK" HeaderText="CANTIDAD ETIQUETAS">
+                            <ItemStyle CssClass="numCol" />
+                        </asp:BoundField>
+                    </Columns>
+                </asp:GridView>
+            </div>  
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="btnEtiquetasStock" type="button" class="btn btn-primary" data-dismiss="modal">Si</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
           </div>
         </div>
       </div>

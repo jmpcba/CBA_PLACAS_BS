@@ -10,6 +10,7 @@
         sb = New StatusBar(HFMsg, lblMessage)
         lblSubtitulo.Text = ""
         HFCrystal.Value = ""
+        HFStock.Value = "n"
     End Sub
 
     Protected Sub grNvos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
@@ -114,6 +115,9 @@
             gp.EnviarProduccion(grEnviarProd)
             sb.write(String.Format("Pedido {0} enviado a produccion", gp.pedido.id))
             HFCrystal.Value = "orden"
+            If gp.pedido.usaStock Then
+                HFStock.Value = "y"
+            End If
 
             llenarGrillasDetalle(gp)
             validar(gp)
@@ -134,6 +138,7 @@
         grAlmc.DataSource = items
         grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
         grImprimir.DataSource = items
+        grEtiquetasStock.DataSource = items
 
         grDetalle.DataBind()
         grStock.DataBind()
@@ -143,6 +148,7 @@
         grAlmc.DataBind()
         grImprimir.DataBind()
         materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
+        grEtiquetasStock.DataBind()
 
         If gp.pedido.estado.id = Estado.estados.recibido Then
             If materiales Then

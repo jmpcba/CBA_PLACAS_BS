@@ -16,6 +16,8 @@ Public Class impresion
             rptType = GestorDatos.reportes.compras
         ElseIf rpt = "almc" Then
             rptType = GestorDatos.reportes.etiquetaDeposito
+        ElseIf rpt = "stock" Then
+            rptType = GestorDatos.reportes.etiquetaDepositoStock
         ElseIf rpt = "remito" Then
             rptType = GestorDatos.reportes.remito
         End If

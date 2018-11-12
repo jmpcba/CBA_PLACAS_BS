@@ -11,6 +11,7 @@ Public Class Pedido
     Public estado As Estado
     Public despiece As DataTable
     Private db As DbHelper
+    Friend usaStock As Boolean = False
 
     Sub New()
         Dim today = Date.Today

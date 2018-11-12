@@ -126,7 +126,9 @@ Public Class GestorPedidos
                 stock = 0
             End If
             pedido.items(index).setStock(stock)
-
+            If stock > 0 Then
+                pedido.usaStock = True
+            End If
 
             'SI SE CUBRE 100% DEL PEDIDO CON STOCK CAMBIAR EL ESTADO
             If pedido.items(index).stock = pedido.items(index).getCant() Then

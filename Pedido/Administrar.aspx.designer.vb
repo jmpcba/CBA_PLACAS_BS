@@ -194,6 +194,15 @@ Partial Public Class Administrar
     Protected WithEvents HFEstado As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFStock As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control btnVolver.
     '''</summary>
     '''<remarks>
@@ -444,4 +453,13 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnImprimirEtiquetas As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control grEtiquetasStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grEtiquetasStock As Global.System.Web.UI.WebControls.GridView
 End Class
