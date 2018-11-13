@@ -48,8 +48,6 @@ Public Class GestorPedidos
         For Each r As GridViewRow In _gr.Rows
             Dim idItem = Convert.ToInt32(_gr.DataKeys(r.RowIndex).Value)
             Dim index = pedido.itemIndex(idItem)
-            Dim txtHojasGridView As TextBox
-            Dim txtMarcosGridView As TextBox
             Dim txtEnsamGridView As TextBox
             Dim hojas As Integer = 0
             Dim marcos As Integer = 0
@@ -109,7 +107,7 @@ Public Class GestorPedidos
         End Try
     End Sub
 
-    Public Sub EnviarProduccion(_gr As GridView)
+    Public Sub EnviarProduccion(_gr As GridView, Optional _cambiarStock As Boolean = False)
         Dim flag = True
         'ACTUALIZAR STOCK EN CADA ITEM DEL PEDIDO
         For Each r As GridViewRow In _gr.Rows
@@ -120,26 +118,41 @@ Public Class GestorPedidos
 
             txstockGridView = r.FindControl("txtStockRow")
             Dim txtVal = txstockGridView.Text.Trim
+
             If txtVal <> "" Then
                 stock = txtVal
             Else
-                stock = 0
+                If _cambiarStock Then
+                    Continue For
+                Else
+                    stock = 0
+                End If
             End If
+
             pedido.items(index).setStock(stock)
+
             If stock > 0 Then
                 pedido.usaStock = True
             End If
 
-            'SI SE CUBRE 100% DEL PEDIDO CON STOCK CAMBIAR EL ESTADO
-            If pedido.items(index).stock = pedido.items(index).getCant() Then
-                pedido.items(index).setEstado(New Estado(Estado.estados.deposito))
+            If _cambiarStock Then
+                'SI EL NUEVO STOCK CUBRE LA TOTALIDAD DEL PEDIDO
+                If pedido.items(index).stock + pedido.items(index).getEnDeposito = pedido.items(index).getCant() Then
+                    pedido.items(index).setEstado(New Estado(Estado.estados.deposito))
+                End If
             Else
-                pedido.items(index).setEstado(New Estado(Estado.estados.enCola))
+                'SI SE CUBRE 100% DEL PEDIDO CON STOCK CAMBIAR EL ESTADO
+                If pedido.items(index).stock = pedido.items(index).getCant() Then
+                    pedido.items(index).setEstado(New Estado(Estado.estados.deposito))
+
+                Else
+                    pedido.items(index).setEstado(New Estado(Estado.estados.enCola))
+                End If
             End If
             pedido.items(index).actualizar()
         Next
 
-        'SI ALGUN ITEM NO ESTA EN ESTADO PEDIDO MARCA LA FLAG EN FALSE
+        'SI ALGUN ITEM NO ESTA EN ESTADO DEPOSITO MARCA LA FLAG EN FALSE
         For Each i As Item In pedido.items
             If i.getEstado().id <> Estado.estados.deposito Then
                 flag = False
@@ -150,12 +163,10 @@ Public Class GestorPedidos
         'SI TODOS LOS ITEMS ESTAN EN ESTADO DEPOSITO MARCA EL PEDIDO COMO DEPOSITO. SI NO, EN COLA
         If flag Then
             pedido.estado = New Estado(Estado.estados.deposito)
-        Else
+        ElseIf Not _cambiarStock Then
             pedido.estado = New Estado(Estado.estados.enCola)
         End If
         pedido.actualizar()
-
-        'mail.send(String.Format("Su pedido {0} ingreso a la cola de produccion", pedido.id))
     End Sub
 
     Friend Sub cancelarItem(_idItem As Integer)

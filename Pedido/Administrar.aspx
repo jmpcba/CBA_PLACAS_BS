@@ -124,10 +124,15 @@
 
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 4){
                 $("#liRemito").removeClass("disabled")
+                
             }
 
             if ($("#" + '<%= HFEstado.ClientID%>').val() >= 5){
                 $("#btnReImprimir").addClass("disabled")
+            }
+
+            if ($("#" + '<%= HFEstado.ClientID%>').val() >= 1 && $("#" + '<%= HFEstado.ClientID%>').val() < 3) {
+                $("#liStock").removeClass("disabled")
             }
 
             //RE-IMPRESION ORDEN DE TRABAJO
@@ -147,10 +152,19 @@
             //APERTURA DE MODAL PARA IMPRIMIR ETIQUETAS DE PRODUCTOS CUBIERTOS CON STOCK INTERNO
             if ($("#" + '<%= HFStock.ClientID %>').val() == "y"){
                 $('#mdlImprimirEtiquetaDepo').modal()
+            } else if ($("#" + '<%= HFStock.ClientID %>').val() == "r") {
+                $('#mdlReImprimirOrden').modal()
             }
+
             //IMPRESION DE ETIQUETAS PARA STOCK
             $("#btnEtiquetasStock").click(function () {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=stock&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
+                newWindow.blur();
+                window.focus()
+            })
+
+            $("#btnReImprimirOrden").click(function () {
+                var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
                 newWindow.blur();
                 window.focus()
             })
@@ -250,12 +264,14 @@
                 </button>
                 <div class="btn-group">
                   <button id="btnReImprimir" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Imprimir <span class="caret"></span>
+                    Opciones <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li id="liOrden" class="disabled"><a id="aOrden" href="#">Orden De Trabajo</a></li>
-                    <li id="liEtiqueta" class="disabled"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Etiqueta De Deposito</a></li>
-                    <li id="liRemito" class="disabled"><a id="aRemito" href="#">Remito</a></li>
+                    <li id="liOrden" class="disabled"><a id="aOrden" href="#">Imprimir Orden De Trabajo</a></li>
+                    <li id="liEtiqueta" class="disabled"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Imprimir Etiqueta De Deposito</a></li>
+                    <li id="liRemito" class="disabled"><a id="aRemito" href="#">Imprimir Remito</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li id="liStock" class="disabled"><a id="aStock" href="#mdlCambiarStock" data-toggle="modal">Cambiar Uso De Stock Existente</a></li>
                   </ul>
                 </div>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
@@ -770,4 +786,92 @@
         </div>
       </div>
     </div>
+    <!--MODAL CAMBIAR STOCK -->
+    <div class="modal fade" id="mdlCambiarStock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="lblCambiarStock">Cambiar Uso De Stock Existente</h4>
+          </div>
+          <div class="modal-body">
+            <div  class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cuantos Productos Desea Cubrir con Stock?</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                      <asp:GridView ID="grCambiarStock" runat="server" AutoGenerateColumns="False" ToolTip="Detalles del Pedido" DataKeyNames="ID_ITEM">
+                            <Columns>
+                                <asp:TemplateField HeaderText="#">
+                                    <ItemTemplate>
+                                        <%# Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField HeaderText="LINEA" DataField="LINEA" />
+                                <asp:BoundField HeaderText="MADERA" DataField="MADERA" />
+                                <asp:BoundField HeaderText="HOJA" DataField="HOJA" />
+                                <asp:BoundField HeaderText="MARCO" DataField="MARCO" />
+                                <asp:BoundField HeaderText="CHAPA" DataField="CHAPA" />
+                                <asp:BoundField HeaderText="MANO" DataField="MANO" />
+                                <asp:BoundField HeaderText="CANT" DataField="CANT" >
+                                <ItemStyle CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField HeaderText="STOCK DISP" DataField="STOCK_PROD" >
+                                <ItemStyle CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="ENSAMBLADAS" HeaderText="TERMINADAS" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STOCK" HeaderText="CUBIERTO CON STOCK" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="USAR STOCK">
+                                    <ItemTemplate>
+                                        <div class="form-group">
+                                            <asp:TextBox ID="txtStockRow" runat="server" ValidationGroup="vgCambiarStock" ToolTip="Seleccione cuantas puertas cubrir con stock existente" CssClass="form-control"></asp:TextBox>
+                                            <asp:RangeValidator ID="rvStockNvo" runat="server" ControlToValidate="txtStockRow" ErrorMessage="No puede superar Stock o Cantidad" ForeColor="Red" MinimumValue="0" ValidationGroup="vgCambiarStock" Type="Integer" MaximumValue="0" Text="0">*</asp:RangeValidator>
+                                        </div>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                            </Columns>
+                        </asp:GridView>
+                        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="vgCambiarStock" DisplayMode="List" ForeColor="Red" />
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <asp:Button ID="btnCambiarStock" runat="server" Text="Cambiar" ValidationGroup="vgCambiarStock" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MODAL RE IMPRIMIR ORDENES -->
+    <div id="mdlReImprimirOrden" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cambio Los Productos Cubiertos Con Stock Existente</h4>
+      </div>
+      <div class="modal-body">
+        <p>Desea re-imprimir la orden de trabajo ahora?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btnReImprimirOrden" type="button" class="btn btn-primary" data-dismiss="modal">Si</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </asp:Content>

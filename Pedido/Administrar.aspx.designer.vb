@@ -462,4 +462,31 @@ Partial Public Class Administrar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grEtiquetasStock As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control grCambiarStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grCambiarStock As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control ValidationSummary1.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents ValidationSummary1 As Global.System.Web.UI.WebControls.ValidationSummary
+    
+    '''<summary>
+    '''Control btnCambiarStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnCambiarStock As Global.System.Web.UI.WebControls.Button
 End Class

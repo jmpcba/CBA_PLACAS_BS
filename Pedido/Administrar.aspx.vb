@@ -11,6 +11,7 @@
         lblSubtitulo.Text = ""
         HFCrystal.Value = ""
         HFStock.Value = "n"
+
     End Sub
 
     Protected Sub grNvos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
@@ -28,25 +29,6 @@
             validar(gp)
             llenarGrillasDetalle(gp)
 
-            For Each r As GridViewRow In grEnviarProd.Rows
-                'Dim numUpDown As AjaxControlToolkit.NumericUpDownExtender
-                Dim val As RangeValidator
-
-                'numUpDown = r.FindControl("txtStockRow_NumericUpDownExtender")
-                val = r.FindControl("rvStockNvo")
-                val.MinimumValue = 0
-
-                If Convert.ToInt32(r.Cells(8).Text) > Convert.ToInt32(r.Cells(7).Text) Then
-                    'numUpDown.Maximum = r.Cells(7).Text
-                    val.MaximumValue = r.Cells(7).Text
-                    val.ErrorMessage = "Ingrese un numero mayor que cero y menor a CANT"
-                Else
-                    'numUpDown.Maximum = r.Cells(8).Text
-                    val.MaximumValue = r.Cells(8).Text
-                    val.ErrorMessage = "Ingrese un numero mayor que cero y menor a STOCK DISP"
-                End If
-            Next
-
             grPedidos.SelectedIndex = -1
             lblSubtitulo.Text = "Detalles Pedido: " & gp.pedido.id
             sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id.ToString))
@@ -54,6 +36,62 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Private Sub calcularRangeValidatorsGrillasStock()
+        gp = Session("gp")
+
+        For Each r As GridViewRow In grEnviarProd.Rows
+
+            Dim val As RangeValidator
+            Dim stock = Convert.ToInt32(r.Cells(8).Text)
+            Dim cant = Convert.ToInt32(r.Cells(7).Text)
+            Dim numeroLinea = r.RowIndex + 1
+
+            val = r.FindControl("rvStockNvo")
+            val.MinimumValue = 0
+
+            If stock > cant Then
+                val.MaximumValue = cant
+                val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor a " & cant
+            Else
+                val.MaximumValue = stock
+                val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor a " & stock
+            End If
+        Next
+
+        For Each r As GridViewRow In grCambiarStock.Rows
+            Dim idItem = r.Cells(12).Text
+            Dim index = gp.pedido.itemIndex(idItem)
+            Dim val As RangeValidator
+            Dim stock = Convert.ToInt32(r.Cells(8).Text)
+            Dim cant = Convert.ToInt32(r.Cells(7).Text)
+            Dim ensamblados = gp.pedido.items(index).getEnsamblados
+            Dim numeroLinea = r.RowIndex + 1
+            val = r.FindControl("rvStockNvo")
+            val.MinimumValue = 0
+
+            If ensamblados > 0 Then
+                If stock > cant - ensamblados Then
+                    val.MaximumValue = cant - ensamblados
+                    val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor " & cant - ensamblados
+                ElseIf stock = 0 Then
+                    val.MaximumValue = stock
+                    val.ErrorMessage = "ITEM " & numeroLinea & ": No dispone de stock disponible para este producto"
+                Else
+                    val.MaximumValue = stock
+                    val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor " & stock
+                End If
+            Else
+                If stock > cant Then
+                    val.MaximumValue = cant
+                    val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor " & cant
+                Else
+                    val.MaximumValue = stock
+                    val.ErrorMessage = "ITEM " & numeroLinea & ": Ingrese un numero mayor que 0 y menor " & stock
+                End If
+            End If
+        Next
     End Sub
 
     Private Sub validar(_gp As GestorPedidos)
@@ -133,6 +171,7 @@
 
         grDetalle.DataSource = items
         grStock.DataSource = items
+        grCambiarStock.DataSource = items
         grDeposito.DataSource = items
         grEnviarProd.DataSource = items
         grAlmc.DataSource = items
@@ -149,6 +188,7 @@
         grImprimir.DataBind()
         materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
         grEtiquetasStock.DataBind()
+        grCambiarStock.DataBind()
 
         If gp.pedido.estado.id = Estado.estados.recibido Then
             If materiales Then
@@ -198,7 +238,8 @@
         Else
             lblModificadoDet.Text = ""
         End If
-
+        'range validators de enviar a prod y cambiar stock
+        calcularRangeValidatorsGrillasStock()
     End Sub
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click
@@ -252,5 +293,24 @@
             sb.writeError(ex.Message)
         End Try
 
+    End Sub
+
+    Protected Sub btnCambiarStock_Click(sender As Object, e As EventArgs) Handles btnCambiarStock.Click
+        Try
+
+            gp = Session("gp")
+            gp.EnviarProduccion(grCambiarStock, True)
+
+            sb.write(String.Format("Pedido {0} Actualizado", gp.pedido.id))
+
+            If gp.pedido.usaStock Then
+                HFStock.Value = "r"
+            End If
+
+            llenarGrillasDetalle(gp)
+            validar(gp)
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class
