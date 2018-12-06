@@ -8,6 +8,20 @@ Public Class impresion
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim rptType As GestorDatos.reportes
         Dim rpt = Request.QueryString("rpt")
+
+        If rpt = "etiquetaSimple" Then
+            Dim ids As New List(Of String)
+            Dim i As Integer = 0
+
+            For Each k In Request.QueryString.Keys
+                If i = 0 Then
+                    Continue For
+                Else
+                    ids.Add(k)
+                End If
+            Next
+        End If
+
         Dim idPedido = Request.QueryString("idPedido")
 
         If rpt = "orden" Then

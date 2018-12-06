@@ -142,6 +142,33 @@ Public Class DbHelper
         End Try
     End Function
 
+    Public Function getReporte(ids As List(Of String)) As DataTable
+        Dim query As String
+        Dim i = 0
+
+        query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID IN ("
+
+        For Each s As String In ids
+            query += s
+            i += 1
+            If i <> ids.Count - 1 Then
+                query += ","
+            End If
+        Next
+        query += ")"
+
+        cmd.CommandType = CommandType.Text
+
+        Try
+            da.Fill(ds, "ETIQUETAS")
+
+            Return ds.Tables("ETIQUETAS")
+        Catch ex As Exception
+            Throw New Exception("ERROR DE BASE DE DATOS:  " & ex.Message)
+        End Try
+
+    End Function
+
     Friend Sub eliminarMaterial(_id As Integer)
         Try
             cmd.CommandType = CommandType.Text

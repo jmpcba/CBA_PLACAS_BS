@@ -39,8 +39,6 @@
                 $("#btnEnviarProd").prop("disabled", true);
             } else {
                 $("#btnEnviarProd").prop("disabled", false);
-                
-
             }
 
             //DESACTIVAR BOTON PRODUCCION
@@ -162,15 +160,44 @@
                 newWindow.blur();
                 window.focus()
             })
-
+            //IMPRESION ORDEN DE TRABAJO
             $("#btnReImprimirOrden").click(function () {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=orden&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000")
                 newWindow.blur();
                 window.focus()
             })
+
+            //IMPRESION ETIQUETA DE DEPOSITO SIMPLE
+            var urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&items="
+
+            $("[id*=chkImprimir]").click(function () {
+                
+
+                if (this.checked) {
+                    console.log("checkbox checkeado")
+                    var $this = $(this);
+                    var row = $this.closest('tr');
+                    var idPedido = row.find(".hiddencol").html()
+                    urlEtiquetaSimple += idPedido + "-"
+                    
+                } else {
+                    urlEtiquetaSimple = urlEtiquetaSimple.replace(idPedido, "")
+                    console.log("checkbox des-checkeado")
+                }
+               
+                alert(urlEtiquetaSimple);
+            });
+
+            $("#btnReImprimirEtiquetas").click(function () {
+               //recorta el ultimo "-" de la url 
+                if (urlEtiquetaSimple.endsWith("-")) {
+                    urlEtiquetaSimple = urlEtiquetaSimple.substring(0, urlEtiquetaSimple.length - 1)
+                }
+                var newWindow = window.open(urlEtiquetaSimple, '', "width=800, height=1000")
+                newWindow.blur();
+                window.focus()
+            })
         })
-
-
     </script>
     <div class="page-header">
         <h1 class="text-center">Administracion de Pedidos <br /><small>
@@ -723,9 +750,15 @@
                         <asp:BoundField DataField="MANO" HeaderText="MANO" />
                         <asp:TemplateField>
                             <ItemTemplate>
-                                <asp:CheckBox ID="chPrint" runat="server" />
+                                <input id="chkImprimir" type="checkbox" />
                             </ItemTemplate>
                         </asp:TemplateField>
+                        <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
                     </Columns>
                     <EmptyDataTemplate>
                         <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
@@ -736,13 +769,13 @@
             </div>
           </div>
           <div class="modal-footer">
-              <asp:Button ID="btnImprimirEtiquetas" runat="server" Text="Imprimir" />
+              <button id="btnReImprimirEtiquetas" type="button" class="btn btn-primary" data-dismiss="modal">Imprimir</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
     </div>
-    <!--MODAL IMPRIMIR ETIQUETA DE DEPOSITO -->
+    <!--MODAL IMPRIMIR ETIQUETA DE DEPOSITO PARA STOCK -->
     <div class="modal fade" id="mdlImprimirEtiquetaDepo" tabindex="-1" role="dialog" aria-labelledby="lblDepo">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
