@@ -267,8 +267,21 @@ Public Class GestorDatos
     End Function
 
     Friend Function getReporte(_pedido As Pedido, _reporte As reportes) As DataTable
-        db = New DbHelper()
-        Return db.getReporte(_pedido, _reporte)
+        Try
+            db = New DbHelper()
+            Return db.getReporte(_pedido, _reporte)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
+    Friend Function getReporte(_ids As String())
+        Try
+            db = New DbHelper()
+            Return db.getReporte(_ids)
+        Catch ex As Exception
+            Throw
+        End Try
     End Function
 
     Public Function getItems(_pedido As Integer, Optional _enCurso As Boolean = False) As DataTable

@@ -168,7 +168,7 @@
             })
 
             //IMPRESION ETIQUETA DE DEPOSITO SIMPLE
-            var urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&items="
+            var urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
 
             $("[id*=chkImprimir]").click(function () {
                 
@@ -179,23 +179,30 @@
                     var row = $this.closest('tr');
                     var idPedido = row.find(".hiddencol").html()
                     urlEtiquetaSimple += idPedido + "-"
-                    
+                    console.log(urlEtiquetaSimple);
                 } else {
-                    urlEtiquetaSimple = urlEtiquetaSimple.replace(idPedido, "")
+                    var $this = $(this);
+                    var row = $this.closest('tr');
+                    var idPedido = row.find(".hiddencol").html()
+                    urlEtiquetaSimple = urlEtiquetaSimple.replace(idPedido + "-", "")
                     console.log("checkbox des-checkeado")
+                    console.log(urlEtiquetaSimple);
                 }
-               
-                alert(urlEtiquetaSimple);
             });
 
             $("#btnReImprimirEtiquetas").click(function () {
                //recorta el ultimo "-" de la url 
                 if (urlEtiquetaSimple.endsWith("-")) {
-                    urlEtiquetaSimple = urlEtiquetaSimple.substring(0, urlEtiquetaSimple.length - 1)
+                    urlEtiquetaSimple = urlEtiquetaSimple.substring(0, urlEtiquetaSimple.length - 1);
                 }
-                var newWindow = window.open(urlEtiquetaSimple, '', "width=800, height=1000")
+                var newWindow = window.open(urlEtiquetaSimple, '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()
+            })
+
+            $('#mdlImprimir').on('shown.bs.modal', function (e) {
+                console.log("PANEL ABIERTO");
+                $("[type=checkbox]").removeAttr('checked');
             })
         })
     </script>
@@ -719,7 +726,7 @@
         </div>
       </div>
     </div>
-    <!--MODAL IMPRIMIR-->
+    <!--MODAL IMPRIMIR ETIQUETA UNICA-->
     <div class="modal fade" id="mdlImprimir" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -728,7 +735,7 @@
             <h4 class="modal-title" id="ImprimirLabel">Imprimir Etiquetas de Deposito</h4>
           </div>
           <div class="modal-body">
-              <!--PANEL GRILLA IMPRIMIR-->
+              <!--PANEL GRILLA IMPRIMIR ETIQUETA DEPOSITO UNICA-->
               <div id="pnlGrillaImprimir" class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">Para que items desea imprimir etiquetas?</h3>

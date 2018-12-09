@@ -8,21 +8,12 @@ Public Class impresion
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim rptType As GestorDatos.reportes
         Dim rpt = Request.QueryString("rpt")
+        Dim idPedido = Request.QueryString("idPedido")
+        Dim idsItems As String()
 
         If rpt = "etiquetaSimple" Then
-            Dim ids As New List(Of String)
-            Dim i As Integer = 0
-
-            For Each k In Request.QueryString.Keys
-                If i = 0 Then
-                    Continue For
-                Else
-                    ids.Add(k)
-                End If
-            Next
+            idsItems = idPedido.Split("-")
         End If
-
-        Dim idPedido = Request.QueryString("idPedido")
 
         If rpt = "orden" Then
             rptType = GestorDatos.reportes.ordenTrabajo
@@ -34,9 +25,16 @@ Public Class impresion
             rptType = GestorDatos.reportes.etiquetaDepositoStock
         ElseIf rpt = "remito" Then
             rptType = GestorDatos.reportes.remito
+        ElseIf rpt = "etiquetaSimple" Then
+            rptType = GestorDatos.reportes.etiquetaDepositoUnica
         End If
 
-        crystalReport(rptType, idPedido)
+        If rptType = GestorDatos.reportes.etiquetaDepositoUnica Then
+            crystalReport(idsItems)
+        Else
+            crystalReport(rptType, idPedido)
+        End If
+
     End Sub
 
     Private Sub crystalReport(_rpt As GestorDatos.reportes, _idPedido As Integer)
@@ -97,4 +95,28 @@ Public Class impresion
         End Try
     End Sub
 
+    Private Sub crystalReport(idsItems As String())
+        Dim rptPath As String
+        Dim dt = New DataTable()
+        Dim rd = New ReportDocument()
+        Dim gd = New GestorDatos
+        Dim exFormat As ExportFormatType
+
+        exFormat = ExportFormatType.PortableDocFormat
+        rptPath = "etiquetas.rpt"
+
+        Try
+            dt = gd.getReporte(idsItems)
+            rd.Load(Server.MapPath(rptPath))
+            rd.SetDataSource(dt)
+
+            Try
+                rd.ExportToHttpResponse(exFormat, Response, False, "deposito.pdf")
+            Catch ex As ThreadAbortException
+                Thread.ResetAbort()
+            End Try
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
 End Class

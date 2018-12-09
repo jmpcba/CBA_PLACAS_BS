@@ -142,27 +142,31 @@ Public Class DbHelper
         End Try
     End Function
 
-    Public Function getReporte(ids As List(Of String)) As DataTable
+    Public Function getReporte(ids As String()) As DataTable
         Dim query As String
         Dim i = 0
 
-        query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID IN ("
+        query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID_ITEM IN ("
 
         For Each s As String In ids
             query += s
+            query += ","
             i += 1
-            If i <> ids.Count - 1 Then
-                query += ","
-            End If
         Next
+
+        If query.EndsWith(",") Then
+            query = query.Substring(0, query.Length - 1)
+        End If
+
         query += ")"
 
         cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
 
         Try
             da.Fill(ds, "ETIQUETAS")
-
             Return ds.Tables("ETIQUETAS")
+
         Catch ex As Exception
             Throw New Exception("ERROR DE BASE DE DATOS:  " & ex.Message)
         End Try
