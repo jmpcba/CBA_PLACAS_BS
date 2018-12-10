@@ -204,6 +204,41 @@
                 urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
                 $("[type=checkbox]").removeAttr('checked');
             })
+
+            //FILTRO TABLA PEDIDOS
+            $("#" + '<%= DPFiltroEstados.ClientID %>').change(function () {
+                var estado, table, tr, txtValue, td;
+                estado = this.value;
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                console.log(estado);
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(estado) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            })
+
+            $("#btnLimpiarFiltro").click(function(){
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[3];
+                    if (td) {
+                            tr[i].style.display = "";
+                    }
+                }
+                console.log("boton limpiar filtro")
+                $("#" + '<%= DPFiltroEstados.ClientID %>').val("0")
+            })
         })
     </script>
     <div class="page-header">
@@ -229,6 +264,9 @@
                     <strong>CLIENTES:</strong>
                     <asp:DropDownList ID="DPFiltroClientes" runat="server" DataSourceID="SqlDataSource1" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
+                </div>
+                 <div class="col-md-2 text-right">
+                     <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
                 </div>
                 <div class="col-md-2 text-right">
                     <asp:ImageButton ID="btnRefreshNv" runat="server" ImageUrl="~/images/refresh-button-icon.png" ImageAlign="Middle" ToolTip="Refrescar" CssClass="imageButtons img-circle" />
