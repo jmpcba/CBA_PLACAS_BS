@@ -168,10 +168,9 @@
             })
 
             //IMPRESION ETIQUETA DE DEPOSITO SIMPLE
-            var urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
+            var urlEtiquetaSimple
 
             $("[id*=chkImprimir]").click(function () {
-                
 
                 if (this.checked) {
                     console.log("checkbox checkeado")
@@ -202,6 +201,7 @@
 
             $('#mdlImprimir').on('shown.bs.modal', function (e) {
                 console.log("PANEL ABIERTO");
+                urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
                 $("[type=checkbox]").removeAttr('checked');
             })
         })
