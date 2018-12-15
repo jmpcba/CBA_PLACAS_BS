@@ -55,3 +55,9 @@ input[type="select"] {
     margin-right: auto;
     width:20%;
 }
+
+.vcenter {
+   display: inline-block;
+   vertical-align: middle;
+   float: none;
+}

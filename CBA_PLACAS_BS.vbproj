@@ -251,6 +251,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Themes\default\default.skin" />
+    <Content Include="Pedido\nuevo.aspx" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="images\add-512.png" />
@@ -511,6 +512,13 @@
     </Compile>
     <Compile Include="Pedido\Administrar.aspx.vb">
       <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\nuevo.aspx.designer.vb">
+      <DependentUpon>nuevo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\nuevo.aspx.vb">
+      <DependentUpon>nuevo.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="reporte\compras.vb">
