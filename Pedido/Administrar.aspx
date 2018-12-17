@@ -205,7 +205,7 @@
                 $("[type=checkbox]").removeAttr('checked');
             })
 
-            //FILTRO TABLA PEDIDOS
+            //FILTRO TABLA PEDIDOS POR ESTADO
             $("#" + '<%= DPFiltroEstados.ClientID %>').change(function () {
                 var estado, table, tr, txtValue, td;
                 estado = this.value;
@@ -218,6 +218,27 @@
                     if (td) {
                         txtValue = td.textContent || td.innerText;
                         if (txtValue.toUpperCase().indexOf(estado) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            })
+            
+            //FILTRO CLIENTES
+            $("#" + '<%= DPFiltroClientes.ClientID %>').change(function () {
+                var cliente, table, tr, txtValue, td;
+                cliente = this.value;
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                console.log(cliente);
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(cliente.toUpperCase()) > -1) {
                             tr[i].style.display = "";
                         } else {
                             tr[i].style.display = "none";
@@ -262,7 +283,7 @@
                 </div>
                 <div class="col-md-3">
                     <strong>CLIENTES:</strong>
-                    <asp:DropDownList ID="DPFiltroClientes" runat="server" DataSourceID="SqlDataSource1" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
+                    <asp:DropDownList ID="DPFiltroClientes" runat="server" DataSourceID="SqlDataSource1" DataTextField="NOMBRE" DataValueField="NOMBRE"></asp:DropDownList>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
                 </div>
                  <div class="col-md-2 text-right">

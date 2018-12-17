@@ -15,8 +15,55 @@
             } else {
                 $("#msg").hide();
             }
+
+            //HABILITAR PANEL PEDIDO SI SE ELIGIO UN CLIENTE
+            if ($("#" + '<%= hfCliente.ClientID %>').val() != "inicial") {
+                console.log("habilitando")
+                $("#aPedido").prop("disabled", false);
+                $("#btnSigCliente").prop("disabled", false);
+                $("#headingPedido").addClass("panel-primary")
+                
+            } else {
+                console.log("des-habilitando")
+                $("#aPedido").prop("disabled", true);
+                $("#btnSigCliente").prop("disabled", true);
+                $("#headingPedido").removeClass("panel-primary")
+            }
+
+            //HABILITAR PANEL RESUMEN SI HAY PEDIDOS
+            if ($("#" + '<%= hfPedido.ClientID %>').val() != 0) {
+                console.log("habilitando")
+                $("#aResumen").prop("disabled", false);
+                $("#btnSigPedido").prop("disabled", false);
+                $("#headingResumen").addClass("panel-primary")
+                
+            } else {
+                console.log("des-habilitando")
+                $("#aResumen").prop("disabled", true);
+                $("#btnSigPedido").prop("disabled", true);
+                $("#headingResumen").removeClass("panel-primary")
+            }
+
+            $(function () {
+                var paneName = $("[id*=PaneName]").val() != "" ? $("[id*=PaneName]").val() : "collapseOne";
+                console.log(paneName)
+                //Remove the previous selected Pane.
+                $("#accordion .in").removeClass("in");
+
+                //Set the selected Pane.
+                $("#" + paneName).collapse("show");
+
+                //When Pane is clicked, save the ID to the Hidden Field.
+                $(".panel-heading a").click(function () {
+                    $("[id*=PaneName]").val($(this).attr("href").replace("#", ""));
+                });
+            });
         })
     </script>
+    <!--HIDDEN FIELDS-->
+    <asp:HiddenField ID="paneName" runat="server" />
+    <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
+    <asp:HiddenField ID="hfPedido" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Nuevo Pedido<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -30,20 +77,20 @@
     </div>
     <div class="row">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default panel-primary panel-primary">
+            <div id="headingCLiente" class="panel panel-default panel-primary">
             <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Seleccione un Cliente
+                <a id="aCliente" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlCliente" aria-expanded="true" aria-controls="collapseOne">
+                    Cliente
                 </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="pnlCliente" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                       <div class="form-group">
                           <div class="row">
-                              <div class="col-md-1">
-                                  Cliente
+                              <div class="col-md-2">
+                                  Seleccione un Cliente
                               </div>
                               <div class="col-md-4">
                                 <asp:DropDownList ID="dpCliente" runat="server" AutoPostBack="True" ValidationGroup="vgCliente" DataSourceID="dsClientes" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
@@ -53,7 +100,7 @@
                           </div>
                         <asp:Panel ID="pnlDatosCliente" Visible="False" runat="server">
                             <hr />
-                            <div class="panel panel-primary">
+                            <div class="panel panel-info">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Detalle</h3>
                                 </div>
@@ -88,53 +135,101 @@
                                     </div>
                                 </div>
                             </div>
-                    </asp:Panel>
-                      </div>
+                        </asp:Panel>
+                    </div>
+                    <button id="btnSigCliente" class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlPedido" aria-expanded="false" aria-controls="pnlPedido">
+                        Siguiente
+                    </button>
                 </div>
             </div>
             </div>
-            <div class="panel panel-default panel-primary">
+            <div id="headingPedido" class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <a id="aPedido" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlPedido" aria-expanded="false" aria-controls="collapseTwo">
                     Pedido
                 </a>
                 </h4>
             </div>
-            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div id="pnlPedido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
-                PEDIDO
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-3">
+                                Seleccione una linea de productos
+                            </div>
+                            <div class="col-md-3">
+                                <asp:DropDownList ID="cbLinea" AutoPostBack="true" runat="server"></asp:DropDownList>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlCliente" aria-expanded="false" aria-controls="pnlPedido">
+                        Anterior
+                    </button>
+                    <button id="btnSigPedido" class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlResumen" aria-expanded="false" aria-controls="pnlPedido">
+                        Siguiente
+                    </button>
                 </div>
             </div>
             </div>
-            <div class="panel panel-default panel-primary">
+            <div id="headingResumen" class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingThree">
                 <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <a id="aResumen" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlResumen" aria-expanded="false" aria-controls="collapseThree">
                     Resumen
                 </a>
                 </h4>
             </div>
-            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div id="pnlResumen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body">
-                RESUMEN
+                    RESUMEN
+                    <br />
+                    <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlResumen" aria-expanded="false" aria-controls="pnlPedido">
+                        Anterior
+                    </button>
+                    <button class="btn btn-primary pull-right" type="button" data-toggle="modal" data-parent="#accordion" data-target="#mdlConfirmacion" aria-expanded="false" aria-controls="pnlPedido">
+                        Enviar
+                    </button>
                 </div>
             </div>
             </div>
-            <div class="panel panel-default panel-primary">
+            <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingFour">
                 <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlConfirmacion" aria-expanded="false" aria-controls="collapseThree">
                     Confirmacion
                 </a>
                 </h4>
             </div>
-            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div id="pnlConfirmacion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body">
-                CONFIRMACION
+                    CONFIRMACION
+                    <br />
+                    <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlResumen" aria-expanded="false" aria-controls="pnlPedido">
+                        Nuevo Pedido
+                    </button>
                 </div>
             </div>
             </div>
         </div>
     </div>
-    </asp:Content>
+    <!--MODAL CONFIRMACION-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacion">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Desea enviar este pedido?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <asp:Button ID="btnEnviar" runat="server" Text="Si" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</asp:Content>
