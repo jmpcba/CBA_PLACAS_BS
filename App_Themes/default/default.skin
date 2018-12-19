@@ -95,3 +95,5 @@ no se permite que haya varios SkinId por tipo de control en el mismo tema.
 </asp:DetailsView>
 <%--DROPDOWN--%>
 <asp:DropDownList runat="server" CssClass="form-control"></asp:DropDownList>
+<%--TEXTBOX--%>
+<asp:TextBox runat="server" CssClass="form-control"></asp:TextBox>

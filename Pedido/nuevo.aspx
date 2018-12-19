@@ -2,6 +2,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+            //ABRIR ULTIMO PANEL
+            var pnlActual = $("#" + '<%= HFPanelActual.ClientID %>').val()
+            var pnlAnterior = $("#" + '<%= HFPanelAnterior.ClientID %>').val()
+            console.log("PANELES SEGUN HF")
+            console.log(pnlActual)
+            console.log(pnlAnterior)
+            if (pnlActual != "") {
+                $("#" + pnlActual).addClass("in")
+                $("#" + pnlAnterior).removeClass("in")
+            }
+
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             if (err == "error") {
@@ -18,13 +29,11 @@
 
             //HABILITAR PANEL PEDIDO SI SE ELIGIO UN CLIENTE
             if ($("#" + '<%= hfCliente.ClientID %>').val() != "inicial") {
-                console.log("habilitando")
                 $("#aPedido").prop("disabled", false);
                 $("#btnSigCliente").prop("disabled", false);
                 $("#headingPedido").addClass("panel-primary")
                 
             } else {
-                console.log("des-habilitando")
                 $("#aPedido").prop("disabled", true);
                 $("#btnSigCliente").prop("disabled", true);
                 $("#headingPedido").removeClass("panel-primary")
@@ -32,36 +41,32 @@
 
             //HABILITAR PANEL RESUMEN SI HAY PEDIDOS
             if ($("#" + '<%= hfPedido.ClientID %>').val() != 0) {
-                console.log("habilitando")
                 $("#aResumen").prop("disabled", false);
                 $("#btnSigPedido").prop("disabled", false);
                 $("#headingResumen").addClass("panel-primary")
                 
             } else {
-                console.log("des-habilitando")
                 $("#aResumen").prop("disabled", true);
                 $("#btnSigPedido").prop("disabled", true);
                 $("#headingResumen").removeClass("panel-primary")
             }
 
-            $(function () {
-                var paneName = $("[id*=PaneName]").val() != "" ? $("[id*=PaneName]").val() : "collapseOne";
-                console.log(paneName)
-                //Remove the previous selected Pane.
-                $("#accordion .in").removeClass("in");
+            $(".panel-collapse").on("shown.bs.collapse", function () {
+                var pnl = $(this).attr('id')
+                console.log(pnl)
+                $("#" + '<%= HFPanelActual.ClientID %>').val(pnl)
+            })
 
-                //Set the selected Pane.
-                $("#" + paneName).collapse("show");
-
-                //When Pane is clicked, save the ID to the Hidden Field.
-                $(".panel-heading a").click(function () {
-                    $("[id*=PaneName]").val($(this).attr("href").replace("#", ""));
-                });
-            });
+            $(".panel-collapse").on("hidden.bs.collapse", function () {
+                var pnl = $(this).attr('id')
+                console.log(pnl)
+                $("#" + '<%= HFPanelAnterior.ClientID %>').val(pnl)
+            })
         })
     </script>
     <!--HIDDEN FIELDS-->
-    <asp:HiddenField ID="paneName" runat="server" />
+    <asp:HiddenField ID="HFPanelActual" runat="server" />
+    <asp:HiddenField ID="HFPanelAnterior" runat="server" />
     <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
     <asp:HiddenField ID="hfPedido" runat="server" Value="0" />
     <div class="page-header">
@@ -152,21 +157,86 @@
                 </h4>
             </div>
             <div id="pnlPedido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                    <div class="panel panel-default">
+                <div class="panel-body">                
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Seleccione una linea de productos</h3>
+                        </div>
+                    <div class="panel-body">
+                        <div class="col-md-1">
+                            Linea:
+                        </div>
+                        <div class="col-md-3">
+                            <asp:DropDownList ID="cbLinea" AutoPostBack="true" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <asp:Panel ID="pnlCombos" Visible="false" runat="server">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Caracteristicas</h3>
+                        </div>
                         <div class="panel-body">
-                            <div class="col-md-3">
-                                Seleccione una linea de productos
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Chapa:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbChapa" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Marco:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMarco" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Madera:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMadera" runat="server"></asp:DropDownList>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <asp:DropDownList ID="cbLinea" AutoPostBack="true" runat="server"></asp:DropDownList>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Hoja:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbHoja" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Mano:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMano" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Cantidad:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtCant" runat="server"></asp:TextBox>
+                                    <asp:RegularExpressionValidator ID="rgvCant" runat="server" ErrorMessage="Ingrese un valor numerico" ControlToValidate="txtCant" ValidationExpression="\d*" Display="Static" Text="*" CssClass="validators"></asp:RegularExpressionValidator>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Ingrese un valor numerico" Text="*" ControlToValidate="txtCant" CssClass="validators"></asp:RequiredFieldValidator>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <asp:Panel ID="pnlValidacion" runat="server" CssClass="validators">
+                                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="List" />
+                                </asp:Panel>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-10">
+                                    <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="pull-right" />
+                                </div>
                             </div>
                         </div>
                     </div>
+                </asp:Panel>
                     <br />
                     <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlCliente" aria-expanded="false" aria-controls="pnlPedido">
-                        Anterior
-                    </button>
+                        Anterior</button>
                     <button id="btnSigPedido" class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlResumen" aria-expanded="false" aria-controls="pnlPedido">
                         Siguiente
                     </button>

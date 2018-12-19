@@ -7,14 +7,20 @@
         gd = New GestorDatos
         sb = New StatusBar(HFMsg, lblMessage)
 
-        If IsPostBack Then
-            Try
+        Try
+            If IsPostBack Then
+                HFPanelActual.Value = Request.Form(HFPanelActual.UniqueID)
+                HFPanelAnterior.Value = Request.Form(HFPanelAnterior.UniqueID)
+            Else
                 gd.getComboLineas(cbLinea)
-                paneName.Value = Request.Form(paneName.UniqueID)
-            Catch ex As Exception
-                sb.writeError(ex.Message)
-            End Try
-        End If
+                HFPanelActual.Value = ""
+                HFPanelAnterior.Value = ""
+            End If
+
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+
     End Sub
 
     Protected Sub dpCliente_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dpCliente.SelectedIndexChanged
@@ -36,6 +42,16 @@
 
             sb.write(msg)
 
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub cbLinea_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbLinea.SelectedIndexChanged
+        Try
+            pnlCombos.Visible = True
+            gd.fillCombos(cbLinea, cbChapa, cbMarco, cbMadera, cbHoja, cbMano)
+            sb.write(String.Format("Datos para linea {0} - CARGADOS", cbLinea.SelectedItem.Text))
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
