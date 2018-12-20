@@ -13,6 +13,17 @@
                 $("#" + pnlAnterior).removeClass("in")
             }
 
+            //DETECTAR POSICION DE SCROLL
+            $(window).scroll(function (event) {
+                var scroll = $(window).scrollTop();
+                $("#" + '<%= HFPos.ClientID %>').val(scroll)
+            });
+
+            var pos = $("#" + '<%= HFPos.ClientID %>').val()
+            if (pos != "") {
+                $(window).scrollTop(pos)
+            }
+
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             if (err == "error") {
@@ -51,6 +62,7 @@
                 $("#headingResumen").removeClass("panel-primary")
             }
 
+            //IDENTIFICAR ULTIMO PANEL ABIERTO Y CERRADO
             $(".panel-collapse").on("shown.bs.collapse", function () {
                 var pnl = $(this).attr('id')
                 console.log(pnl)
@@ -66,6 +78,7 @@
     </script>
     <!--HIDDEN FIELDS-->
     <asp:HiddenField ID="HFPanelActual" runat="server" />
+    <asp:HiddenField ID="HFPos" runat="server" />
     <asp:HiddenField ID="HFPanelAnterior" runat="server" />
     <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
     <asp:HiddenField ID="hfPedido" runat="server" Value="0" />
@@ -98,7 +111,7 @@
                                   Seleccione un Cliente
                               </div>
                               <div class="col-md-4">
-                                <asp:DropDownList ID="dpCliente" runat="server" AutoPostBack="True" ValidationGroup="vgCliente" DataSourceID="dsClientes" DataTextField="NOMBRE" DataValueField="ID"></asp:DropDownList>
+                                <asp:DropDownList ID="dpCliente" runat="server" AutoPostBack="True" ValidationGroup="vgCliente"></asp:DropDownList>
                                 <asp:SqlDataSource ID="dsClientes" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [CLIENTES]"></asp:SqlDataSource>
                                 <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="dpCliente" CssClass="validators" ErrorMessage="Debe elegir un cliente de la lista" Operator="NotEqual" ValidationGroup="vgCliente" ValueToCompare="">*</asp:CompareValidator>
                               </div>
@@ -140,11 +153,11 @@
                                     </div>
                                 </div>
                             </div>
+                            <br />
                         </asp:Panel>
                     </div>
                     <button id="btnSigCliente" class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlPedido" aria-expanded="false" aria-controls="pnlPedido">
-                        Siguiente
-                    </button>
+                        Siguiente</button>
                 </div>
             </div>
             </div>
@@ -233,6 +246,39 @@
                             </div>
                         </div>
                     </div>
+                    <br />
+                </asp:Panel>
+                <asp:Panel ID="pnlDetalle" Visible ="false" runat="server">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Detalle</h3>
+                        </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <asp:GridView ID="grPedido" runat="server" AutoGenerateColumns="False">
+                                <Columns>
+                                    <asp:CommandField ButtonType="Image" DeleteImageUrl="~/images/delete.png" ShowDeleteButton="True">
+                                    <ControlStyle Width="20px" />
+                                    </asp:CommandField>
+                                    <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                                    <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                                    <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                                    <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                                    <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                                    <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                                    <asp:BoundField DataField="CANTIDAD" HeaderText="CANTIDAD" >
+                                    <HeaderStyle CssClass="numCols" HorizontalAlign="Center" />
+                                    <ItemStyle CssClass="numCols" HorizontalAlign="Center" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="MONTO" HeaderText="MONTO" DataFormatString="{0:C2}" >
+                                    <HeaderStyle CssClass="numCols" HorizontalAlign="Center" />
+                                    <ItemStyle CssClass="numCols" HorizontalAlign="Center" VerticalAlign="Middle" />
+                                    </asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+                    </div>
+                </div>
                 </asp:Panel>
                     <br />
                     <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlCliente" aria-expanded="false" aria-controls="pnlPedido">
@@ -255,7 +301,7 @@
                 <div class="panel-body">
                     RESUMEN
                     <br />
-                    <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlResumen" aria-expanded="false" aria-controls="pnlPedido">
+                    <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlPedido" aria-expanded="false" aria-controls="pnlPedido">
                         Anterior
                     </button>
                     <button class="btn btn-primary pull-right" type="button" data-toggle="modal" data-parent="#accordion" data-target="#mdlConfirmacion" aria-expanded="false" aria-controls="pnlPedido">

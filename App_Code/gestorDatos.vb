@@ -13,6 +13,7 @@ Public Class GestorDatos
         estados
         clientes
         unidadMateriales
+        lineas
     End Enum
 
     Public Enum reportes
@@ -116,19 +117,6 @@ Public Class GestorDatos
         End Try
     End Sub
 
-    Public Sub getComboLineas(ByVal _cbLineas As DropDownList)
-        Try
-            _cbLineas.DataSource = linea.getLineas()
-            _cbLineas.DataTextField = "nombre"
-            _cbLineas.DataValueField = "id"
-            _cbLineas.DataBind()
-
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
-
-
     Public Sub fillCombos(ByVal _cbLinea As DropDownList, ByVal _cbChapa As DropDownList, ByVal _cbMarco As DropDownList, ByVal _cbMadera As DropDownList, ByVal _cbHoja As DropDownList, ByVal _cbMano As DropDownList)
         Dim db = New DbHelper()
 
@@ -186,6 +174,12 @@ Public Class GestorDatos
 
                 Dim cliente As New Cliente()
                 _cb.DataSource = cliente.getClientes()
+                _cb.DataTextField = "nombre"
+                _cb.DataValueField = "id"
+                _cb.DataBind()
+            ElseIf _comboName = combos.lineas Then
+
+                _cb.DataSource = linea.getLineas()
                 _cb.DataTextField = "nombre"
                 _cb.DataValueField = "id"
                 _cb.DataBind()

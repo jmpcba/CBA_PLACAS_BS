@@ -1,6 +1,7 @@
 ﻿Public Class nuevo
     Inherits System.Web.UI.Page
     Dim gd As GestorDatos
+    Dim gp As GestorPedidos
     Dim sb As StatusBar
     Dim cliente As Cliente
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -11,10 +12,14 @@
             If IsPostBack Then
                 HFPanelActual.Value = Request.Form(HFPanelActual.UniqueID)
                 HFPanelAnterior.Value = Request.Form(HFPanelAnterior.UniqueID)
+                HFPos.Value = Request.Form(HFPos.UniqueID)
             Else
-                gd.getComboLineas(cbLinea)
+                gd.getCombos(cbLinea, GestorDatos.combos.lineas)
+                gd.getCombos(dpCliente, GestorDatos.combos.clientes)
                 HFPanelActual.Value = ""
                 HFPanelAnterior.Value = ""
+                HFPos.Value = ""
+                hfPedido.Value = "0"
             End If
 
         Catch ex As Exception
@@ -28,6 +33,9 @@
         pnlDatosCliente.Visible = True
 
         Try
+            gp = New GestorPedidos(New Cliente(dpCliente.SelectedValue))
+            Session("gp") = gp
+
             lblIDCliente.Text = cliente.id
             lblCuitCliente.Text = cliente.CUIT
             lblNombreCliente.Text = cliente.nombre
@@ -55,5 +63,49 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Protected Sub btnAgregar_Click(sender As Object, e As EventArgs) Handles btnAgregar.Click
+        Try
+            Dim chapa = New Chapa(cbChapa.SelectedItem.Value, cbChapa.SelectedItem.Text)
+            Dim marco = New Marco(cbMarco.SelectedItem.Value, cbMarco.SelectedItem.Text)
+            Dim madera = New Madera(cbMadera.SelectedItem.Value, cbMadera.SelectedItem.Text)
+            Dim hoja = New Hoja(cbHoja.SelectedItem.Value, cbHoja.SelectedItem.Text)
+            Dim mano = New Mano(cbMano.SelectedItem.Value, cbMano.SelectedItem.Text)
+            Dim cant = txtCant.Text.Trim()
+            Dim linea = New Linea(cbLinea.SelectedItem.Value, cbLinea.SelectedItem.Text)
+            Dim producto = New Producto(hoja, marco, madera, chapa, mano, linea)
+
+            Dim item = New Item(producto, cant)
+            gp = Session("gp")
+            gp.addItem(item)
+            pnlDetalle.Visible = True
+            gd.mostrarGrillaItems(grPedido, gp.pedido)
+
+            sb.write(String.Format("Nuevo Item Agregado"))
+            Session("gestorPedidos") = gp
+            hfPedido.Value = gp.pedido.items.Count
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub grPedido_RowDeleting(sender As Object, e As GridViewDeleteEventArgs) Handles grPedido.RowDeleting
+        Try
+            Dim r = e.RowIndex
+            gp = Session("gestorPedidos")
+            gp.eliminarItem(r)
+            gd.mostrarGrillaItems(grPedido, gp.pedido)
+
+            If gp.pedido.items.Count = 0 Then
+                pnlDetalle.Visible = False
+            End If
+
+            sb.write(String.Format("Item en fila {0} -ELIMINADO", r + 1))
+
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+
     End Sub
 End Class

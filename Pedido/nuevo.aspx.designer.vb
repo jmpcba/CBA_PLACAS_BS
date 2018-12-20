@@ -23,6 +23,15 @@ Partial Public Class nuevo
     Protected WithEvents HFPanelActual As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFPos.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFPos As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control HFPanelAnterior.
     '''</summary>
     '''<remarks>
@@ -300,6 +309,24 @@ Partial Public Class nuevo
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnAgregar As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control pnlDetalle.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents pnlDetalle As Global.System.Web.UI.WebControls.Panel
+    
+    '''<summary>
+    '''Control grPedido.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grPedido As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
     '''Control btnEnviar.
