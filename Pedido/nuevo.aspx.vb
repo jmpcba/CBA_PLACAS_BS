@@ -1,4 +1,6 @@
-﻿Public Class nuevo
+﻿Imports CBA_PLACAS_BS
+
+Public Class nuevo
     Inherits System.Web.UI.Page
     Dim gd As GestorDatos
     Dim gp As GestorPedidos
@@ -82,12 +84,41 @@
             pnlDetalle.Visible = True
             gd.mostrarGrillaItems(grPedido, gp.pedido)
 
-            sb.write(String.Format("Nuevo Item Agregado"))
             Session("gestorPedidos") = gp
             hfPedido.Value = gp.pedido.items.Count
+
+            grillaStock(gp)
+
+            sb.write(String.Format("Nuevo Item Agregado"))
+
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Private Sub grillaStock(_gp As GestorPedidos)
+        gd.mostrarGrillaItems(grPepedidoConfirmar, _gp.pedido, True)
+        'lblCantidadNvo.Text = gp.pedido.cantTotal
+        'lblPrecioNvo.Text = gp.pedido.precioTotal
+        'lblDetalleNvo.Text = gp.pedido.cliente.nombre
+
+        Dim flag = True
+
+        For Each row As GridViewRow In grPepedidoConfirmar.Rows
+            If Convert.ToInt32(row.Cells(6).Text) >= Convert.ToInt32(row.Cells(7).Text) Then
+                row.ForeColor = Drawing.Color.Red
+                flag = False
+            End If
+        Next
+
+        If flag Then
+            lblStock.Text = "Dispone de Stock para cubrir este pedido"
+            HFStock.Value = 1
+
+        Else
+            lblStock.Text = "Este pedido debe ser fabricado"
+            HFStock.Value = 0
+        End If
     End Sub
 
     Protected Sub grPedido_RowDeleting(sender As Object, e As GridViewDeleteEventArgs) Handles grPedido.RowDeleting
@@ -96,10 +127,13 @@
             gp = Session("gestorPedidos")
             gp.eliminarItem(r)
             gd.mostrarGrillaItems(grPedido, gp.pedido)
+            grillaStock(gp)
 
             If gp.pedido.items.Count = 0 Then
                 pnlDetalle.Visible = False
             End If
+
+            hfPedido.Value = gp.pedido.items.Count
 
             sb.write(String.Format("Item en fila {0} -ELIMINADO", r + 1))
 

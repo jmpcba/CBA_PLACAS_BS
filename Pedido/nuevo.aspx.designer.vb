@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class nuevo
     
     '''<summary>
+    '''Control HFStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFStock As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control HFPanelActual.
     '''</summary>
     '''<remarks>
@@ -327,6 +336,24 @@ Partial Public Class nuevo
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grPedido As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control lblStock.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblStock As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control grPepedidoConfirmar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grPepedidoConfirmar As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
     '''Control btnEnviar.

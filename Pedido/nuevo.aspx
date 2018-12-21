@@ -65,18 +65,30 @@
             //IDENTIFICAR ULTIMO PANEL ABIERTO Y CERRADO
             $(".panel-collapse").on("shown.bs.collapse", function () {
                 var pnl = $(this).attr('id')
-                console.log(pnl)
                 $("#" + '<%= HFPanelActual.ClientID %>').val(pnl)
             })
 
             $(".panel-collapse").on("hidden.bs.collapse", function () {
                 var pnl = $(this).attr('id')
-                console.log(pnl)
                 $("#" + '<%= HFPanelAnterior.ClientID %>').val(pnl)
             })
+
+            //PANEL DEPOSITO
+            if ($("#" + '<%= HFStock.ClientID %>').val() == "1") {
+                $("#pnlStock").removeClass("panel-danger")
+                $("#pnlStock").addClass("panel-success")
+                console.log("true")
+                console.log($("#" + '<%= HFStock.ClientID %>').val())
+            } else {
+                $("#pnlStock").removeClass("panel-success")
+                $("#pnlStock").addClass("panel-danger")
+                console.log("false")
+                console.log($("#" + '<%= HFStock.ClientID %>').val())
+            }
         })
     </script>
     <!--HIDDEN FIELDS-->
+    <asp:HiddenField ID="HFStock" value="0" runat="server" />
     <asp:HiddenField ID="HFPanelActual" runat="server" />
     <asp:HiddenField ID="HFPos" runat="server" />
     <asp:HiddenField ID="HFPanelAnterior" runat="server" />
@@ -299,8 +311,45 @@
             </div>
             <div id="pnlResumen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body">
-                    RESUMEN
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Totales</h3>
+                        </div>
+                        <div class="panel-body">
+                            Panel content
+                        </div>
+                    </div>
                     <br />
+                    <div id="pnlStock" class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <asp:Label ID="lblStock" runat="server" Text="Label"></asp:Label>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <asp:GridView ID="grPepedidoConfirmar" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                                        <asp:BoundField DataField="CANTIDAD" HeaderText="PEDIDO" >
+                                        <HeaderStyle CssClass="numCols" />
+                                        <ItemStyle CssClass="numCols" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="STOCK" HeaderText="STOCK" ItemStyle-HorizontalAlign="Right" >
+                                            <HeaderStyle CssClass="numCols" />
+                                            <ItemStyle HorizontalAlign="Right" CssClass="numCols"></ItemStyle>
+                                        </asp:BoundField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                     <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlPedido" aria-expanded="false" aria-controls="pnlPedido">
                         Anterior
                     </button>
