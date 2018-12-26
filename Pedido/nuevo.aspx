@@ -11,6 +11,8 @@
             if (pnlActual != "") {
                 $("#" + pnlActual).addClass("in")
                 $("#" + pnlAnterior).removeClass("in")
+            } else {
+                $("#pnlCliente").addClass("in")
             }
 
             //DETECTAR POSICION DE SCROLL
@@ -119,7 +121,7 @@
                 </a>
                 </h4>
             </div>
-            <div id="pnlCliente" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="pnlCliente" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
                       <div class="form-group">
                           <div class="row">
