@@ -6,8 +6,18 @@
         $(document).ready(function () {
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
+
+            var estado = parseInt($("#" + '<%= HFEstado.ClientID %>').val(), 10)
+            console.log(estado)
+            if (estado >= 4) {
+                $("#liPedido").addClass("disabled")
+                $("#liItem").addClass("disabled")
+                $("#btnModificar").prop("disabled", true)
+            }
         })
     </script>
+    <!--HIDDEN FIELDS-->
+    <asp:HiddenField ID="HFEstado" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Modificar Pedidos <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -76,11 +86,11 @@
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
                 <div class="btn-group">
                   <button id="btnEliminarGrupo" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Eliminar <span class="caret"></span>
+                    Cancelar <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li id="liOrden" class="disabled"><a id="aOrden" href="#">Eliminar Pedido</a></li>
-                    <li id="liEtiqueta" class="disabled"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Eliminar Items</a></li>
+                    <li id="liPedido"><a id="aOrden" href="#mdlConfirmacion" data-toggle="modal">Cancelar Pedido</a></li>
+                    <li id="liItem"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Eliminar Items</a></li>
                   </ul>
                 </div>
                 <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#enviarProd">
@@ -135,6 +145,55 @@
                         </div>
                     </div>
                 </div>
+                <!--PANEL PRODUCCION-->
+                <div class="panel panel-default panel-primary">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#produccion">Produccion</a>
+                        </h4>
+                    </div>
+                    <div id="produccion" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <asp:GridView ID="grProduccion" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
+                            <Columns>
+                                <asp:TemplateField HeaderText="#">
+                                    <ItemTemplate>
+                                        <%# Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                                <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                                <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                                <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                                <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                                <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                                <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" />
+                                <asp:BoundField DataField="CANT" HeaderText="CANT" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="STOCK" HeaderText="DE STOCK" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="P_FAB" HeaderText="PARA FABRICAR" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="ENSAMBLADAS" HeaderText="TERMINADAS" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
+                                </asp:BoundField>
+                            </Columns>
+                            <EmptyDataTemplate>
+                                <asp:TextBox ID="txtTest" runat="server"></asp:TextBox>
+                            </EmptyDataTemplate>
+                        </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--panel registro-->
                 <div class="panel panel-default panel-primary">
                 <div class="panel-heading">
@@ -173,4 +232,22 @@
         </div>
       </div>
     </div>
+    <!--MODAL CONFIRMACION-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacion">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger"">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                    </div>
+                <div class="modal-body">
+                        <p>Desea cancelar este pedido?</p>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <asp:Button ID="btnEliminar" runat="server" Text="Si" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </asp:Content>

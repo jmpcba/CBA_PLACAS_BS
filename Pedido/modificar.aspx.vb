@@ -16,6 +16,12 @@
             'gd.getComboLineas(cbLinea)
             llenarGrillaPedido()
         End If
+
+        gp = Session("gp")
+
+        If Not IsNothing(gp) Then
+            HFEstado.Value = gp.pedido.estado.id
+        End If
     End Sub
 
     Private Sub llenarGrillaPedido()
@@ -33,12 +39,12 @@
 
             gp = New GestorPedidos(idItem)
 
-            Session("gestorPedidos") = gp
+            Session("gp") = gp
 
             llenarGrillaDetalle()
 
             lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", gp.pedido.id)
-
+            HFEstado.Value = gp.pedido.estado.id
             sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id))
 
         Catch ex As Exception
@@ -47,9 +53,14 @@
     End Sub
 
     Private Sub llenarGrillaDetalle()
+        Dim items As DataTable
 
-        gp = Session("gestorPedidos")
-        grDetalle.DataSource = gd.getItemsModificar(gp.pedido.id)
+        gp = Session("gp")
+        items = gd.getItems(gp.pedido.id)
+        grProduccion.DataSource = items
+        grProduccion.DataBind()
+
+        grDetalle.DataSource = items
         grDetalle.DataBind()
 
         gd.obtenerRegistro(gp.pedido, grLog)
@@ -61,4 +72,23 @@
 
     End Sub
 
+    Protected Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+        gp = Session("gp")
+
+        Try
+            gp.cancelarPedido()
+            sb.write(String.Format("Pedido {0} - CANCELADO", gp.pedido.id))
+            HFEstado.Value = gp.pedido.estado.id
+            llenarGrillaDetalle()
+
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
+        pnlDetalle.Visible = False
+        pnlPedidos.Visible = True
+        'grPedidos.DataBind()
+    End Sub
 End Class

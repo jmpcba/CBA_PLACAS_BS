@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class modificar
     
     '''<summary>
+    '''Control HFEstado.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFEstado As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control lblSubtitulo.
     '''</summary>
     '''<remarks>
@@ -203,6 +212,15 @@ Partial Public Class modificar
     Protected WithEvents lblModificadoDet As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control grProduccion.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grProduccion As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
     '''Control grLog.
     '''</summary>
     '''<remarks>
@@ -210,4 +228,13 @@ Partial Public Class modificar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grLog As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control btnEliminar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnEliminar As Global.System.Web.UI.WebControls.Button
 End Class

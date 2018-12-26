@@ -22,6 +22,7 @@ Public Class nuevo
                 HFPanelAnterior.Value = ""
                 HFPos.Value = ""
                 hfPedido.Value = "0"
+                gp = Nothing
             End If
 
         Catch ex As Exception
@@ -38,9 +39,9 @@ Public Class nuevo
             gp = Session("gp")
 
             If IsNothing(gp) Then
-                gp = New GestorPedidos(New Cliente(dpCliente.SelectedValue))
+                gp = New GestorPedidos(cliente)
             Else
-                gp.pedido.cliente = New Cliente(dpCliente.SelectedValue)
+                gp.pedido.cliente = cliente
             End If
 
             lblIDCliente.Text = cliente.id
@@ -164,6 +165,9 @@ Public Class nuevo
 
         Catch ex As Exception
             sb.write(ex.Message)
+        Finally
+            gp = Nothing
         End Try
+
     End Sub
 End Class
