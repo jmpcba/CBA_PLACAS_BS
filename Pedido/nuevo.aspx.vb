@@ -35,8 +35,13 @@ Public Class nuevo
         pnlDatosCliente.Visible = True
 
         Try
-            gp = New GestorPedidos(New Cliente(dpCliente.SelectedValue))
-            Session("gp") = gp
+            gp = Session("gp")
+
+            If IsNothing(gp) Then
+                gp = New GestorPedidos(New Cliente(dpCliente.SelectedValue))
+            Else
+                gp.pedido.cliente = New Cliente(dpCliente.SelectedValue)
+            End If
 
             lblIDCliente.Text = cliente.id
             lblCuitCliente.Text = cliente.CUIT
@@ -47,11 +52,12 @@ Public Class nuevo
             lblCiudadCliente.Text = cliente.ciudad
             lblProvCliente.Text = cliente.provincia
             hfCliente.Value = cliente.id
+            lblCliente.Text = cliente.nombre
 
             Dim msg = String.Format("Datos del cliente {0} - CARGADOS", dpCliente.SelectedItem.Text)
 
             sb.write(msg)
-
+            Session("gp") = gp
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
@@ -83,8 +89,10 @@ Public Class nuevo
             gp.addItem(item)
             pnlDetalle.Visible = True
             gd.mostrarGrillaItems(grPedido, gp.pedido)
+            lblCantTotal.Text = gp.pedido.cantTotal
+            lblMontoTotal.Text = gp.pedido.precioTotal
 
-            Session("gestorPedidos") = gp
+            Session("gp") = gp
             hfPedido.Value = gp.pedido.items.Count
 
             grillaStock(gp)
@@ -124,7 +132,7 @@ Public Class nuevo
     Protected Sub grPedido_RowDeleting(sender As Object, e As GridViewDeleteEventArgs) Handles grPedido.RowDeleting
         Try
             Dim r = e.RowIndex
-            gp = Session("gestorPedidos")
+            gp = Session("gp")
             gp.eliminarItem(r)
             gd.mostrarGrillaItems(grPedido, gp.pedido)
             grillaStock(gp)
@@ -134,6 +142,8 @@ Public Class nuevo
             End If
 
             hfPedido.Value = gp.pedido.items.Count
+            lblCantTotal.Text = gp.pedido.cantTotal
+            lblMontoTotal.Text = gp.pedido.precioTotal
 
             sb.write(String.Format("Item en fila {0} -ELIMINADO", r + 1))
 
@@ -141,5 +151,19 @@ Public Class nuevo
             sb.writeError(ex.Message)
         End Try
 
+    End Sub
+
+    Protected Sub btnEnviar_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
+        Try
+            gp = Session("gp")
+            gp.enviarPedido()
+
+            Session.Remove("gp")
+
+            Response.Redirect("confirmacion.aspx?idPedido=" & gp.pedido.id)
+
+        Catch ex As Exception
+            sb.write(ex.Message)
+        End Try
     End Sub
 End Class

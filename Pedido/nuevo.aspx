@@ -38,6 +38,10 @@
                 $("#msg").hide();
             }
 
+            
+            $("#aConfirmacion").prop("disabled", true);
+            
+
             //HABILITAR PANEL PEDIDO SI SE ELIGIO UN CLIENTE
             if ($("#" + '<%= hfCliente.ClientID %>').val() != "inicial") {
                 $("#aPedido").prop("disabled", false);
@@ -73,7 +77,7 @@
                 $("#" + '<%= HFPanelAnterior.ClientID %>').val(pnl)
             })
 
-            //PANEL DEPOSITO
+            //PANEL STOCK
             if ($("#" + '<%= HFStock.ClientID %>').val() == "1") {
                 $("#pnlStock").removeClass("panel-danger")
                 $("#pnlStock").addClass("panel-success")
@@ -313,10 +317,21 @@
                 <div class="panel-body">
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Totales</h3>
+                            <h3 class="panel-title">Resumen</h3>
                         </div>
                         <div class="panel-body">
-                            Panel content
+                            <div class="col-md-4">
+                                <h5><strong>Cliente: </strong>
+                                    <asp:Label ID="lblCliente" runat="server" Text="Label"></asp:Label></h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5><strong>Cant Total: </strong>
+                                    <asp:Label ID="lblCantTotal" runat="server" Text="Label"></asp:Label></h5>
+                            </div>
+                            <div class="col-md-4">
+                                <h5><strong>Monto Total: </strong>
+                                    <asp:Label ID="lblMontoTotal" runat="server" Text="Label"></asp:Label></h5>
+                            </div>
                         </div>
                     </div>
                     <br />
@@ -359,10 +374,10 @@
                 </div>
             </div>
             </div>
-            <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingFour">
+            <!--div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingConfirmacion">
                 <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlConfirmacion" aria-expanded="false" aria-controls="collapseThree">
+                <a class="collapsed" id="aConfirmacion" role="button" data-toggle="collapse" data-parent="#accordion" href="#pnlConfirmacion" aria-expanded="false" aria-controls="collapseThree">
                     Confirmacion
                 </a>
                 </h4>
@@ -376,8 +391,8 @@
                     </button>
                 </div>
             </div>
-            </div>
-        </div>
+            </!--div>
+        </div-->
     </div>
     <!--MODAL CONFIRMACION-->
     <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacion">

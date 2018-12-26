@@ -251,6 +251,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="App_Themes\default\default.skin" />
+    <Content Include="Pedido\confirmacion.aspx" />
     <Content Include="Pedido\nuevo.aspx" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -512,6 +513,13 @@
     </Compile>
     <Compile Include="Pedido\Administrar.aspx.vb">
       <DependentUpon>Administrar.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\confirmacion.aspx.designer.vb">
+      <DependentUpon>confirmacion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\confirmacion.aspx.vb">
+      <DependentUpon>confirmacion.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Pedido\nuevo.aspx.designer.vb">

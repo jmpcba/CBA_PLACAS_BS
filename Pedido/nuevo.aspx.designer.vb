@@ -338,6 +338,33 @@ Partial Public Class nuevo
     Protected WithEvents grPedido As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
+    '''Control lblCliente.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblCliente As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblCantTotal.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblCantTotal As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblMontoTotal.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblMontoTotal As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Control lblStock.
     '''</summary>
     '''<remarks>
