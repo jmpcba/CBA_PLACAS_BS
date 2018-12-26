@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="nuevo.aspx.vb" Inherits="CBA_PLACAS_BS.nuevo" Theme="default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript" src="../scripts/funcionesComunes.js">
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             //ABRIR ULTIMO PANEL
@@ -28,18 +30,8 @@
 
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
-            if (err == "error") {
-                $("#msg").removeClass("alert-success");
-                $("#msg").addClass("alert-danger");
-                $("#msg").show()
-            } else if (err == "success") {
-                $("#msg").addClass("alert-success");
-                $("#msg").removeClass("alert-danger");
-                $("#msg").show()
-            } else {
-                $("#msg").hide();
-            }
-
+            barraEstado(err, $("#msg"))
+            
             
             $("#aConfirmacion").prop("disabled", true);
             
@@ -393,8 +385,8 @@
                     </button>
                 </div>
             </div>
-            </!--div>
-        </div-->
+            </!--div-->
+        </div>
     </div>
     <!--MODAL CONFIRMACION-->
     <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacion">

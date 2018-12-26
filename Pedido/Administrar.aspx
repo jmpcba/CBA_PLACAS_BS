@@ -1,21 +1,14 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="Administrar.aspx.vb" Inherits="CBA_PLACAS_BS.Administrar" Theme="default"%>
 <%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="ajaxToolkit" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript" src="../scripts/funcionesComunes.js">
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
-            if (err == "error") {
-                $("#msg").removeClass("alert-success");
-                $("#msg").addClass("alert-danger");
-                $("#msg").show()
-            } else if (err == "success") {
-                $("#msg").addClass("alert-success");
-                $("#msg").removeClass("alert-danger");
-                $("#msg").show()
-            } else {
-                $("#msg").hide();
-            }
+            barraEstado(err, $("#msg"))
+            
 
             //MATERIALES
             var mat = $("#" + '<%= HFMat.ClientID %>').val();
@@ -276,27 +269,33 @@
     <asp:Panel ID="pnlPedidos" runat="server" CssClass="row">
         <div class="form-group">
             <div class="row">
-                <div class="col-md-3 col-md-offset-2">
+                <div class="col-md-3">
                     <strong>ESTADOS:</strong>
+                </div>
+                <div class="col-md-3">
+                    <strong>CLIENTES:</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
                     <asp:DropDownList ID="DPFiltroEstados" runat="server" DataSourceID="DSestados" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                     <asp:SqlDataSource ID="DSestados" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [estados]"></asp:SqlDataSource>
                 </div>
                 <div class="col-md-3">
-                    <strong>CLIENTES:</strong>
                     <asp:DropDownList ID="DPFiltroClientes" runat="server" DataSourceID="SqlDataSource1" DataTextField="NOMBRE" DataValueField="NOMBRE"></asp:DropDownList>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
                 </div>
-                 <div class="col-md-2 text-right">
-                     <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
-                </div>
-                <div class="col-md-2 text-right">
-                    <asp:ImageButton ID="btnRefreshNv" runat="server" ImageUrl="~/images/refresh-button-icon.png" ImageAlign="Middle" ToolTip="Refrescar" CssClass="imageButtons img-circle" />
+                <div class="col-md-3">
+                     <div class="btn-group" role="group" aria-label="...">
+                <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
+                <asp:Button ID="Button1" runat="server" Text="Refrescar" />
+            </div>
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
                 <div class="table-responsive">
                     <asp:GridView ID="grPedidos" runat="server" AutoGenerateColumns="False" DataSourceID="dsNvos" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed"><Columns>
                         <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />

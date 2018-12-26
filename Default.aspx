@@ -1,42 +1,39 @@
 ﻿<%@ Page Title="Home Page" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="CBA_PLACAS_BS._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
     <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-    </div>
+                <h1>Pedidos</h1>
+                <p class="lead">Administre pedidos existentes y envie nuevos pedidos desde aqui.</p>
+                <p><a href="Pedido/nuevo.aspx" class="btn btn-primary btn-lg">Nuevo&raquo;</a></p>
+                <p><a href="Pedido/modificar.aspx" class="btn btn-primary btn-lg">Modificar&raquo;</a></p>
+                <p><a href="pedido/consultar.aspx" class="btn btn-primary btn-lg">Consultar&raquo;</a></p>
+                <p><a href="pedido/administrar.aspx" class="btn btn-primary btn-lg">Administrar&raquo;</a></p>
+            </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting Started</h2>
-            <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            </p>
-            <p>
-                <a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>
-    </div>
-
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Productos</h2>
+                    <p>
+                        Administre desde aqui sus productos.</p>
+                    <p><a class="btn btn-default" href="App_pages/productos/ProductoNuevo.aspx">Nuevo &raquo;</a></p>
+                    <p><a class="btn btn-default" href="App_pages/productos/modificarProductos.aspx">Modificar &raquo;</a></p>
+                    <p><a class="btn btn-default" href="App_pages/productos/materiales.aspx">Materiales&raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Clientes</h2>
+                    <p>
+                        Administracion de usuarios y roles.
+                    </p>
+                    <p><a class="btn btn-default" href="App_pages/clientes/busquedaCliente.aspx">Buscar &raquo;</a></p>
+                    <p><a class="btn btn-default" href="App_pages/clientes/ModificarCliente">Modificar &raquo;</a></p>
+                    <p><a class="btn btn-default" href="App_pages/clientes/nuevoCliente.aspx">Nuevo &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Reportes</h2>
+                    <p>
+                        Informacion historica del sistema</p>
+                    <p><a class="btn btn-default" href="App_pages/reportes/reportePedidosCliente.aspx">Ventas Por Cliente &raquo;</a></p>
+                    <p><a class="btn btn-default" href="App_pages/reportes/reportePedidosProducto.aspx">Ventas Por Producto &raquo;</a></p>
+                </div>
+            </div>
 </asp:Content>
