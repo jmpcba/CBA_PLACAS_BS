@@ -90,10 +90,10 @@
                   </button>
                   <ul class="dropdown-menu">
                     <li id="liPedido"><a id="aOrden" href="#mdlConfirmacion" data-toggle="modal">Cancelar Pedido</a></li>
-                    <li id="liItem"><a id="aEtiqueta" href="#mdlImprimir" data-toggle="modal">Eliminar Items</a></li>
+                    <li id="liItem"><a id="aEtiqueta" href="#mdlEliminarItems" data-toggle="modal">Cancelar Items</a></li>
                   </ul>
                 </div>
-                <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#enviarProd">
+                <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#">
                     Modificar
                 </button>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
@@ -116,6 +116,7 @@
                         <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                         <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                         <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" />
                         <asp:BoundField DataField="CANT" HeaderText="CANT" >
                         <ControlStyle Font-Bold="True" />
                         <ItemStyle Font-Bold="True" CssClass="numCol" />
@@ -210,8 +211,7 @@
                 </div>
             </div>
             </div>  
-        </div>
-        
+        </div> 
     </asp:Panel>
     <!--MODAL REGISTRO HISTORICO-->
     <div class="modal fade" id="mdlRegistro" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
@@ -250,4 +250,128 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <!--MODAL CONFIRMACION ITEMS-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacionItem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger"">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                    </div>
+                <div class="modal-body">
+                        <p>Desea cancelar los items seleccionados?</p>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlEliminarItems" data-dismiss="modal">No</button>
+                    <asp:Button ID="btnEliminarItems" runat="server" Text="Si" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--MODAL ELIMINAR ITEMS-->
+    <div class="modal fade" id="mdlEliminarItems" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="ImprimirLabel">Cancelar Items</h4>
+          </div>
+          <div class="modal-body">
+              <!--PANEL GRILLA ELIMINAR ITEMS-->
+              <div id="pnlGrillaImprimir" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Que items desea cancelar?</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                <asp:GridView ID="grEliminarItems" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table" DataKeyNames="ID_ITEM">
+                    <Columns>
+                        <asp:TemplateField HeaderText="#">
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:CheckBox ID="chkEliminar" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
+                    </Columns>
+                </asp:GridView>
+            </div>  
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Eliminar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--MODAL MODIFICAR ITEMS-->
+    <div class="modal fade" id="mdlModificarItems" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modificarLabel">Modificar Items</h4>
+          </div>
+          <div class="modal-body">
+              <!--PANEL GRILLA MODIFICAR ITEMS-->
+              <div id="pnlGrillaModificar" class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Modificar Items</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="table-responsive form-group">
+                <asp:GridView ID="grModificarItems" runat="server" AutoGenerateColumns="False" ToolTip="Modificar Items" CssClass="table" DataKeyNames="ID_ITEM">
+                    <Columns>
+                        <asp:TemplateField HeaderText="#">
+                            <ItemTemplate>
+                                <%# Container.DataItemIndex + 1 %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
+                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
+                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
+                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
+                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
+                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
+                        <asp:TemplateField>
+                            <ItemTemplate>
+                                <asp:CheckBox ID="chkEliminar" runat="server" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
+                    </Columns>
+                </asp:GridView>
+            </div>  
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Eliminar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </asp:Content>

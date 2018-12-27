@@ -58,10 +58,12 @@
         gp = Session("gp")
         items = gd.getItems(gp.pedido.id)
         grProduccion.DataSource = items
-        grProduccion.DataBind()
-
         grDetalle.DataSource = items
+        grEliminarItems.DataSource = items
+
         grDetalle.DataBind()
+        grProduccion.DataBind()
+        grEliminarItems.DataBind()
 
         gd.obtenerRegistro(gp.pedido, grLog)
         lblnroPedidoDet.Text = gp.pedido.id.ToString
@@ -90,5 +92,27 @@
         pnlDetalle.Visible = False
         pnlPedidos.Visible = True
         'grPedidos.DataBind()
+    End Sub
+
+    Protected Sub btnEliminarItems_Click(sender As Object, e As EventArgs) Handles btnEliminarItems.Click
+        Try
+            gp = Session("gp")
+            For Each r As GridViewRow In grEliminarItems.Rows
+                Dim chk As CheckBox
+                chk = r.FindControl("chkEliminar")
+
+                If chk.Checked Then
+                    Dim idItem = Convert.ToInt32(grEliminarItems.DataKeys(r.RowIndex).Value.ToString())
+
+                    gp.cancelarItem(idItem)
+                End If
+            Next
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        Finally
+            Session("gp") = gp
+            llenarGrillaDetalle()
+        End Try
+
     End Sub
 End Class

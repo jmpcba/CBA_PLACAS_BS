@@ -237,4 +237,31 @@ Partial Public Class modificar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnEliminar As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btnEliminarItems.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnEliminarItems As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control grEliminarItems.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grEliminarItems As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control grModificarItems.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grModificarItems As Global.System.Web.UI.WebControls.GridView
 End Class
