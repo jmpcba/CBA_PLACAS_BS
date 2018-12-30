@@ -304,15 +304,15 @@
                         <ItemStyle CssClass="numCol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
-                        <ControlStyle CssClass="hiddencol" />
-                        <FooterStyle CssClass="hiddencol" />
-                        <HeaderStyle CssClass="hiddencol" />
-                        <ItemStyle CssClass="hiddencol" />
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
                         <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                        <ControlStyle CssClass="imageButtons" />
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>

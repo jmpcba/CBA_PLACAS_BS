@@ -93,7 +93,7 @@
                     <li id="liItem"><a id="aEtiqueta" href="#mdlEliminarItems" data-toggle="modal">Cancelar Items</a></li>
                   </ul>
                 </div>
-                <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#">
+                <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlModificarItems">
                     Modificar
                 </button>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
@@ -250,7 +250,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <!--MODAL CONFIRMACION ITEMS-->
+    <!--MODAL CONFIRMACION ELIMINAR ITEMS ITEMS-->
     <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacionItem">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -308,6 +308,12 @@
                             <HeaderStyle CssClass="hiddencol" />
                             <ItemStyle CssClass="hiddencol" />
                         </asp:BoundField>
+                        <asp:BoundField DataField="ESTADO" HeaderText="ID_ITEM" SortExpression="ESTADO" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
                     </Columns>
                 </asp:GridView>
             </div>  
@@ -336,42 +342,103 @@
                     <h3 class="panel-title">Modificar Items</h3>
                 </div>
                 <div class="panel-body">
-                  <div class="table-responsive form-group">
-                <asp:GridView ID="grModificarItems" runat="server" AutoGenerateColumns="False" ToolTip="Modificar Items" CssClass="table" DataKeyNames="ID_ITEM">
-                    <Columns>
-                        <asp:TemplateField HeaderText="#">
-                            <ItemTemplate>
-                                <%# Container.DataItemIndex + 1 %>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
-                        <asp:BoundField DataField="MADERA" HeaderText="MADERA" />
-                        <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
-                        <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
-                        <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
-                        <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                        <asp:TemplateField>
-                            <ItemTemplate>
-                                <asp:CheckBox ID="chkEliminar" runat="server" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField DataField="ID_ITEM" HeaderText="ID_ITEM" SortExpression="ID_ITEM" >
-                            <ControlStyle CssClass="hiddencol" />
-                            <FooterStyle CssClass="hiddencol" />
-                            <HeaderStyle CssClass="hiddencol" />
-                            <ItemStyle CssClass="hiddencol" />
-                        </asp:BoundField>
-                    </Columns>
-                </asp:GridView>
-            </div>  
+                    <div class="table-responsive form-group">
+                        <asp:GridView ID="grModificarItems" runat="server" ToolTip="Modificar Items" AutoGenerateColumns="False" 
+                            DataKeyNames="ITEM,ID_LINEA">
+                            <Columns>
+                                <asp:TemplateField HeaderText="#">
+                                    <ItemTemplate>
+                                        <%# Container.DataItemIndex + 1 %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ITEM" HeaderText="ITEM" ReadOnly="true">
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="LINEA" HeaderText="LINEA" ReadOnly="True" />
+                                <asp:TemplateField HeaderText="MADERA">
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="cbMadera" runat="server" CssClass="modificar">
+                                        </asp:DropDownList>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="HOJA" >
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="cbHoja" runat="server" CssClass="modificar">
+                                        </asp:DropDownList>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="MARCO">
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="cbMarco" runat="server" CssClass="modificar">
+                                        </asp:DropDownList>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="CHAPA">
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="cbChapa" runat="server" CssClass="modificar">
+                                        </asp:DropDownList>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="MANO">
+                                    <ItemTemplate>
+                                        <asp:DropDownList ID="cbMano" runat="server" CssClass="modificar">
+                                        </asp:DropDownList>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField HeaderText="CANT">
+                                    <ItemTemplate>
+                                        <asp:TextBox ID="txtCant" runat="server" Text='<%# Bind("CANT") %>' CssClass="modificar"></asp:TextBox>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="ID_LINEA" HeaderText="ID_LINEA">
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="ID_MADERA" HeaderText="ID_MADERA" Visible="False" />
+                                <asp:BoundField DataField="ID_HOJA" HeaderText="ID_HOJA" Visible="False" />
+                                <asp:BoundField DataField="ID_MARCO" HeaderText="ID_MARCO" Visible="False" />
+                                <asp:BoundField DataField="ID_CHAPA" HeaderText="ID_CHAPA" Visible="False" />
+                                <asp:BoundField DataField="ID_MANO" HeaderText="ID_MANO" Visible="False" />
+                                <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" SortExpression="ESTADO" >
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                            </Columns>
+                        </asp:GridView>  
+                    </div>  
                 </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Eliminar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionModificar" data-dismiss="modal">Guardar</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
     </div>
+    <!--MODAL CONFIRMACION MODIFICAR ITEMS ITEMS-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfirmacionModificar">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger"">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                    </div>
+                <div class="modal-body">
+                        <p>Desea Modificar los items seleccionados?</p>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlModificarItems" data-dismiss="modal">No</button>
+                    <asp:Button ID="btnModificarItems" runat="server" Text="Si" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </asp:Content>

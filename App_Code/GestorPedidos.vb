@@ -274,4 +274,64 @@ Public Class GestorPedidos
         End If
         Return ret
     End Function
+
+    Public Sub modificar(_gr As GridView)
+        Dim update = False
+        For Each r As GridViewRow In _gr.Rows
+            Dim cbMadera As DropDownList
+            Dim cbHoja As DropDownList
+            Dim cbMarco As DropDownList
+            Dim cbChapa As DropDownList
+            Dim cbMano As DropDownList
+            Dim txtCant As TextBox
+            Dim idItem = _gr.DataKeys(r.RowIndex).Values(0)
+            Dim itemIndex = pedido.itemIndex(idItem)
+
+            cbMadera = r.FindControl("cbMadera")
+            cbHoja = r.FindControl("cbHoja")
+            cbMarco = r.FindControl("cbMarco")
+            cbChapa = r.FindControl("cbChapa")
+            cbMano = r.FindControl("cbMano")
+            txtCant = r.FindControl("txtCant")
+
+            If pedido.items(itemIndex).getProducto.madera.id <> cbMadera.SelectedValue Or
+                pedido.items(itemIndex).getProducto.hoja.id <> cbHoja.SelectedValue Or
+                pedido.items(itemIndex).getProducto.marco.id <> cbMarco.SelectedValue Or
+                pedido.items(itemIndex).getProducto.chapa.id <> cbChapa.SelectedValue Or
+                pedido.items(itemIndex).getProducto.mano.id <> cbMano.SelectedValue Or
+                pedido.items(itemIndex).getCant <> txtCant.Text.Trim Then
+                update = True
+            End If
+
+            Try
+                'ACTUALIZAR ITEM MODIFICADO
+                If update Then
+                    Dim cant = txtCant.Text.Trim
+                    Dim chapa = New Chapa(cbChapa.SelectedItem.Value, cbChapa.SelectedItem.Text)
+                    Dim marco = New Marco(cbMarco.SelectedItem.Value, cbMarco.SelectedItem.Text)
+                    Dim madera = New Madera(cbMadera.SelectedItem.Value, cbMadera.SelectedItem.Text)
+                    Dim hoja = New Hoja(cbHoja.SelectedItem.Value, cbHoja.SelectedItem.Text)
+                    Dim mano = New Mano(cbMano.SelectedItem.Value, cbMano.SelectedItem.Text)
+                    Dim linea = pedido.items(pedido.itemIndex(idItem)).getProducto().linea
+                    Dim producto = New Producto(hoja, marco, madera, chapa, mano, linea)
+
+
+                    pedido.items(itemIndex).setProducto(producto)
+                    pedido.items(itemIndex).setCant(cant)
+                    pedido.items(itemIndex).actualizar()
+                End If
+            Catch ex As Exception
+                Throw
+            End Try
+        Next
+
+        'ACTUALIZAR PEDIDO
+        If update Then
+            Try
+                pedido.actualizar()
+            Catch ex As Exception
+                Throw
+            End Try
+        End If
+    End Sub
 End Class

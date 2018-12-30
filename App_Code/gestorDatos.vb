@@ -155,6 +155,44 @@ Public Class GestorDatos
 
     End Sub
 
+    Public Sub fillCombos(ByVal _idLinea As Integer, ByVal _cbChapa As DropDownList, ByVal _cbMarco As DropDownList, ByVal _cbMadera As DropDownList, ByVal _cbHoja As DropDownList, ByVal _cbMano As DropDownList)
+        Dim db = New DbHelper()
+
+        _cbMarco.DataSource = db.fillCombo("SP_COMBO_MARCO", _idLinea)
+        _cbMadera.DataSource = db.fillCombo("SP_COMBO_MADERA", _idLinea)
+        _cbChapa.DataSource = db.fillCombo("SP_COMBO_CHAPA", _idLinea)
+        _cbHoja.DataSource = db.fillCombo("SP_COMBO_HOJA", _idLinea)
+        _cbMano.DataSource = db.fillCombo("SP_COMBO_MANO", _idLinea)
+
+        _cbMano.DataTextField = "nombre"
+        _cbMano.DataValueField = "id"
+
+        _cbChapa.DataTextField = "nombre"
+        _cbChapa.DataValueField = "id"
+
+        _cbMarco.DataTextField = "nombre"
+        _cbMarco.DataValueField = "id"
+
+        _cbMadera.DataTextField = "nombre"
+        _cbMadera.DataValueField = "id"
+
+        _cbHoja.DataTextField = "nombre"
+        _cbHoja.DataValueField = "id"
+
+        _cbChapa.DataSourceID = Nothing
+        _cbMarco.DataSourceID = Nothing
+        _cbMadera.DataSourceID = Nothing
+        _cbHoja.DataSourceID = Nothing
+        _cbMano.DataSourceID = Nothing
+
+        _cbChapa.DataBind()
+        _cbMarco.DataBind()
+        _cbMadera.DataBind()
+        _cbHoja.DataBind()
+        _cbMano.DataBind()
+
+    End Sub
+
     Friend Function buscarProductos(_idLinea As Object, _idChapa As Object, _idHoja As Object, _idMarco As Object, _idMadera As Object, _idMano As Object) As DataTable
         db = New DbHelper()
         Return db.buscarPedidos(_idLinea, _idChapa, _idHoja, _idMarco, _idMadera, _idMano)

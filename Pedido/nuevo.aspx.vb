@@ -28,7 +28,6 @@ Public Class nuevo
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
-
     End Sub
 
     Protected Sub dpCliente_SelectedIndexChanged(sender As Object, e As EventArgs) Handles dpCliente.SelectedIndexChanged

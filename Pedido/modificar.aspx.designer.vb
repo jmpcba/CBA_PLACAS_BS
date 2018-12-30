@@ -264,4 +264,13 @@ Partial Public Class modificar
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grModificarItems As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control btnModificarItems.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnModificarItems As Global.System.Web.UI.WebControls.Button
 End Class

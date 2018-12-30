@@ -254,6 +254,7 @@
     <Content Include="Pedido\confirmacion.aspx" />
     <Content Include="Pedido\modificar.aspx" />
     <Content Include="Pedido\nuevo.aspx" />
+    <Content Include="Pedido\tests.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -536,6 +537,13 @@
     </Compile>
     <Compile Include="Pedido\nuevo.aspx.vb">
       <DependentUpon>nuevo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\tests.aspx.designer.vb">
+      <DependentUpon>tests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\tests.aspx.vb">
+      <DependentUpon>tests.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="reporte\compras.vb">
