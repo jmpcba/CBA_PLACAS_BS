@@ -8,17 +8,21 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
+        Dim idPedido As Integer
 
         If IsPostBack Then
             HFAgregar.Value = 0
+            HFIsPostBack.Value = 1
         Else
             gd.getCombos(cbLinea, GestorDatos.combos.lineas)
             llenarGrillaPedido()
+            HFIsPostBack.Value = 0
         End If
 
-        gp = Session("gp")
+        idPedido = ViewState("idPedido")
 
-        If Not IsNothing(gp) Then
+        If idPedido <> 0 Then
+            gp = New GestorPedidos(idPedido)
             HFEstado.Value = gp.pedido.estado.id
         End If
     End Sub

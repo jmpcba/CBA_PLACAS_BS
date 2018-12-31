@@ -1,9 +1,14 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="nuevo.aspx.vb" Inherits="CBA_PLACAS_BS.nuevo" Theme="default" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <script type="text/javascript" src="../scripts/funcionesComunes.js">
-    </script>
+    <script type="text/javascript" src="../scripts/funcionesComunes.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var dropdowns = [$("#" + '<%= dpCliente.ClientID %>'), $("#" + '<%= cbLinea.ClientID %>')]
+
+            if ($("#" + '<%= HFIsPostBack.ClientID %>').val() == 0) {
+                iniciarDropDowns(dropdowns)
+            }
             //ABRIR ULTIMO PANEL
             var pnlActual = $("#" + '<%= HFPanelActual.ClientID %>').val()
             var pnlAnterior = $("#" + '<%= HFPanelAnterior.ClientID %>').val()
@@ -92,6 +97,7 @@
     <asp:HiddenField ID="HFPanelAnterior" runat="server" />
     <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
     <asp:HiddenField ID="hfPedido" runat="server" Value="0" />
+    <asp:HiddenField ID="HFIsPostBack" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Nuevo Pedido<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>

@@ -115,6 +115,19 @@ Public Class Pedido
 
     Friend Sub actualizar(Optional _updateItems As Boolean = False)
         Dim db = New DbHelper("pedidos")
+        Dim idEstado = Estado.estados.cancelado
+
+        For Each i As Item In items
+            If i.getEstado().id <> Estado.estados.cancelado Then
+                If i.getEstado.id < idEstado Then
+                    idEstado = i.getEstado.id
+                End If
+            End If
+        Next
+
+        If estado.id <> idEstado Then
+            estado = New Estado(idEstado)
+        End If
 
         If _updateItems Then
             For Each i As Item In items

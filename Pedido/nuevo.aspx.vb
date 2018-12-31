@@ -15,6 +15,7 @@ Public Class nuevo
                 HFPanelActual.Value = Request.Form(HFPanelActual.UniqueID)
                 HFPanelAnterior.Value = Request.Form(HFPanelAnterior.UniqueID)
                 HFPos.Value = Request.Form(HFPos.UniqueID)
+                HFIsPostBack.Value = 1
             Else
                 gd.getCombos(cbLinea, GestorDatos.combos.lineas)
                 gd.getCombos(dpCliente, GestorDatos.combos.clientes)
@@ -22,6 +23,7 @@ Public Class nuevo
                 HFPanelAnterior.Value = ""
                 HFPos.Value = ""
                 hfPedido.Value = "0"
+                HFIsPostBack.Value = 0
                 gp = Nothing
             End If
 

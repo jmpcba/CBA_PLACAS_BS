@@ -5,6 +5,11 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            var dropdowns = [ $("#" + '<%= DPFiltroEstados.ClientID %>'), $("#" + '<%= DPFiltroClientes.ClientID %>')]
+
+            iniciarDropDowns(dropdowns)
+
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
@@ -200,58 +205,26 @@
 
             //FILTRO TABLA PEDIDOS POR ESTADO
             $("#" + '<%= DPFiltroEstados.ClientID %>').change(function () {
-                var estado, table, tr, txtValue, td;
+                var estado, table
                 estado = this.value;
                 table = document.getElementById('<%= grPedidos.ClientID %>');
-                console.log(estado);
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[3];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(estado) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
+                filtro(table, estado, 3)
             })
             
             //FILTRO CLIENTES
             $("#" + '<%= DPFiltroClientes.ClientID %>').change(function () {
-                var cliente, table, tr, txtValue, td;
+                var cliente, table
                 cliente = this.value;
                 table = document.getElementById('<%= grPedidos.ClientID %>');
-                console.log(cliente);
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[1];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(cliente.toUpperCase()) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
+                filtro(table, cliente, 1)
             })
 
+            //LIMPIAR FILTROS
             $("#btnLimpiarFiltro").click(function(){
                 table = document.getElementById('<%= grPedidos.ClientID %>');
-                tr = table.getElementsByTagName("tr");
+                limpiarFiltro(table)
 
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[3];
-                    if (td) {
-                            tr[i].style.display = "";
-                    }
-                }
-                console.log("boton limpiar filtro")
-                $("#" + '<%= DPFiltroEstados.ClientID %>').val("0")
+               iniciarDropDowns(dropdowns)
             })
         })
     </script>

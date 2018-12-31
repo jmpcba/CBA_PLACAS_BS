@@ -41,6 +41,15 @@ Partial Public Class modificar
     Protected WithEvents HFIdPedido As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFIsPostBack.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFIsPostBack As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control lblSubtitulo.
     '''</summary>
     '''<remarks>

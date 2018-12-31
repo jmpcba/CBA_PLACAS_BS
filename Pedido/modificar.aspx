@@ -4,6 +4,12 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var dropdowns = [$("#" + '<%= DPFiltroEstados.ClientID %>'), $("#" + '<%= DPFiltroClientes.ClientID %>')]
+
+            if ($("#" + '<%= HFIsPostBack.ClientID %>').val() == 0) {
+                iniciarDropDowns(dropdowns)
+            }
+
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
@@ -24,12 +30,35 @@
             } else {
                 $('#mdlAgregar').modal('hide')
             }
+
+            $("#" + '<%= DPFiltroEstados.ClientID %>').change(function () {
+                var estado, table
+                estado = this.value;
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                filtro(table, estado, 3)
+            })
+
+
+            $("#" + '<%= DPFiltroClientes.ClientID %>').change(function () {
+                var cliente, table
+                cliente = this.value;
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                filtro(table, cliente, 1)
+            })
+
+            $("#btnLimpiarFiltro").click(function () {
+                table = document.getElementById('<%= grPedidos.ClientID %>');
+                limpiarFiltro(table)
+
+                iniciarDropDowns(dropdowns)
+            })
         })
     </script>
     <!--HIDDEN FIELDS-->
     <asp:HiddenField ID="HFEstado" runat="server" Value="0" />
     <asp:HiddenField ID="HFAgregar" runat="server" Value="0" />
     <asp:HiddenField ID="HFIdPedido" runat="server" Value="0" />
+    <asp:HiddenField ID="HFIsPostBack" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Modificar Pedidos <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -339,7 +368,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Eliminar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Cancelar Items</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
@@ -409,7 +438,6 @@
                                 <asp:TemplateField HeaderText="CANT">
                                     <ItemTemplate>
                                         <asp:TextBox ID="txtCant" runat="server" Text='<%# Bind("CANT") %>' CssClass="modificar" ValidationGroup="VGModificar"></asp:TextBox>
-                                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="RangeValidator" ValidationGroup="VGModificar" Type="Integer" MinimumValue="1"></asp:RangeValidator>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="ID_LINEA" HeaderText="ID_LINEA">

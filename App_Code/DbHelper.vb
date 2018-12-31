@@ -714,7 +714,7 @@ Public Class DbHelper
     Public Function getItems(_pedido As Integer) As DataTable
         Try
             cmd.Connection = cnn
-            cmd.CommandText = "SELECT * FROM VW_ITEMS WHERE ID_PEDIDO=" & _pedido
+            cmd.CommandText = String.Format("SELECT * FROM VW_ITEMS WHERE ID_PEDIDO={0} AND ID_ESTADO <> 7", _pedido)
             cmd.CommandType = CommandType.Text
 
             da.Fill(ds, table)
