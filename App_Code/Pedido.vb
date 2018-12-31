@@ -64,9 +64,9 @@ Public Class Pedido
             For Each r As DataRow In tItems.Rows
                 Dim item = New Item(r("id"))
                 items.Add(item)
-                precioTotal += item.monto
-                cantTotal += item.getCant()
             Next
+
+            calcularTotales()
 
         Catch ex As Exception
             Throw
@@ -74,27 +74,30 @@ Public Class Pedido
 
     End Sub
 
-    Public Sub agregarItem(ByVal _item As Item)
-        Dim encontro = False
+    'Public Function agregarItem(ByVal _item As Item) As Boolean
+    '    Dim encontro = False
 
-        For Each i As Item In items
-            If i.getProducto.id = _item.getProducto.id Then
-                Dim cantActual = i.getCant()
-                i.setCant(cantActual + _item.getCant())
-                i.monto += _item.monto
-                encontro = True
-                Exit For
-            End If
-        Next
+    '    For Each i As Item In items
+    '        If i.getProducto.id = _item.getProducto.id Then
+    '            Dim cantActual = i.getCant()
+    '            i.setCant(cantActual + _item.getCant())
+    '            i.monto += _item.monto
+    '            i.idPedido = id
+    '            encontro = True
+    '            i.actualizar()
+    '            Exit For
+    '        End If
+    '    Next
 
-        If Not encontro Then
-            items.Add(_item)
-        End If
+    '    If Not encontro Then
+    '        items.Add(_item)
+    '    End If
 
-        precioTotal += _item.monto
-        cantTotal += _item.getCant()
+    '    calcularTotales()
 
-    End Sub
+    '    Return encontro
+
+    'End Function
 
     Public Sub enviar()
         db = New DbHelper()
@@ -152,8 +155,7 @@ Public Class Pedido
         Dim i As Item
         i = items(_index)
         items.Remove(i)
-        cantTotal -= i.getCant()
-        precioTotal -= i.monto
+        calcularTotales()
     End Sub
 
     Public Function itemIndex(_id As Integer) As Integer
@@ -170,14 +172,16 @@ Public Class Pedido
         Return result
     End Function
 
-    Private Sub calcularTotales()
+    Public Sub calcularTotales()
 
         cantTotal = 0
         precioTotal = 0
 
         For Each i As Item In items
-            cantTotal += i.getCant()
-            precioTotal += i.monto
+            If i.getEstado().id <> 7 Then
+                cantTotal += i.getCant()
+                precioTotal += i.monto
+            End If
         Next
     End Sub
 

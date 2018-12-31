@@ -180,7 +180,7 @@
                 </h4>
             </div>
             <div id="pnlPedido" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">                
+                <div class="panel-body">                                                                                                                              
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Seleccione una linea de productos</h3>
@@ -194,8 +194,8 @@
                         </div>
                     </div>
                 </div>
-                <br />
-                <asp:Panel ID="pnlCombos" Visible="false" runat="server">
+                    <br />
+                    <asp:Panel ID="pnlCombos" Visible="false" runat="server">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Caracteristicas</h3>
@@ -258,7 +258,7 @@
                     </div>
                     <br />
                 </asp:Panel>
-                <asp:Panel ID="pnlDetalle" Visible ="false" runat="server">
+                    <asp:Panel ID="pnlDetalle" Visible ="false" runat="server">
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Detalle</h3>

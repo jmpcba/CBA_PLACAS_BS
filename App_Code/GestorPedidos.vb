@@ -18,14 +18,30 @@ Public Class GestorPedidos
     End Sub
 
     Public Sub addItem(ByVal _item As Item, Optional _existente As Boolean = False)
+        Dim encontro As Boolean
         Try
             If _existente Then
-                _item.idPedido = pedido.id
-                _item.insertar()
-                pedido.agregarItem(_item)
+                For Each i As Item In pedido.items
+                    If i.getProducto.id = _item.getProducto.id And i.getEstado.id <> Estado.estados.cancelado Then
+                        Dim cantActual = i.getCant()
+                        i.setCant(cantActual + _item.getCant())
+                        i.monto += _item.monto
+                        i.actualizar()
+                        encontro = True
+                        Exit For
+                    End If
+                Next
+
+                If Not encontro Then
+                    pedido.items.Add(_item)
+                    _item.idPedido = pedido.id
+                    _item.insertar()
+                End If
+
+                pedido.calcularTotales()
                 pedido.actualizar()
             Else
-                pedido.agregarItem(_item)
+                pedido.items.Add(_item)
             End If
         Catch ex As Exception
             Throw
@@ -191,6 +207,10 @@ Public Class GestorPedidos
                 pedido.actualizar()
                 mail.send(String.Format("Su pedido {0} fue modificado", pedido.id))
             End If
+
+            pedido.calcularTotales()
+            pedido.actualizar()
+
         Catch ex As Exception
             Throw
         End Try
@@ -328,6 +348,7 @@ Public Class GestorPedidos
         'ACTUALIZAR PEDIDO
         If update Then
             Try
+                pedido.calcularTotales()
                 pedido.actualizar()
             Catch ex As Exception
                 Throw

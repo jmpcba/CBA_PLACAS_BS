@@ -9,15 +9,27 @@
 
             var estado = parseInt($("#" + '<%= HFEstado.ClientID %>').val(), 10)
             console.log(estado)
+
             if (estado >= 4) {
+
                 $("#liPedido").addClass("disabled")
                 $("#liItem").addClass("disabled")
-                $("#btnModificar").prop("disabled", true)
+                $("#liAgregar").addClass("disabled")
+                $("#liModificar").addClass("disabled")
+
+            }
+
+            if ($("#" + '<%= HFAgregar.ClientID %>').val() ==1){
+                $('#mdlAgregar').modal('show')
+            } else {
+                $('#mdlAgregar').modal('hide')
             }
         })
     </script>
     <!--HIDDEN FIELDS-->
     <asp:HiddenField ID="HFEstado" runat="server" Value="0" />
+    <asp:HiddenField ID="HFAgregar" runat="server" Value="0" />
+    <asp:HiddenField ID="HFIdPedido" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Modificar Pedidos <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -93,9 +105,15 @@
                     <li id="liItem"><a id="aEtiqueta" href="#mdlEliminarItems" data-toggle="modal">Cancelar Items</a></li>
                   </ul>
                 </div>
-                <button id="btnModificar" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlModificarItems">
-                    Modificar
-                </button>
+                <div class="btn-group">
+                  <button id="btnModificarGrupo" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Modificar <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li id="liAgregar"><a id="aAgregar" href="#mdlAgregar" data-toggle="modal">Agregar Items</a></li>
+                    <li id="liModificar"><a id="aModificar" href="#mdlModificarItems" data-toggle="modal">Modificar Items</a></li>
+                  </ul>
+                </div>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
             </div>
         </div>
@@ -344,7 +362,7 @@
                 <div class="panel-body">
                     <div class="table-responsive form-group">
                         <asp:GridView ID="grModificarItems" runat="server" ToolTip="Modificar Items" AutoGenerateColumns="False" 
-                            DataKeyNames="ITEM,ID_LINEA">
+                            DataKeyNames="ITEM,ID_LINEA,ID_ESTADO">
                             <Columns>
                                 <asp:TemplateField HeaderText="#">
                                     <ItemTemplate>
@@ -390,7 +408,8 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="CANT">
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtCant" runat="server" Text='<%# Bind("CANT") %>' CssClass="modificar"></asp:TextBox>
+                                        <asp:TextBox ID="txtCant" runat="server" Text='<%# Bind("CANT") %>' CssClass="modificar" ValidationGroup="VGModificar"></asp:TextBox>
+                                        <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="RangeValidator" ValidationGroup="VGModificar" Type="Integer" MinimumValue="1"></asp:RangeValidator>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="ID_LINEA" HeaderText="ID_LINEA">
@@ -405,6 +424,12 @@
                                 <asp:BoundField DataField="ID_CHAPA" HeaderText="ID_CHAPA" Visible="False" />
                                 <asp:BoundField DataField="ID_MANO" HeaderText="ID_MANO" Visible="False" />
                                 <asp:BoundField DataField="ESTADO" HeaderText="ESTADO" SortExpression="ESTADO" >
+                                    <ControlStyle CssClass="hiddencol" />
+                                    <FooterStyle CssClass="hiddencol" />
+                                    <HeaderStyle CssClass="hiddencol" />
+                                    <ItemStyle CssClass="hiddencol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
                                     <ControlStyle CssClass="hiddencol" />
                                     <FooterStyle CssClass="hiddencol" />
                                     <HeaderStyle CssClass="hiddencol" />
@@ -441,4 +466,93 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <!--MODAL AGREGAR ITEMS-->
+    <div class="modal fade" id="mdlAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Agregar Items</h4>
+          </div>
+          <div class="modal-body">
+            <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Seleccione una linea de productos</h3>
+                        </div>
+                    <div class="panel-body">
+                        <div class="col-md-1">
+                            Linea:
+                        </div>
+                        <div class="col-md-3">
+                            <asp:DropDownList ID="cbLinea" AutoPostBack="true" runat="server"></asp:DropDownList>
+                        </div>
+                    </div>
+                </div>
+                    <br />
+                    <asp:Panel ID="pnlCombos" Visible="false" runat="server">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Caracteristicas</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Chapa:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbChapa" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Marco:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMarco" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Madera:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMadera" runat="server"></asp:DropDownList>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    Hoja:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbHoja" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Mano:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:DropDownList ID="cbMano" runat="server"></asp:DropDownList>
+                                </div>
+                                <div class="col-md-2">
+                                    Cantidad:
+                                </div>
+                                <div class="col-md-2">
+                                    <asp:TextBox ID="txtCant" runat="server"></asp:TextBox>
+                                    <asp:RegularExpressionValidator ID="rgvCant" runat="server" ErrorMessage="Ingrese un valor numerico" ControlToValidate="txtCant" ValidationExpression="\d*" Display="Static" Text="*" CssClass="validators"></asp:RegularExpressionValidator>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Ingrese un valor numerico" Text="*" ControlToValidate="txtCant" CssClass="validators"></asp:RequiredFieldValidator>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <asp:Panel ID="pnlValidacion" runat="server" CssClass="validators">
+                                    <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="List" />
+                                </asp:Panel>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </asp:Panel>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
+          </div>
+        </div>
+    </div>
+</div>
 </asp:Content>

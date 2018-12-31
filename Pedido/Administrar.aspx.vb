@@ -292,12 +292,10 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
-
     End Sub
 
     Protected Sub btnCambiarStock_Click(sender As Object, e As EventArgs) Handles btnCambiarStock.Click
         Try
-
             gp = Session("gp")
             gp.EnviarProduccion(grCambiarStock, True)
 

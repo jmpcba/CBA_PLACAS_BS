@@ -49,6 +49,7 @@
             </Columns>
         </asp:GridView>
     <br />
+    <asp:CheckBox ID="CheckBox1" runat="server" />
     <br />
     <asp:Button ID="Button1" runat="server" Text="Button" />
 </asp:Content>
