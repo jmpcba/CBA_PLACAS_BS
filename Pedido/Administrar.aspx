@@ -229,7 +229,7 @@
         })
     </script>
     <div class="page-header">
-        <h1 class="text-center">Administracion de Pedidos <br /><small>
+        <h1 class="text-center">Administrar Pedidos <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">

@@ -110,7 +110,7 @@ Public Class GestorPedidos
                     i.actualizar()
                 End If
 
-                If i.getEstado.id <> Estado.estados.deposito Then
+                If i.getEstado.id <> Estado.estados.deposito And i.getEstado.id <> Estado.estados.cancelado Then
                     flag = False
                 End If
             Next
@@ -236,13 +236,15 @@ Public Class GestorPedidos
     Public Sub actualizarEstado(_estado As Estado)
         Try
             For Each i As Item In pedido.items
-                i.setEstado(_estado)
-                i.actualizar()
+                If i.getEstado.id <> Estado.estados.cancelado Then
+                    i.setEstado(_estado)
+                    i.actualizar()
+                End If
             Next
 
             pedido.estado = _estado
             pedido.actualizar()
-            mail.send(String.Format("Su pedido {0} se encuenbtra en estado: {1}", pedido.id, pedido.estado.nombre))
+            mail.send(String.Format("Su pedido {0} se encuentra en estado: {1}", pedido.id, pedido.estado.nombre))
         Catch ex As Exception
             Throw
         End Try
