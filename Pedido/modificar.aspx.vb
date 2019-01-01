@@ -21,34 +21,29 @@
 
         idPedido = ViewState("idPedido")
 
-        If idPedido <> 0 Then
-            gp = New GestorPedidos(idPedido)
-            HFEstado.Value = gp.pedido.estado.id
-        End If
     End Sub
 
     Private Sub llenarGrillaPedido()
-        grPedidos.DataSource = gd.getGrilla(GestorDatos.grillas.pedidosModificar)
-        grPedidos.DataBind()
+        'grPedidos.DataSource = gd.getGrilla(GestorDatos.grillas.pedidosModificar)
+        'grPedidos.DataBind()
         grPedidos.SelectedIndex = -1
     End Sub
 
     Protected Sub grPedidos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
         Try
             Dim row = grPedidos.SelectedRow
-            Dim idItem = row.Cells(1).Text
+            Dim idPedido = Convert.ToInt32(grPedidos.SelectedDataKey.Value)
 
             pnlPedidos.Visible = False
             pnlDetalle.Visible = True
 
-            gp = New GestorPedidos(idItem)
+            gp = New GestorPedidos(idPedido)
 
-            Session("gp") = gp
             ViewState("idPedido") = gp.pedido.id
             llenarGrillaDetalle()
 
             lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", gp.pedido.id)
-            HFEstado.Value = gp.pedido.estado.id
+
             sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id))
 
         Catch ex As Exception
@@ -59,7 +54,9 @@
     Private Sub llenarGrillaDetalle()
         Dim items As DataTable
         Dim idPedido As Integer
+
         idPedido = ViewState("idPedido")
+        HFEstado.Value = gp.pedido.estado.id
 
         'refrescar el objeto pedidos desde la DB
         gp = New GestorPedidos(idPedido)
@@ -169,8 +166,6 @@
 
         Catch ex As Exception
             sb.writeError(ex.Message)
-        Finally
-            Session("gp") = gp
         End Try
     End Sub
 
@@ -201,7 +196,6 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         Finally
-            Session("gp") = gp
             llenarGrillaDetalle()
         End Try
 
@@ -256,7 +250,6 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         Finally
-            Session("gp") = gp
             llenarGrillaDetalle()
         End Try
     End Sub

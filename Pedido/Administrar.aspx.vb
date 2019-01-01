@@ -22,9 +22,9 @@
             pnlDetalle.Visible = True
 
             idPedido = Convert.ToInt32(grPedidos.SelectedDataKey.Value)
+            ViewState("idPedido") = idPedido
             gp = New GestorPedidos(idPedido)
             HFIDPedido.Value = gp.pedido.id.ToString
-            Session("gp") = gp
 
             validar(gp)
             llenarGrillasDetalle(gp)
@@ -38,8 +38,8 @@
         End Try
     End Sub
 
-    Private Sub calcularRangeValidatorsGrillasStock()
-        gp = Session("gp")
+    Private Sub calcularRangeValidatorsGrillasStock(_gp)
+
 
         For Each r As GridViewRow In grEnviarProd.Rows
 
@@ -62,11 +62,11 @@
 
         For Each r As GridViewRow In grCambiarStock.Rows
             Dim idItem = r.Cells(12).Text
-            Dim index = gp.pedido.itemIndex(idItem)
+            Dim index = _gp.pedido.itemIndex(idItem)
             Dim val As RangeValidator
             Dim stock = Convert.ToInt32(r.Cells(8).Text)
             Dim cant = Convert.ToInt32(r.Cells(7).Text)
-            Dim ensamblados = gp.pedido.items(index).getEnsamblados
+            Dim ensamblados = _gp.pedido.items(index).getEnsamblados
             Dim numeroLinea = r.RowIndex + 1
             val = r.FindControl("rvStockNvo")
             val.MinimumValue = 0
@@ -149,7 +149,9 @@
     Protected Sub btnEnviarProd_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
         Try
 
-            gp = Session("gp")
+            Dim idPedido As Integer
+            idPedido = ViewState("idPedido")
+            gp = New GestorPedidos(idPedido)
             gp.EnviarProduccion(grEnviarProd)
             sb.write(String.Format("Pedido {0} enviado a produccion", gp.pedido.id))
             HFCrystal.Value = "orden"
@@ -173,7 +175,7 @@
         grStock.DataSource = items
         grCambiarStock.DataSource = items
         grDeposito.DataSource = items
-        grEnviarProd.DataSource = items
+        grEnviarProd.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.enviarProd)
         grAlmc.DataSource = items
         grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
         grImprimir.DataSource = items
@@ -239,12 +241,15 @@
             lblModificadoDet.Text = ""
         End If
         'range validators de enviar a prod y cambiar stock
-        calcularRangeValidatorsGrillasStock()
+        calcularRangeValidatorsGrillasStock(_gp)
     End Sub
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click
         Try
-            gp = Session("gp")
+            Dim idPedido As Integer
+            idPedido = ViewState("idPedido")
+            gp = New GestorPedidos(idPedido)
+
             gp.actualizarEnCurso(grEnCurso)
             validar(gp)
             llenarGrillasDetalle(gp)
@@ -257,7 +262,10 @@
     End Sub
 
     Protected Sub btnRefrescar_Click(sender As Object, e As EventArgs) Handles btnRefrescar.Click
-        gp = Session("gp")
+        Dim idPedido As Integer
+        idPedido = ViewState("idPedido")
+        gp = New GestorPedidos(idPedido)
+
         llenarGrillasDetalle(gp)
         validar(gp)
     End Sub
@@ -269,7 +277,9 @@
     Protected Sub btnAccionDepo_Click(sender As Object, e As EventArgs) Handles btnAccionDepo.Click
 
         Try
-            gp = Session("gp")
+            Dim idPedido As Integer
+            idPedido = ViewState("idPedido")
+            gp = New GestorPedidos(idPedido)
 
             If gp.pedido.getPAlmacenar > 0 Then
                 gp.enviarDeposito()
@@ -287,7 +297,6 @@
 
             validar(gp)
             llenarGrillasDetalle(gp)
-            Session("gp") = gp
 
         Catch ex As Exception
             sb.writeError(ex.Message)
@@ -296,7 +305,10 @@
 
     Protected Sub btnCambiarStock_Click(sender As Object, e As EventArgs) Handles btnCambiarStock.Click
         Try
-            gp = Session("gp")
+            Dim idPedido As Integer
+            idPedido = ViewState("idPedido")
+            gp = New GestorPedidos(idPedido)
+
             gp.EnviarProduccion(grCambiarStock, True)
 
             sb.write(String.Format("Pedido {0} Actualizado", gp.pedido.id))

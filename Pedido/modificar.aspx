@@ -87,37 +87,42 @@
                 </div>
                 <div class="col-md-3">
                     <asp:DropDownList ID="DPFiltroClientes" runat="server" DataSourceID="SqlDataSource1" DataTextField="NOMBRE" DataValueField="NOMBRE"></asp:DropDownList>
-                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
                 </div>
                 <div class="col-md-3">
-                     <div class="btn-group" role="group" aria-label="...">
-                <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
-                <asp:Button ID="Button1" runat="server" Text="Refrescar" />
-            </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
+                        <asp:Button ID="Button1" runat="server" Text="Refrescar" />
+                    </div>
                 </div>
             </div>
         </div>
+        <br />
         <div class="row">
-            <div class="table-responsive">
-            <asp:GridView ID="grPedidos" 
-            runat="server" 
-            AutoGenerateColumns="False" 
-            ToolTip="Pedidos en Curso" 
-            DataKeyNames="Nro Pedido">
-            <Columns>
-                <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                <ControlStyle Height="20px" Width="20px" />
-                </asp:CommandField>
-                <asp:BoundField DataField="Nro Pedido" HeaderText="Nro Pedido" ReadOnly="True" SortExpression="Nro Pedido" />
-                <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
-                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" SortExpression="Cantidad" />
-                <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
-                <asp:BoundField DataField="Fecha Recibido" HeaderText="Fecha Recibido" SortExpression="Fecha Recibido" DataFormatString="{0:d}" />
-                <asp:BoundField DataField="Ultima Modificacion" HeaderText="Ultima Modificacion" SortExpression="Ultima Modificacion" DataFormatString="{0:d}" />
-            </Columns>
-        </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [CLIENTES]"></asp:SqlDataSource>
-        </div>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <asp:GridView ID="grPedidos" runat="server" AutoGenerateColumns="False" DataSourceID="dsNvos" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed"><Columns>
+                        <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
+                        <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
+                        <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" SortExpression="Cantidad" >
+                        <ItemStyle CssClass="numCol" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
+                        <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
+                        </asp:CommandField>
+                        </Columns>
+                    </asp:GridView>
+                    <asp:SqlDataSource ID="dsNvos" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT DISTINCT * FROM [VW_PEDIDOS_EN_CURSO]"></asp:SqlDataSource>
+                </div>
+            </div>
         </div>
     </asp:Panel>
     <asp:Panel ID="pnlDetalle" CssClass="row" runat="server" Visible="false">

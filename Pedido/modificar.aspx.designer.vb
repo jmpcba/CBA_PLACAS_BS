@@ -113,13 +113,13 @@ Partial Public Class modificar
     Protected WithEvents DPFiltroClientes As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control SqlDataSource2.
+    '''Control SqlDataSource1.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents SqlDataSource2 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
     
     '''<summary>
     '''Control Button1.
@@ -140,13 +140,13 @@ Partial Public Class modificar
     Protected WithEvents grPedidos As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
-    '''Control SqlDataSource1.
+    '''Control dsNvos.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents SqlDataSource1 As Global.System.Web.UI.WebControls.SqlDataSource
+    Protected WithEvents dsNvos As Global.System.Web.UI.WebControls.SqlDataSource
     
     '''<summary>
     '''Control pnlDetalle.

@@ -117,6 +117,7 @@ Public Class Pedido
         Dim db = New DbHelper("pedidos")
         Dim idEstado = Estado.estados.cancelado
 
+        'BUSCAR EL ITEM CON ESTADO MENOR Y SETEAR ESE ESTADO PARA EL PEDIDO
         For Each i As Item In items
             If i.getEstado().id <> Estado.estados.cancelado Then
                 If i.getEstado.id < idEstado Then

@@ -360,6 +360,17 @@ Public Class GestorDatos
         End Try
     End Function
 
+    Public Function getItems(_pedido As Integer, _tipo As DbHelper.tipoItem) As DataTable
+        Try
+            Dim db = New DbHelper("ITEMS")
+
+            Return db.getItems(_pedido, _tipo)
+
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Public Function buscarPedidos(ByVal _nroPedido As Integer, _fecDesde As Date, ByVal _fecHasta As Date, _fecModDesde As Date, _fecModHasta As Date, ByVal _cliente As Object, ByVal _estado As Object) As DataTable
 
         Dim db = New DbHelper("pedidos")

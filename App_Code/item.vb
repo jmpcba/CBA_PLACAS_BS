@@ -138,7 +138,13 @@ Public Class Item
     Public Sub setStock(_newStock As Integer)
         db = New DbHelper
         stock = _newStock
+
+        If cant - stock - ensamblados > 0 Then
+            estado = New Estado(Estado.estados.enProduccion)
+        End If
+
         db.updateStock(id, stock)
+
     End Sub
 
 End Class

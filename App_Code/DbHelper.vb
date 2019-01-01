@@ -15,6 +15,12 @@ Public Class DbHelper
         MADERAS
     End Enum
 
+    Public Enum tipoItem
+        modificar
+        detalle
+        enviarProd
+    End Enum
+
     Sub New(ByVal _table As String)
         table = _table
         cnn = New SqlConnection(conStr)
@@ -715,6 +721,26 @@ Public Class DbHelper
         Try
             cmd.Connection = cnn
             cmd.CommandText = String.Format("SELECT * FROM VW_ITEMS WHERE ID_PEDIDO={0} AND ID_ESTADO <> 7", _pedido)
+            cmd.CommandType = CommandType.Text
+
+            da.Fill(ds, table)
+
+            Return ds.Tables(table)
+        Catch ex As SqlException
+            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Function
+
+    Public Function getItems(_pedido As Integer, _tipo As tipoItem) As DataTable
+        Dim query = String.Format("SELECT * FROM VW_ITEMS WHERE ID_PEDIDO={0} AND ID_ESTADO <> 7", _pedido)
+
+        If _tipo = tipoItem.enviarProd Then
+            query += " AND ID_ESTADO = 0"
+        End If
+
+        Try
+            cmd.Connection = cnn
+            cmd.CommandText = query
             cmd.CommandType = CommandType.Text
 
             da.Fill(ds, table)

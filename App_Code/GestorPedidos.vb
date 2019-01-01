@@ -88,8 +88,10 @@ Public Class GestorPedidos
         If cambio Then
             If pedido.estado.id < Estado.estados.enProduccion Then
                 pedido.estado = New Estado(Estado.estados.enProduccion)
-                pedido.actualizar()
             End If
+
+            pedido.actualizar()
+
         End If
     End Sub
 
@@ -161,7 +163,7 @@ Public Class GestorPedidos
                 If pedido.items(index).stock = pedido.items(index).getCant() Then
                     pedido.items(index).setEstado(New Estado(Estado.estados.deposito))
 
-                Else
+                ElseIf pedido.items(index).getEstado.id = Estado.estados.recibido Then
                     pedido.items(index).setEstado(New Estado(Estado.estados.enCola))
                 End If
             End If

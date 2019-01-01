@@ -259,10 +259,10 @@
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT [ID], [NOMBRE] FROM [CLIENTES]"></asp:SqlDataSource>
                 </div>
                 <div class="col-md-3">
-                     <div class="btn-group" role="group" aria-label="...">
-                <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
-                <asp:Button ID="Button1" runat="server" Text="Refrescar" />
-            </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
+                        <asp:Button ID="Button1" runat="server" Text="Refrescar" />
+                    </div>
                 </div>
             </div>
         </div>
