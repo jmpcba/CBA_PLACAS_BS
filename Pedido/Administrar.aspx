@@ -406,7 +406,7 @@
             <div id="deposito" class="panel-collapse collapse">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <asp:GridView ID="grDeposito" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table">
+                        <asp:GridView ID="grDeposito" runat="server" AutoGenerateColumns="False" ToolTip="Detalle pedido" CssClass="table" DataKeyNames="ID_ITEM,ID_ESTADO">
                             <Columns>
                                 <asp:TemplateField HeaderText="#">
                                     <ItemTemplate>

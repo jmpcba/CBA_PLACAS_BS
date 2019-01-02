@@ -19,6 +19,7 @@ Public Class DbHelper
         modificar
         detalle
         enviarProd
+        IncluirCancelados
     End Enum
 
     Sub New(ByVal _table As String)
@@ -111,7 +112,7 @@ Public Class DbHelper
         ElseIf _tipo = GestorDatos.reportes.ordenTrabajo Then
             query = "SELECT * FROM VW_ORDENES WHERE PEDIDO=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDeposito Then
-            query = "SELECT * FROM VW_ETIQUETAS WHERE ID=" & _pedido.id.ToString
+            query = "SELECT * FROM VW_ETIQUETAS WHERE ID_ESTADO <> 7 AND ID=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDepositoUnica Then
             query = "SELECT * FROM VW_ETIQUETAS_SIMPLE WHERE ID=" & _pedido.id.ToString
         ElseIf GestorDatos.reportes.etiquetaDepositoInterna Then
@@ -736,6 +737,9 @@ Public Class DbHelper
 
         If _tipo = tipoItem.enviarProd Then
             query += " AND ID_ESTADO = 0"
+        Else
+            _tipo = tipoItem.detalle
+            query = query.Replace(" AND ID_ESTADO <> 7", "")
         End If
 
         Try

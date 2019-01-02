@@ -174,7 +174,7 @@
         grDetalle.DataSource = items
         grStock.DataSource = items
         grCambiarStock.DataSource = items
-        grDeposito.DataSource = items
+        grDeposito.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.detalle)
         grEnviarProd.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.enviarProd)
         grAlmc.DataSource = items
         grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
@@ -242,6 +242,14 @@
         End If
         'range validators de enviar a prod y cambiar stock
         calcularRangeValidatorsGrillasStock(_gp)
+
+        For Each r As GridViewRow In grDeposito.Rows
+            Dim idEstado = grDeposito.DataKeys(r.RowIndex).Values(1)
+            If idEstado = Estado.estados.cancelado Then
+                r.ForeColor = Drawing.Color.Gray
+            End If
+        Next
+
     End Sub
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click

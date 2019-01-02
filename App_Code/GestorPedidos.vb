@@ -105,9 +105,11 @@ Public Class GestorPedidos
         Dim flag = True
         Try
             For Each i As Item In pedido.items
-                If i.getEnsamblados > i.getEnDeposito Then
-                    i.setEnDeposito(i.getEnsamblados)
-                    i.actualizar()
+                If i.getEstado.id <> Estado.estados.cancelado Then
+                    If i.getEnsamblados > i.getEnDeposito Then
+                        i.setEnDeposito(i.getEnsamblados)
+                        i.actualizar()
+                    End If
                 End If
 
                 If i.getEstado.id <> Estado.estados.deposito And i.getEstado.id <> Estado.estados.cancelado Then

@@ -62,7 +62,7 @@
         gp = New GestorPedidos(idPedido)
 
         items = gd.getItems(gp.pedido.id)
-        grProduccion.DataSource = items
+        grProduccion.DataSource = gd.getItems(gp.pedido.id, DbHelper.tipoItem.detalle)
         grDetalle.DataSource = items
         grEliminarItems.DataSource = items
         grModificarItems.DataSource = gd.getItemsModificar(gp.pedido.id)
