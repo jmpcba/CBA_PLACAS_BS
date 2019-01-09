@@ -196,7 +196,6 @@
             })
 
             $('#mdlImprimir').on('shown.bs.modal', function (e) {
-                console.log("PANEL ABIERTO");
                 urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
                 $("[type=checkbox]").removeAttr('checked');
             })

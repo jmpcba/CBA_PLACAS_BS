@@ -68,6 +68,15 @@ Partial Public Class clientes
     Protected WithEvents txtBuscarCuit As Global.System.Web.UI.WebControls.TextBox
     
     '''<summary>
+    '''Control dpFiltroProv.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents dpFiltroProv As Global.System.Web.UI.WebControls.DropDownList
+    
+    '''<summary>
     '''Control Button1.
     '''</summary>
     '''<remarks>
@@ -102,4 +111,58 @@ Partial Public Class clientes
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents pnlDetalle As Global.System.Web.UI.WebControls.Panel
+    
+    '''<summary>
+    '''Control txtCuit.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtCuit As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control txtNombre.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtNombre As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control txtTel.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtTel As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control txtMail.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtMail As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control txtCiudad.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtCiudad As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control dpProv.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents dpProv As Global.System.Web.UI.WebControls.DropDownList
 End Class
