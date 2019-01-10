@@ -254,6 +254,7 @@
     <Content Include="App_Themes\default\default.skin" />
     <Content Include="Pedido\confirmacion.aspx" />
     <Content Include="Pedido\modificar.aspx" />
+    <Content Include="Pedido\modificarDetalle.aspx" />
     <Content Include="Pedido\nuevo.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
@@ -538,6 +539,13 @@
     </Compile>
     <Compile Include="Pedido\modificar.aspx.vb">
       <DependentUpon>modificar.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\modificarDetalle.aspx.designer.vb">
+      <DependentUpon>modificarDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\modificarDetalle.aspx.vb">
+      <DependentUpon>modificarDetalle.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Pedido\nuevo.aspx.designer.vb">

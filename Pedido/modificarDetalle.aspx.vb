@@ -1,56 +1,29 @@
-﻿Public Class modificar
+﻿Public Class modificarDetalle
     Inherits System.Web.UI.Page
-
     Dim gd As GestorDatos
     Dim gp As GestorPedidos
     Dim sb As StatusBar
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim idPedido = Request.QueryString("idPedido")
+
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
-        Dim idPedido As Integer
+
+        ViewState("idPedido") = idPedido
+        llenarGrillaDetalle()
+
+        lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", gp.pedido.id)
+
+        sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id))
 
         If IsPostBack Then
             HFAgregar.Value = 0
             HFIsPostBack.Value = 1
         Else
             gd.getCombos(cbLinea, GestorDatos.combos.lineas)
-            llenarGrillaPedido()
             HFIsPostBack.Value = 0
         End If
-
-        idPedido = ViewState("idPedido")
-
-    End Sub
-
-    Private Sub llenarGrillaPedido()
-        'grPedidos.DataSource = gd.getGrilla(GestorDatos.grillas.pedidosModificar)
-        'grPedidos.DataBind()
-        grPedidos.SelectedIndex = -1
-    End Sub
-
-    Protected Sub grPedidos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
-        Try
-            Dim row = grPedidos.SelectedRow
-            Dim idPedido = Convert.ToInt32(grPedidos.SelectedDataKey.Value)
-
-            'pnlPedidos.Visible = False
-            'pnlDetalle.Visible = True
-
-            'gp = New GestorPedidos(idPedido)
-
-            'ViewState("idPedido") = gp.pedido.id
-            'llenarGrillaDetalle()
-
-            'lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", gp.pedido.id)
-
-            'sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id))
-
-            Response.Redirect("modificarDetalle.aspx?idPedido=" & idPedido)
-
-        Catch ex As Exception
-            sb.writeError(ex.Message)
-        End Try
     End Sub
 
     Private Sub llenarGrillaDetalle()
@@ -58,10 +31,10 @@
         Dim idPedido As Integer
 
         idPedido = ViewState("idPedido")
-        HFEstado.Value = gp.pedido.estado.id
 
         'refrescar el objeto pedidos desde la DB
         gp = New GestorPedidos(idPedido)
+        HFEstado.Value = gp.pedido.estado.id
 
         items = gd.getItems(gp.pedido.id)
         grProduccion.DataSource = gd.getItems(gp.pedido.id, DbHelper.tipoItem.detalle)
@@ -163,7 +136,6 @@
         Try
             gp.cancelarPedido()
             sb.write(String.Format("Pedido {0} - CANCELADO", gp.pedido.id))
-            HFEstado.Value = gp.pedido.estado.id
             llenarGrillaDetalle()
 
         Catch ex As Exception
@@ -172,11 +144,7 @@
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
-        pnlDetalle.Visible = False
-        pnlPedidos.Visible = True
-        llenarGrillaPedido()
-
-        lblSubtitulo.Text = ""
+        Response.Redirect("modificar.aspx")
     End Sub
 
     Protected Sub btnEliminarItems_Click(sender As Object, e As EventArgs) Handles btnEliminarItems.Click
