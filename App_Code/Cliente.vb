@@ -32,6 +32,9 @@ Public Class Cliente
 
     Public Sub New(_CUIT As String, _nombre As String, _tel As String, _mail As String, _dir As String, _ciudad As String, _prov As String)
         CUIT = _CUIT
+        CUIT = CUIT.Insert(2, "-")
+        CUIT = CUIT.Insert(CUIT.Length - 1, "-")
+
         nombre = _nombre
         tel = _tel
         mail = _mail

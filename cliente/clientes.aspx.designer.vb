@@ -77,13 +77,13 @@ Partial Public Class clientes
     Protected WithEvents dpFiltroProv As Global.System.Web.UI.WebControls.DropDownList
     
     '''<summary>
-    '''Control Button1.
+    '''Control btnRefrescar.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnRefrescar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
     '''Control grClientes.
@@ -131,6 +131,15 @@ Partial Public Class clientes
     Protected WithEvents txtNombre As Global.System.Web.UI.WebControls.TextBox
     
     '''<summary>
+    '''Control txtDir.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtDir As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
     '''Control txtTel.
     '''</summary>
     '''<remarks>
@@ -165,4 +174,13 @@ Partial Public Class clientes
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents dpProv As Global.System.Web.UI.WebControls.DropDownList
+    
+    '''<summary>
+    '''Control btnGuardar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnGuardar As Global.System.Web.UI.WebControls.Button
 End Class

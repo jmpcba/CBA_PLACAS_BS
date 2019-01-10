@@ -53,10 +53,15 @@
                 </div>
                 <div class="col-md-4">
                     <div class="btn-group" role="group" aria-label="...">
-                        <button id="btnNvo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlDetalle">Nuevo Cliente</button>
                         <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
-                        <asp:Button ID="Button1" runat="server" Text="Refrescar" />
+                        <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
                     </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnNvo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlDetalle">Nuevo Cliente</button>
                 </div>
             </div>
             <br />
@@ -106,6 +111,12 @@
                 </div>
             </div><br />
             <div class="row">
+                <div class="col-md-3"><strong>Direccion</strong></div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtDir" runat="server"></asp:TextBox>
+                </div>
+            </div><br />
+            <div class="row">
                 <div class="col-md-3"><strong>Telefono</strong></div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtTel" runat="server"></asp:TextBox>
@@ -133,7 +144,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar</button>
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
           </div>
         </div>
       </div>

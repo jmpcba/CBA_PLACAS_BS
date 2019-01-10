@@ -20,4 +20,17 @@
     Private Sub llenarGrillaClientes()
 
     End Sub
+
+    Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+
+        Dim cliente = New Cliente(txtCuit.Text.Trim, txtNombre.Text.Trim, txtTel.Text.Trim, txtMail.Text.Trim, txtDir.Text.Trim, txtCiudad.Text.Trim, dpProv.SelectedValue)
+
+        Try
+            cliente.insertar()
+            sb.write("Nuevo Cliente ingresado")
+            grClientes.DataBind()
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
 End Class
