@@ -232,6 +232,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="cliente\clientes.aspx" />
+    <Content Include="cliente\clientesDetalle.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -465,6 +466,7 @@
     <Compile Include="App_Code\Pedido.vb" />
     <Compile Include="App_Code\pieza.vb" />
     <Compile Include="App_Code\Producto.vb" />
+    <Content Include="App_Code\utils.vb" />
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\IdentityConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
@@ -481,6 +483,13 @@
     </Compile>
     <Compile Include="cliente\clientes.aspx.vb">
       <DependentUpon>clientes.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="cliente\clientesDetalle.aspx.designer.vb">
+      <DependentUpon>clientesDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="cliente\clientesDetalle.aspx.vb">
+      <DependentUpon>clientesDetalle.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Contact.aspx.designer.vb">

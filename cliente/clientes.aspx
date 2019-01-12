@@ -88,61 +88,7 @@
             </div>
         </div>
     </asp:Panel>
-    <asp:Panel ID="pnlDatosCliente" Visible="False" runat="server">
-            <div class="row">
-            <!--botones grupo -->
-            <div class="btn-group" role="group" aria-label="...">
-                <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-                <button id="btnModificar" type="button" class="btn btn-primary">
-                Modificar
-                </button>
-                <button id="btnHistorial" type="button" class="btn btn-primary">
-                Historial de Pedidos
-                </button>
-                <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
-            </div>
-        </div>
-        <hr />
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">
-                    <asp:Label ID="lblNombreTitulo" runat="server" Text=""></asp:Label>
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Id: </strong><asp:Label ID="lblIDCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>CUIT: </strong><asp:Label ID="lblCuitCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>Nombre: </strong><asp:Label ID="lblNombreCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>Telefono: </strong><asp:Label ID="lblTelCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <strong>Mail: </strong><asp:Label ID="lblMailcliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>Direccion: </strong><asp:Label ID="lblDirCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>Ciudad: </strong><asp:Label ID="lblCiudadCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                    <div class="col-md-3">
-                        <strong>Provincia: </strong><asp:Label ID="lblProvCliente" runat="server" Text="Label"></asp:Label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br />
-    </asp:Panel>
-    <!-- Modal -->
+    <!-- Modal modificar-->
     <div class="modal fade" id="mdlDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

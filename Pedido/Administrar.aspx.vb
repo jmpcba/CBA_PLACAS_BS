@@ -206,7 +206,7 @@
             End If
         End If
 
-        gd.obtenerRegistro(_gp.pedido, grLog)
+        gd.getRegistro(_gp.pedido, grLog)
         lblnroPedidoDet.Text = _gp.pedido.id.ToString
         lblEstadoDet.Text = _gp.pedido.estado.nombre
         lblCantDet.Text = _gp.pedido.cantTotal.ToString

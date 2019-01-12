@@ -1,5 +1,7 @@
 ﻿Imports System.Data
 Imports System.Data.SqlClient
+Imports CBA_PLACAS_BS
+
 Public Class GestorDatos
     Public chapa As Chapa
     Public marco As Marco
@@ -46,6 +48,15 @@ Public Class GestorDatos
         mano = New Mano
     End Sub
 
+    Friend Function getPedidos(_cliente As Cliente) As DataTable
+        Try
+            Dim db As New DbHelper()
+            Return db.getPedidos(_cliente)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Friend Function actualizarMateriales(_grMateriales As GridView) As List(Of Integer)
         Dim db = New DbHelper()
         Dim lineasActualizadas = New List(Of Integer)
@@ -72,12 +83,6 @@ Public Class GestorDatos
         Return lineasActualizadas
 
     End Function
-
-    Friend Sub getCliente(_idCliente As Integer, _dv As DetailsView)
-        Dim cliente = New Cliente(_idCliente)
-        _dv.DataSource = cliente.datos
-        _dv.DataBind()
-    End Sub
 
     Friend Function getDespiece(_prod As Producto) As DataTable
         Try
@@ -458,7 +463,7 @@ Public Class GestorDatos
                 Dim requerido = r("CONSUMO")
 
                 If requerido > r("STOCK_DISPONIBLE") Then
-                    Result = False
+                    result = False
                     redRows.Add(i)
                 End If
                 i += 1
@@ -528,10 +533,10 @@ Public Class GestorDatos
         grDetalle.DataBind()
 
         'GRILLA REGISTRO
-        obtenerRegistro(_pedido, _grRegistro)
+        getRegistro(_pedido, _grRegistro)
     End Sub
 
-    Public Sub obtenerRegistro(_pedido As Pedido, _grRegistro As GridView)
+    Public Sub getRegistro(_pedido As Pedido, _grRegistro As GridView)
         Dim DTR = New DataTable
         Dim dbRegistroPedido = New DbHelper()
         DTR = dbRegistroPedido.getRegistroPedido(_pedido.id)

@@ -47,7 +47,7 @@
         grEliminarItems.DataBind()
         grModificarItems.DataBind()
 
-        gd.obtenerRegistro(gp.pedido, grLog)
+        gd.getRegistro(gp.pedido, grLog)
         lblnroPedidoDet.Text = gp.pedido.id.ToString
         lblEstadoDet.Text = gp.pedido.estado.nombre
         lblCantDet.Text = gp.pedido.cantTotal.ToString

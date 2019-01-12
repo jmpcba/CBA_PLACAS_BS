@@ -1,7 +1,7 @@
 ﻿Imports System.Data
 
 Imports System.Data.SqlClient
-
+Imports CBA_PLACAS_BS
 
 Public Class DbHelper
     Private cnn As SqlConnection
@@ -44,6 +44,18 @@ Public Class DbHelper
             cnn.Close()
         End Try
     End Sub
+
+    Friend Function getPedidos(_cliente As Cliente) As DataTable
+        cmd.CommandText = "SELECT * FROM VW_PEDIDOS WHERE ID_CLIENTE=" & _cliente.id
+        cmd.CommandType = CommandType.Text
+
+        Try
+            da.Fill(ds, "pedidosCliente")
+            Return ds.Tables("pedidosCliente")
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
 
     Friend Function getExcluidas(_tabla As tablas, _id As Integer) As DataTable
         cmd.CommandText = String.Format("SELECT * FROM {0} WHERE ID <> {1}", _tabla, _id)
