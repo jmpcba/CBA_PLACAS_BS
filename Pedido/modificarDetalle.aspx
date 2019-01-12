@@ -18,11 +18,11 @@
 
             }
 
-            if ($("#" + '<%= HFAgregar.ClientID %>').val() ==1){
-                $('#mdlAgregar').modal('show')
-            } else {
-                $('#mdlAgregar').modal('hide')
-            }
+            //if ($("#" + '<%= HFAgregar.ClientID %>').val() ==1){
+            //    $('#mdlAgregar').modal('show')
+            //} else {
+            //    $('#mdlAgregar').modal('hide')
+            //}
          })
     </script>
     <!--HIDDEN FIELDS-->
@@ -179,7 +179,6 @@
             </div>
             </div>  
         </div> 
-    </asp:Panel>
     <!--MODAL REGISTRO HISTORICO-->
     <div class="modal fade" id="mdlRegistro" tabindex="-1" role="dialog" aria-labelledby="registroLabel">
       <div class="modal-dialog modal-lg" role="document">
@@ -423,7 +422,14 @@
             <h4 class="modal-title" id="myModalLabel">Agregar Items</h4>
           </div>
           <div class="modal-body">
-            <div class="panel panel-primary">
+                <asp:UpdateProgress runat="server" id="PageUpdateProgress">
+                    <ProgressTemplate>
+                        Cargando...
+                    </ProgressTemplate>
+                </asp:UpdateProgress>
+                <asp:UpdatePanel ID="UPLinea" runat="server">
+                    <ContentTemplate>
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Seleccione una linea de productos</h3>
                         </div>
@@ -438,7 +444,7 @@
                 </div>
                     <br />
                     <asp:Panel ID="pnlCombos" Visible="false" runat="server">
-                    <div class="panel panel-primary">
+                        <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Caracteristicas</h3>
                         </div>
@@ -493,9 +499,11 @@
                             </div>
                         </div>
                     </div>
-                    <br />
-                </asp:Panel>
-          </div>
+                        <br />
+                    </asp:Panel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
               <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />

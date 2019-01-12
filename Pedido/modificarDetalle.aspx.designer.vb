@@ -221,6 +221,24 @@ Partial Public Class modificarDetalle
     Protected WithEvents btnModificarItems As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
+    '''Control PageUpdateProgress.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents PageUpdateProgress As Global.System.Web.UI.UpdateProgress
+    
+    '''<summary>
+    '''Control UPLinea.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents UPLinea As Global.System.Web.UI.UpdatePanel
+    
+    '''<summary>
     '''Control cbLinea.
     '''</summary>
     '''<remarks>

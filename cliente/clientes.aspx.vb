@@ -33,4 +33,31 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub grClientes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grClientes.SelectedIndexChanged
+        Try
+            pnlClientes.Visible = False
+            pnlDatosCliente.Visible = True
+
+            Dim idCliente = Convert.ToInt32(grClientes.SelectedDataKey.Value)
+            Dim cliente As New Cliente(idCliente)
+
+            lblIDCliente.Text = cliente.id
+            lblCuitCliente.Text = cliente.CUIT
+            lblNombreCliente.Text = cliente.nombre
+            lblTelCliente.Text = cliente.tel
+            lblMailcliente.Text = cliente.mail
+            lblDirCliente.Text = cliente.direccion
+            lblCiudadCliente.Text = cliente.ciudad
+            lblProvCliente.Text = cliente.provincia
+            lblNombreTitulo.Text = cliente.nombre
+
+            Dim msg = String.Format("Datos del cliente {0} - CARGADOS", cliente.nombre)
+
+            sb.write(msg)
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class
