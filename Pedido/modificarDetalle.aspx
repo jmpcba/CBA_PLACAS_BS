@@ -210,8 +210,8 @@
                         <p>Desea cancelar este pedido?</p>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                     <asp:Button ID="btnEliminar" runat="server" Text="Si" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -505,8 +505,8 @@
                 </asp:UpdatePanel>
            </div>
           <div class="modal-footer">
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
           </div>
         </div>
     </div>

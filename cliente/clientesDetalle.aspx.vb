@@ -30,10 +30,7 @@ Public Class clientesDetalle
     Private Sub iniciarControles(_cliente As Cliente)
         Dim gd As New GestorDatos()
 
-        Dim provincias = {"Buenos Aires", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes",
-                              "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza",
-                              "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "Santa Cruz",
-                              "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"}
+        Dim provincias = My.Settings.provincias
 
         dpProv.DataSource = provincias
         dpProv.DataBind()
@@ -117,5 +114,13 @@ Public Class clientesDetalle
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
+        Response.Redirect("clientes.aspx")
+    End Sub
+
+    Protected Sub btnRefrescarDetalle_Click(sender As Object, e As EventArgs) Handles btnRefrescarDetalle.Click
+        Response.Redirect(Request.RawUrl)
     End Sub
 End Class

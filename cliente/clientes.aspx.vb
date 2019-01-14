@@ -7,10 +7,8 @@
         If IsPostBack Then
 
         Else
-            Dim provincias = {"Buenos Aires", "Catamarca", "Chaco", "Chubut", "Cordoba", "Corrientes",
-                          "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza",
-                          "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "Santa Cruz",
-                          "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"}
+            Dim provincias = My.Settings.provincias
+
             dpProv.DataSource = provincias
             dpFiltroProv.DataSource = provincias
             dpProv.DataBind()
@@ -28,6 +26,7 @@
             grClientes.DataBind()
             cliente.insertar()
             sb.write("Nuevo Cliente ingresado")
+            grClientes.DataBind()
         Catch ex As Exception
             sb.writeError(ex.Message)
         Finally

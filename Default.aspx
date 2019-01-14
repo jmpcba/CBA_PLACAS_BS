@@ -22,11 +22,9 @@
                 <div class="col-md-4">
                     <h2>Clientes</h2>
                     <p>
-                        Administracion de usuarios y roles.
+                        Administracion de Clientes.
                     </p>
-                    <p><a class="btn btn-default" href="App_pages/clientes/busquedaCliente.aspx">Buscar &raquo;</a></p>
-                    <p><a class="btn btn-default" href="App_pages/clientes/ModificarCliente">Modificar &raquo;</a></p>
-                    <p><a class="btn btn-default" href="App_pages/clientes/nuevoCliente.aspx">Nuevo &raquo;</a></p>
+                    <p><a class="btn btn-default" href="cliente/clientes.aspx">Buscar &raquo;</a></p>
                 </div>
                 <div class="col-md-4">
                     <h2>Reportes</h2>

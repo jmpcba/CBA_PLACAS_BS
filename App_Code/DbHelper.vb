@@ -46,7 +46,7 @@ Public Class DbHelper
     End Sub
 
     Friend Function getPedidos(_cliente As Cliente) As DataTable
-        cmd.CommandText = "SELECT * FROM VW_PEDIDOS WHERE ID_CLIENTE=" & _cliente.id
+        cmd.CommandText = "SELECT * FROM VW_PEDIDOS_CLIENTE WHERE ID_CLIENTE=" & _cliente.id
         cmd.CommandType = CommandType.Text
 
         Try

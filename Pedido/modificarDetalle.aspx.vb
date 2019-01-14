@@ -223,4 +223,8 @@
             llenarGrillaDetalle()
         End Try
     End Sub
+
+    Protected Sub btnRefrescar_Click(sender As Object, e As EventArgs) Handles btnRefrescar.Click
+        Response.Redirect(Request.RawUrl)
+    End Sub
 End Class

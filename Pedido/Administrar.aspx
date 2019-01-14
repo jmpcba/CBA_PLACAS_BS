@@ -685,8 +685,8 @@
             </div>
           </div>
           <div class="modal-footer">
-                <asp:Button ID="btnActualizarProd" runat="server" Text="Actualizar" ValidationGroup="vgEnCurso" />
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <asp:Button ID="btnActualizarProd" runat="server" Text="Actualizar" ValidationGroup="vgEnCurso" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
@@ -804,7 +804,7 @@
             </div>
           </div>
           <div class="modal-footer">
-              <button id="btnReImprimirEtiquetas" type="button" class="btn btn-primary" data-dismiss="modal">Imprimir</button>
+            <button id="btnReImprimirEtiquetas" type="button" class="btn btn-primary" data-dismiss="modal">Imprimir</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

@@ -1,7 +1,33 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="provincias" Type="System.Collections.Specialized.StringCollection" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Buenos Aires&lt;/string&gt;
+  &lt;string&gt;Catamarca&lt;/string&gt;
+  &lt;string&gt;Chaco&lt;/string&gt;
+  &lt;string&gt;Chubut&lt;/string&gt;
+  &lt;string&gt;Cordoba&lt;/string&gt;
+  &lt;string&gt;Corrientes&lt;/string&gt;
+  &lt;string&gt;Entre Ríos&lt;/string&gt;
+  &lt;string&gt;Formosa&lt;/string&gt;
+  &lt;string&gt;Jujuy&lt;/string&gt;
+  &lt;string&gt;La Pampa&lt;/string&gt;
+  &lt;string&gt;La Rioja&lt;/string&gt;
+  &lt;string&gt;Mendoza&lt;/string&gt;
+  &lt;string&gt;Misiones&lt;/string&gt;
+  &lt;string&gt;Neuquén&lt;/string&gt;
+  &lt;string&gt;Río Negro&lt;/string&gt;
+  &lt;string&gt;Salta&lt;/string&gt;
+  &lt;string&gt;San Juan&lt;/string&gt;
+  &lt;string&gt;Santa Cruz&lt;/string&gt;
+  &lt;string&gt;Santa Fe&lt;/string&gt;
+  &lt;string&gt;Santiago del Estero&lt;/string&gt;
+  &lt;string&gt;Tierra del Fuego&lt;/string&gt;
+  &lt;string&gt;Tucumán&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

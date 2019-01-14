@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="clientesDetalle.aspx.vb" Inherits="CBA_PLACAS_BS.clientesDetalle" theme="default"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="page-header">
-        <h1 class="text-center">Administrar Clientes <br /><small>
+        <h1 class="text-center">Administrar Cliente <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">
@@ -73,51 +73,68 @@
           </div>
           <div class="modal-body form-group">
             <div class="row">
-                <div class="col-md-3"><strong>CUIT</strong></div>
+                <div class="col-md-3"><strong>CUIT</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Ingrese un CUIT" Text="*" CssClass="validators" ControlToValidate="txtCuit" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="Ingrese un CUIT valido" ValidationExpression="\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]" CssClass="validators" ValidationGroup="VGNvoCliente" ControlToValidate="txtCuit" Text="*"></asp:RegularExpressionValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtCuit" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Razon social</strong></div>
+                <div class="col-md-3"><strong>Razon social</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Ingrese un nombre" Text="*" CssClass="validators" ControlToValidate="txtNombre" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Direccion</strong></div>
+                <div class="col-md-3"><strong>Direccion</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Ingrese una direccion" Text="*" CssClass="validators" ControlToValidate="txtDir" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtDir" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Telefono</strong></div>
+                <div class="col-md-3"><strong>Telefono</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Ingrese un telefono" Text="*" CssClass="validators" ControlToValidate="txtTel" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtTel" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Mail</strong></div>
+                <div class="col-md-3"><strong>Mail</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Ingrese un mail" Text="*" CssClass="validators" ControlToValidate="txtMail" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Ingrese un mail valido" ValidationExpression="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" CssClass="validators" ValidationGroup="VGNvoCliente" ControlToValidate="txtMail" Text="*"></asp:RegularExpressionValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtMail" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Ciudad</strong></div>
+                <div class="col-md-3"><strong>Ciudad</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Ingrese una ciudad" Text="*" CssClass="validators" ControlToValidate="txtCiudad" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtCiudad" runat="server"></asp:TextBox>
                 </div>
             </div><br />
             <div class="row">
-                <div class="col-md-3"><strong>Provincia</strong></div>
+                <div class="col-md-3"><strong>Provincia</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Seleccione una provincia" Text="*" CssClass="validators" ControlToValidate="dpProv" ValidationGroup="VGNvoCliente"></asp:RequiredFieldValidator>
+                </div>
                 <div class="col-md-4">
                     <asp:DropDownList ID="dpProv" runat="server">
                     </asp:DropDownList>
                 </div>
             </div><br />
+              <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="validators" ValidationGroup="VGNvoCliente" />
           </div>
           <div class="modal-footer">
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="VGNvoCliente" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
@@ -133,11 +150,11 @@
           </div>
           <div class="modal-body form-group">
             <div class="table-responsive">
-                <asp:GridView ID="grHistorialPedidos" runat="server" DataKeyNames="ID_PEDIDO" AutoGenerateColumns="False">
+                <asp:GridView ID="grHistorialPedidos" runat="server" DataKeyNames="ID" AutoGenerateColumns="False">
                     <Columns>
-                        <asp:BoundField DataField="ID_PEDIDO" HeaderText="NRO" SortExpression="ID_PEDIDO" />
+                        <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
-                        <asp:BoundField DataField="CANT" HeaderText="Cantidad" SortExpression="CANT" >
+                        <asp:BoundField DataField="CANT_TOTAL" HeaderText="Cantidad" SortExpression="CANT_TOTAL" >
                         <ItemStyle CssClass="numCol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >

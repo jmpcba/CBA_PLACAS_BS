@@ -56,8 +56,25 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Inicio</a></li>
-                        <li><a runat="server" href="~/About">Acerca de</a></li>
-                        <li><a runat="server" href="~/Contact">Contacto</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pedidos <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Pedido/nuevo.aspx">Nuevo</a></li>
+                                <li><a href="/Pedido/modificar.aspx">Modificar</a></li>
+                                <li><a href="/pedido/administrar.aspx">Produccion</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Productos <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Pedido/nuevo.aspx">Nuevo</a></li>
+                                <li><a href="/Pedido/modificar.aspx">Modificar</a></li>
+                                <li><a href="/pedido/administrar.aspx">Materiales</a></li>
+                                
+                            </ul>
+                        </li>
+                        <li><a runat="server" href="~/cliente/clientes.aspx">Clientes</a></li>
+                        <li><a runat="server" href="~/cliente/clientes.aspx">Reportes</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>

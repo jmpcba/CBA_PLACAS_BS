@@ -1,5 +1,5 @@
 ﻿function barraEstado(err, msgBar) {
-    console.log("ERROR" + err)
+    
     if (err == "error") {
         msgBar.removeClass("alert-success");
         msgBar.addClass("alert-danger");
@@ -15,7 +15,6 @@
 
 function filtro(table, clave, col) {
     tr = table.getElementsByTagName("tr");
-    console.log(clave)
 
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[col];
@@ -38,12 +37,17 @@ function limpiarFiltro(table){
             tr[i].style.display = "";
         }
     }
-
-    console.log("boton limpiar filtro")
 }
 
 function iniciarDropDowns(combos){
     for (i = 0; i < combos.length; i++) {
         combos[i].val("-1")
+    }
+}
+
+function iniciarTextBoxes(txtBoxes) {
+    for (i = 0; i < txtBoxes.length; i++) {
+        //txtBoxes[i].attr("value", "")
+        txtBoxes[i].val("")
     }
 }
