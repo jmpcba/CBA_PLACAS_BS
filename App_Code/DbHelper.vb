@@ -10,6 +10,8 @@ Public Class DbHelper
     Private ds As DataSet
     Private table As String
     Private conStr As String = "Data Source=USER-PC;Initial Catalog=cbaPlacas;Integrated Security=True"
+
+
     Public Enum tablas
         CHAPAS
         MADERAS

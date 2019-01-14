@@ -74,30 +74,27 @@ Public Class Pedido
 
     End Sub
 
-    'Public Function agregarItem(ByVal _item As Item) As Boolean
-    '    Dim encontro = False
+    Public Sub agregarItem(ByVal _item As Item)
+        Dim encontro = False
 
-    '    For Each i As Item In items
-    '        If i.getProducto.id = _item.getProducto.id Then
-    '            Dim cantActual = i.getCant()
-    '            i.setCant(cantActual + _item.getCant())
-    '            i.monto += _item.monto
-    '            i.idPedido = id
-    '            encontro = True
-    '            i.actualizar()
-    '            Exit For
-    '        End If
-    '    Next
+        For Each i As Item In items
+            If i.getProducto.id = _item.getProducto.id And i.getEstado.id <> Estado.estados.cancelado Then
+                Dim cantActual = i.getCant()
+                i.setCant(cantActual + _item.getCant())
+                i.monto += _item.monto
+                encontro = True
+                Exit For
+            End If
+        Next
 
-    '    If Not encontro Then
-    '        items.Add(_item)
-    '    End If
+        If Not encontro Then
+            items.Add(_item)
+        End If
 
-    '    calcularTotales()
+        precioTotal += _item.monto
+        cantTotal += _item.getCant()
 
-    '    Return encontro
-
-    'End Function
+    End Sub
 
     Public Sub enviar()
         db = New DbHelper()

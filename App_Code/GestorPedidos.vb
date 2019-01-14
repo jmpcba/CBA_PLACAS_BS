@@ -41,7 +41,7 @@ Public Class GestorPedidos
                 pedido.calcularTotales()
                 pedido.actualizar()
             Else
-                pedido.items.Add(_item)
+                pedido.agregarItem(_item)
             End If
         Catch ex As Exception
             Throw

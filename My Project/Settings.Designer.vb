@@ -72,6 +72,15 @@ Namespace My
                 Return CType(Me("provincias"),Global.System.Collections.Specialized.StringCollection)
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=USER-PC;Initial Catalog=cbaPlacas;Integrated Security=True")>  _
+        Public ReadOnly Property cnnStr() As String
+            Get
+                Return CType(Me("cnnStr"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

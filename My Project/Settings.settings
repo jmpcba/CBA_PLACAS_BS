@@ -29,5 +29,8 @@
   &lt;string&gt;Tucumán&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
+    <Setting Name="cnnStr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Data Source=USER-PC;Initial Catalog=cbaPlacas;Integrated Security=True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
