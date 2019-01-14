@@ -25,6 +25,7 @@ Public Class nuevo
                 hfPedido.Value = "0"
                 HFIsPostBack.Value = 0
                 gp = Nothing
+                Session("gp") = Nothing
             End If
 
         Catch ex As Exception
