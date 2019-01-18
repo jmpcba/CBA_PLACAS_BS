@@ -88,6 +88,18 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -258,6 +270,8 @@
     <Content Include="Pedido\modificarDetalle.aspx" />
     <Content Include="Pedido\nuevo.aspx" />
     <Content Include="Pedido\tests.aspx" />
+    <Content Include="producto\caracteristicas.aspx" />
+    <Content Include="producto\productos.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -569,6 +583,20 @@
     </Compile>
     <Compile Include="Pedido\tests.aspx.vb">
       <DependentUpon>tests.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="producto\caracteristicas.aspx.designer.vb">
+      <DependentUpon>caracteristicas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\caracteristicas.aspx.vb">
+      <DependentUpon>caracteristicas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="producto\productos.aspx.designer.vb">
+      <DependentUpon>productos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\productos.aspx.vb">
+      <DependentUpon>productos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="reporte\compras.vb">
