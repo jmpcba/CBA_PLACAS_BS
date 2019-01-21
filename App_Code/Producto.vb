@@ -39,6 +39,12 @@ Public Class Producto
 
     Public Sub New(_id As Integer)
         Dim dt = New DataTable()
+        Dim idHoja As Integer
+        Dim idMarco As Integer
+        Dim idMadera As Integer
+        Dim idChapa As Integer
+        Dim idMano As Integer
+        Dim idLinea As Integer
 
         db = New DbHelper("PRODUCTOS")
         dt = db.getProducto(_id)
@@ -47,12 +53,19 @@ Public Class Producto
         precioUnitario = dt(0)("precio")
         stock = dt(0)("stock")
 
-        hoja = New Hoja(dt(0)("idHoja"))
-        marco = New Marco(dt(0)("idMarco"))
-        madera = New Madera(dt(0)("idMadera"))
-        chapa = New Chapa(dt(0)("idChapa"))
-        mano = New Mano(dt(0)("idMano"))
-        linea = New Linea(dt(0)("idLinea"))
+        idHoja = dt(0)("idHoja")
+        idMarco = dt(0)("idMarco")
+        idMadera = dt(0)("idMadera")
+        idChapa = dt(0)("idChapa")
+        idMano = dt(0)("idMano")
+        idLinea = dt(0)("idLinea")
+
+        hoja = New Hoja(idHoja)
+        marco = New Marco(idMarco)
+        madera = New Madera(idMadera)
+        chapa = New Chapa(idChapa)
+        mano = New Mano(idMano)
+        linea = New Linea(idLinea)
 
     End Sub
 

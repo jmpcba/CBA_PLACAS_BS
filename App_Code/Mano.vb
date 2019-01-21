@@ -21,6 +21,11 @@ Public Class Mano
         db = New DbHelper("manos")
     End Sub
 
+    Public Sub New(ByVal _nombre As String)
+        nombre = _nombre
+        db = New DbHelper("manos")
+    End Sub
+
     Public Function getManos() As DataTable
         Try
             Return db.getTable()

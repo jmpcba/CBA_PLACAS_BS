@@ -9,6 +9,10 @@ Public Class Hoja
         nombre = _nombre
     End Sub
 
+    Public Sub New(ByVal _nombre As String)
+        nombre = _nombre
+    End Sub
+
     Public Sub New()
 
     End Sub

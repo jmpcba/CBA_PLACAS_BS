@@ -16,6 +16,15 @@
                 pnlAnterior = $(this)
             })
 
+            $('#mdlAgregar').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var tipo = button.data('tipo') 
+                var modal = $(this)
+                modal.find('.modal-title').text('Agregar ' + tipo)
+                modal.find('.modal-body input').val(tipo)
+                $("#" + '<%= HFTipo.ClientID %>').val(tipo)
+            })
+
         })
 
     </script>
@@ -46,7 +55,7 @@
                         <div class="col-md-6 table-responsive">
                         <asp:GridView ID="grLineas" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSLineas">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -54,9 +63,9 @@
                     </div>
                         <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarLinea" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarLinea" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregar" data-tipo="Linea">Agregar</button>
+                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                       </div>
@@ -77,7 +86,7 @@
                     <div class="col-md-6 table-responsive">
                         <asp:GridView ID="grChapas" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSChapas">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -85,9 +94,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarChapa" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarChapa" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarChapa" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Chapa">Agregar</button>
+                            <button id="btnModificarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                   </div>
@@ -111,7 +120,7 @@
                     <div class="col-md-6 table-responsive">
                         <asp:GridView ID="grMaderas" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSMaderas">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -119,9 +128,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarMadera" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarMadera" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarMadera" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Madera">Agregar</button>
+                            <button id="btnModificarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                   </div>
@@ -142,7 +151,7 @@
                     <div class="col-md-6 table-responsive">
                         <asp:GridView ID="grHojas" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSHojas">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -150,9 +159,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarHoja" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarHoja" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarHoja" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarHoja" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Hoja">Agregar</button>
+                            <button id="btnModificarHoja" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarHoja" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                   </div>
@@ -176,7 +185,7 @@
                     <div class="col-md-6 table-responsive">
                         <asp:GridView ID="grMarco" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSMarcos">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -184,9 +193,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarMarco" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarMarco" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarMarco" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarMarco" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Marco">Agregar</button>
+                            <button id="btnModificarMarco" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarMarco" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                   </div>
@@ -207,7 +216,7 @@
                     <div class="col-md-6 table-responsive">
                         <asp:GridView ID="GRManos" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="DSManos">
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
+                                <asp:BoundField DataField="id" HeaderText="COD" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
                             </Columns>
                         </asp:GridView>
@@ -215,9 +224,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="btn-group-vertical">
-                            <button id="btnAgregarMano" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                            <button id="btnModificarMano" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-                            <button id="btnEliminarMano" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+                            <button id="btnAgregarMano" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Mano">Agregar</button>
+                            <button id="btnModificarMano" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
+                            <button id="btnEliminarMano" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
                         </div>
                     </div>
                   </div>
@@ -225,5 +234,27 @@
               </div>
             </div>
         </div>
+    </div>
+    <!--MODAL AGREGAR-->
+    <div class="modal fade" id="mdlAgregar" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Agregar</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="Nombre" class="control-label">Nombre:</label>
+                  <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
+                <asp:HiddenField ID="HFTipo" runat="server" />
+              </div>
+          </div>
+          <div class="modal-footer">
+            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 </asp:Content>

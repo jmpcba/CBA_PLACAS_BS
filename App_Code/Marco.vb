@@ -13,6 +13,12 @@ Public Class Marco
         nombre = _nombre
         db = New DbHelper("marcos")
     End Sub
+
+    Public Sub New(ByVal _nombre As String)
+        nombre = _nombre
+        db = New DbHelper("marcos")
+    End Sub
+
     Public Sub New(ByVal _id As Integer)
         id = _id
         db = New DbHelper("marcos")

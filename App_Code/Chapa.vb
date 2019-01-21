@@ -14,6 +14,10 @@ Public Class Chapa
         nombre = _nombre
     End Sub
 
+    Public Sub New(ByVal _nombre As String)
+        nombre = _nombre
+    End Sub
+
     Public Sub New(ByVal _id As Integer)
         id = _id
         Dim t = db.getRow(_id)

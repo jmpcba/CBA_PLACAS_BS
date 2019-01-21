@@ -21,6 +21,10 @@ Public Class Madera
         nombre = _nombre
     End Sub
 
+    Public Sub New(ByVal _nombre As String)
+        nombre = _nombre
+    End Sub
+
     Public Function getMaderas() As DataTable
         Try
             Return db.getTable()
