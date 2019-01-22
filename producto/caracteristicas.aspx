@@ -46,11 +46,21 @@
                 $("#" + '<%= HFTipo.ClientID %>').val(tipo)
             })
 
+            $('#mdlEliminar').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var tipo = button.data('tipo') 
+                var modal = $(this)
+                modal.find('.modal-title').text('Eliminar ' + tipo)
+                $("#" + '<%= HFEliminar.ClientID %>').val(tipo)
+                $("#" + '<%= btnUPHidden.ClientID %>').click()
+            })
+
         })
 
     </script>
     <!--HIDDEN FIELDS-->
     <asp:HiddenField ID="HFTipo" runat="server" />
+    <asp:HiddenField ID="HFEliminar" runat="server" />
     <div class="page-header">
         <h1 class="text-center">Caracteristicas Productos<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -120,7 +130,7 @@
                           <div class="btn-group-vertical">
                               <button id="btnAgregarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Chapa">Agregar</button>
                               <button id="btnModificarChapa" type="button" class="btn btn-primary" data-target="#mdlModificarChapa" data-toggle="modal">Modificar</button>
-                              <button id="btnEliminarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                              <button id="btnEliminarChapa" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Chapa">Eliminar</button>
                           </div>
                       </div>
                   </div>
@@ -153,7 +163,7 @@
                                 <div class="btn-group-vertical">
                                     <button id="btnAgregarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Madera">Agregar</button>
                                     <button id="btnModificarMadera" type="button" class="btn btn-primary" data-target="#mdlModificarMadera" data-toggle="modal">Modificar</button>
-                                    <button id="btnEliminarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                                    <button id="btnEliminarMadera" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Madera">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -387,6 +397,34 @@
                 </div>
                 <div class="modal-footer">
                     <asp:Button ID="btnManos" runat="server" Text="Guardar" ValidationGroup="VGManos" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MODAL ELIMINAR-->
+    <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="lblEliminar">Eliminar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <asp:DropDownList ID="cbEliminar" runat="server"></asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Seleccione un item" ControlToValidate="cbManos" ValidationGroup="VGEliminar" CssClass="validators" InitialValue=''></asp:RequiredFieldValidator><br />
+                                <div style="display:none">
+                                    <asp:Button ID="btnUPHidden" runat="server" Text="Button" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" ValidationGroup="VGEliminar" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>

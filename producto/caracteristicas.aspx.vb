@@ -129,4 +129,25 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub btnUPHidden_Click(sender As Object, e As EventArgs) Handles btnUPHidden.Click
+        Dim tipo = HFEliminar.Value
+
+        Try
+            If tipo = "Chapa" Then
+                Dim ch As New Chapa
+                cbEliminar.DataSource = ch.getChapas
+            ElseIf tipo = "Madera" Then
+                Dim mad As New Madera
+                cbEliminar.DataSource = mad.getMaderas
+            End If
+            cbEliminar.DataTextField = "nombre"
+            cbEliminar.DataValueField = "id"
+            cbEliminar.DataBind()
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+
+
+    End Sub
 End Class
