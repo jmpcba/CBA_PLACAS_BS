@@ -312,7 +312,7 @@ Public Class GestorDatos
         End Try
     End Function
 
-    Friend Function getReporte(_ids As String())
+    Friend Function getReporte(_ids As String()) As DataTable
         Try
             db = New DbHelper()
             Return db.getReporte(_ids)

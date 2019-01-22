@@ -49,6 +49,14 @@ Public Class Mano
         End Try
     End Sub
 
+    Friend Sub eliminar()
+        Try
+            db.eliminar(Me)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
     Friend Sub actualizar()
         Try
             db.actualizar(Me)

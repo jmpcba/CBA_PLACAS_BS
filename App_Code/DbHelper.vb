@@ -59,8 +59,79 @@ Public Class DbHelper
         End Try
     End Function
 
-    Friend Sub actualizar(_chapa As Chapa)
-        cmd.CommandText = String.Format("UPDATE CHAPAS SET NOMBRE = '{0}' WHERE ID={1}", _chapa.nombre, _chapa.id)
+    Friend Sub eliminar(_chapa As Chapa)
+
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT COD_MAT FROM CHAPAS WHERE ID={0}", _chapa.id)
+            Dim idMat = cmd.ExecuteScalar()
+
+            cmd.CommandText = String.Format("DELETE MATERIALES WHERE ID={0}", idMat)
+            cmd.ExecuteNonQuery()
+
+            cmd.CommandText = String.Format("DELETE CHAPAS WHERE ID={0}", _chapa.id)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_mad As Madera)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT COD_MAT FROM MADERAS WHERE ID={0}", _mad.id)
+            Dim idMat = cmd.ExecuteScalar()
+
+            cmd.CommandText = String.Format("DELETE MATERIALES WHERE ID={0}", idMat)
+            cmd.ExecuteNonQuery()
+
+            cmd.CommandText = String.Format("DELETE MADERAS WHERE ID={0}", _mad.id)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_hoj As Hoja)
+        cmd.CommandText = String.Format("DELETE HOJAS WHERE ID={1}", _hoj.nombre, _hoj.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_mar As Marco)
+        cmd.CommandText = String.Format("DELETE MARCOS WHERE ID={0}", _mar.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_man As Mano)
+        cmd.CommandText = String.Format("DELETE MANOS WHERE ID={0}", _man.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -75,6 +146,20 @@ Public Class DbHelper
 
     Friend Sub actualizar(_madera As Madera)
         cmd.CommandText = String.Format("UPDATE MADERAS SET NOMBRE = '{0}' WHERE ID={1}", _madera.nombre, _madera.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_ch As Chapa)
+        cmd.CommandText = String.Format("UPDATE CHAPAS SET NOMBRE = '{0}' WHERE ID={1}", _ch.nombre, _ch.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -481,12 +566,17 @@ Public Class DbHelper
 
     Friend Sub insertar(_chapa As Chapa)
         Try
-            Dim query = String.Format("INSERT INTO CHAPAS (nombre) VALUES ('{0}')", _chapa.nombre)
 
             cmd.CommandType = CommandType.Text
-            cmd.CommandText = query
+            cmd.CommandText = String.Format("INSERT INTO MATERIALES (nombre, UNIDAD, ES_LINEA) VALUES ('{0}', 'TON', 1)", _chapa.nombre)
 
             cnn.Open()
+            cmd.ExecuteNonQuery()
+
+            cmd.CommandText = "SELECT MAX(ID) FROM MATERIALES"
+            Dim idMat = cmd.ExecuteScalar()
+
+            cmd.CommandText = String.Format("INSERT INTO CHAPAS (nombre, cod_mat) VALUES ('{0}', {1})", _chapa.nombre, idMat)
             cmd.ExecuteNonQuery()
         Catch ex As SqlException
             Throw
@@ -529,12 +619,16 @@ Public Class DbHelper
 
     Friend Sub insertar(_madera As Madera)
         Try
-            Dim query = String.Format("INSERT INTO MADERAS (nombre) VALUES ('{0}')", _madera.nombre)
-
             cmd.CommandType = CommandType.Text
-            cmd.CommandText = query
+            cmd.CommandText = String.Format("INSERT INTO MATERIALES (nombre, UNIDAD, ES_LINEA) VALUES ('{0}', 'HOJA', 1)", _madera.nombre)
 
             cnn.Open()
+            cmd.ExecuteNonQuery()
+
+            cmd.CommandText = "SELECT MAX(ID) FROM MATERIALES"
+            Dim idMat = cmd.ExecuteScalar()
+
+            cmd.CommandText = String.Format("INSERT INTO MADERAS (nombre, cod_mat) VALUES ('{0}', {1})", _madera.nombre, idMat)
             cmd.ExecuteNonQuery()
         Catch ex As SqlException
             Throw

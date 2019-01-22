@@ -5,22 +5,14 @@
         $(document).ready(function () {
             //COMBOS
             var combos = [
-                $("#" + '<%= cbChapas.ClientID %>'),
-                $("#" + '<%= cbMadera.ClientID %>'),
-                $("#" + '<%= cbHojas.ClientID %>'),
-                $("#" + '<%= cbMarcos.ClientID %>'),
-                $("#" + '<%= cbManos.ClientID %>')
+                $("#" + '<%= cbModificar.ClientID %>'),
             ]
 
             iniciarDropDowns(combos)
 
             //TEXT BOXES
             var txtBoxes = [
-                $("#" + '<%= txtModChapa.ClientID %>'),
-                $("#" + '<%= txtModMadera.ClientID %>'),
-                $("#" + '<%= txtModHojas.ClientID %>'),
-                $("#" + '<%= txtMarcos.ClientID %>'),
-                $("#" + '<%= txtModManos.ClientID %>')
+                $("#" + '<%= txtMod.ClientID %>'),
             ]
             iniciarTextBoxes(txtBoxes)
 
@@ -46,6 +38,15 @@
                 $("#" + '<%= HFTipo.ClientID %>').val(tipo)
             })
 
+            $('#mdlModificar').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget)
+                var tipo = button.data('tipo') 
+                var modal = $(this)
+                modal.find('.modal-title').text('Modificar ' + tipo)
+                $("#" + '<%= HFModificar.ClientID %>').val(tipo)
+                $("#" + '<%= btnUPModificar.ClientID %>').click()
+            })
+
             $('#mdlEliminar').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget)
                 var tipo = button.data('tipo') 
@@ -55,12 +56,16 @@
                 $("#" + '<%= btnUPHidden.ClientID %>').click()
             })
 
+            $("#" + '<%= cbModificar.ClientID %>').change(function () {
+                console.log("cbmodificar")
+            })
         })
 
     </script>
     <!--HIDDEN FIELDS-->
     <asp:HiddenField ID="HFTipo" runat="server" />
     <asp:HiddenField ID="HFEliminar" runat="server" />
+    <asp:HiddenField ID="HFModificar" runat="server" />
     <div class="page-header">
         <h1 class="text-center">Caracteristicas Productos<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -97,8 +102,8 @@
                         <div class="col-md-2">
                         <div class="btn-group-vertical">
                             <button id="btnAgregarLinea" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregar" data-tipo="Linea">Agregar</button>
-                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Modificar</button>
-                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Linea">Modificar</button>
+                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Linea">Eliminar</button>
                         </div>
                     </div>
                       </div>
@@ -121,7 +126,6 @@
                             <Columns>
                                 <asp:BoundField DataField="id" HeaderText="id" InsertVisible="False" ReadOnly="True" SortExpression="id" />
                                 <asp:BoundField DataField="nombre" HeaderText="nombre" SortExpression="nombre" />
-                                <asp:BoundField DataField="COD_MAT" HeaderText="COD_MAT" SortExpression="COD_MAT"></asp:BoundField>
                             </Columns>
                         </asp:GridView>
                         <asp:SqlDataSource ID="DSChapas" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [chapas]"></asp:SqlDataSource>
@@ -129,7 +133,7 @@
                       <div class="col-md-2">
                           <div class="btn-group-vertical">
                               <button id="btnAgregarChapa" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Chapa">Agregar</button>
-                              <button id="btnModificarChapa" type="button" class="btn btn-primary" data-target="#mdlModificarChapa" data-toggle="modal">Modificar</button>
+                              <button id="btnModificarChapa" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Chapa">Modificar</button>
                               <button id="btnEliminarChapa" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Chapa">Eliminar</button>
                           </div>
                       </div>
@@ -162,7 +166,7 @@
                             <div class="col-md-2">
                                 <div class="btn-group-vertical">
                                     <button id="btnAgregarMadera" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Madera">Agregar</button>
-                                    <button id="btnModificarMadera" type="button" class="btn btn-primary" data-target="#mdlModificarMadera" data-toggle="modal">Modificar</button>
+                                    <button id="btnModificarMadera" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Madera">Modificar</button>
                                     <button id="btnEliminarMadera" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Madera">Eliminar</button>
                                 </div>
                             </div>
@@ -192,8 +196,8 @@
                             <div class="col-md-2">
                                 <div class="btn-group-vertical">
                                     <button id="btnAgregarHoja" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Hoja">Agregar</button>
-                                    <button id="btnModificarHoja" type="button" class="btn btn-primary" data-target="#mdlModificarHojas" data-toggle="modal">Modificar</button>
-                                    <button id="btnEliminarHoja" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                                    <button id="btnModificarHoja" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Hoja">Modificar</button>
+                                    <button id="btnEliminarHoja" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Hoja">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -225,8 +229,8 @@
                             <div class="col-md-2">
                                 <div class="btn-group-vertical">
                                     <button id="btnAgregarMarco" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Marco">Agregar</button>
-                                    <button id="btnModificarMarco" type="button" class="btn btn-primary" data-target="#mdlModificarMarcos" data-toggle="modal">Modificar</button>
-                                    <button id="btnEliminarMarco" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                                    <button id="btnModificarMarco" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Marco">Modificar</button>
+                                    <button id="btnEliminarMarco" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Marco">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -255,8 +259,8 @@
                             <div class="col-md-2">
                                 <div class="btn-group-vertical">
                                     <button id="btnAgregarMano" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Mano">Agregar</button>
-                                    <button id="btnModificarMano" type="button" class="btn btn-primary" data-target="#mdlModificarManos" data-toggle="modal">Modificar</button>
-                                    <button id="btnEliminarMano" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal">Eliminar</button>
+                                    <button id="btnModificarMano" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Mano">Modificar</button>
+                                    <button id="btnEliminarMano" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Mano">Eliminar</button>
                                 </div>
                             </div>
                         </div>
@@ -276,110 +280,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="Nombre" class="control-label">Nombre:</label>
-                        <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtNombre" runat="server" ValidationGroup="VGAgregar"></asp:TextBox>
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtNombre" ValidationGroup="VGAgregar" CssClass="validators"></asp:RequiredFieldValidator><br />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" />
+                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" ValidationGroup="VGAgregar" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--MODAL MODIFICAR CHAPA-->
-    <div class="modal fade" id="mdlModificarChapa" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="lblModalModificarChapa">Modificar Chapa</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <asp:DropDownList ID="cbChapas" runat="server" DataSourceID="DSChapas" DataTextField="nombre" DataValueField="id"></asp:DropDownList><br />
-                        <label for="Nombre" class="control-label">Nombre:</label><br />
-                        <asp:TextBox ID="txtModChapa" runat="server" ValidationGroup="VGChapa"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Ingrese un valor" ValidationGroup="VGChapa" ControlToValidate="txtModChapa" CssClass="validators"></asp:RequiredFieldValidator>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnGuardarModificar" runat="server" Text="Guardar" ValidationGroup="VGChapa" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--MODAL MODIFICAR MADERA-->
-    <div class="modal fade" id="mdlModificarMadera" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="lblModalModificarMadera">Modificar Maderas</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <asp:DropDownList ID="cbMadera" runat="server" DataSourceID="DSMaderas" DataTextField="nombre" DataValueField="id"></asp:DropDownList><br />
-                        <label for="Nombre" class="control-label">Nombre:</label><br />
-                        <asp:TextBox ID="txtModMadera" runat="server" ValidationGroup="VGMadera"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtModMadera" ValidationGroup="VGMadera" CssClass="validators"></asp:RequiredFieldValidator>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnGuardarMadera" runat="server" Text="Guardar" ValidationGroup="VGMadera" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--MODAL MODIFICAR HOJAS-->
-    <div class="modal fade" id="mdlModificarHojas" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="lblModalModificarHojas">Modificar Hojas</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <asp:DropDownList ID="cbHojas" runat="server" DataSourceID="DSHojas" DataTextField="nombre" DataValueField="id"></asp:DropDownList><br />
-                        <label for="Nombre" class="control-label">Nombre:</label><br />
-                        <asp:TextBox ID="txtModHojas" runat="server" ValidationGroup="VGHojas"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtModHojas" ValidationGroup="VGHojas" CssClass="validators"></asp:RequiredFieldValidator>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnModHojas" runat="server" Text="Guardar" ValidationGroup="VGHojas" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--MODAL MODIFICAR MARCOS-->
-    <div class="modal fade" id="mdlModificarMarcos" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="lblModalModificarMarcos">Modificar Marcos</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <asp:DropDownList ID="cbMarcos" runat="server" DataSourceID="DSMarcos" DataTextField="nombre" DataValueField="id"></asp:DropDownList><br />
-                        <label for="Nombre" class="control-label">Nombre:</label><br />
-                        <asp:TextBox ID="txtMarcos" runat="server" ValidationGroup="VGMarcos"></asp:TextBox><br />
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtModHojas" ValidationGroup="VGMarcos" CssClass="validators"></asp:RequiredFieldValidator>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnMarcos" runat="server" Text="Guardar" ValidationGroup="VGMarcos" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--MODAL MODIFICAR MANOS-->
-    <div class="modal fade" id="mdlModificarManos" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
+    <!--MODAL MODIFICAR-->
+    <div class="modal fade" id="mdlModificar" tabindex="-1" role="dialog" aria-labelledby="mdlModificar">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -388,15 +301,25 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <asp:DropDownList ID="cbManos" runat="server" DataSourceID="DSManos" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Seleccione un item" ControlToValidate="cbManos" ValidationGroup="VGManos" CssClass="validators" InitialValue=''></asp:RequiredFieldValidator><br />
-                        <label for="Nombre" class="control-label">Nombre:</label><br />
-                        <asp:TextBox ID="txtModManos" runat="server" ValidationGroup="VGManos"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtModManos" ValidationGroup="VGManos" CssClass="validators"></asp:RequiredFieldValidator><br />
+                        <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                            <ContentTemplate>
+                                <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+                                    <ProgressTemplate><div class="validators">Cargando</div></ProgressTemplate>
+                                </asp:UpdateProgress>
+                                <asp:DropDownList ID="cbModificar" runat="server" ValidationGroup="VGMod"></asp:DropDownList>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ErrorMessage="Seleccione un item" ControlToValidate="cbModificar" ValidationGroup="VGMod" CssClass="validators" InitialValue=''></asp:RequiredFieldValidator><br />
+                                <label for="Nombre" class="control-label">Nombre:</label><br />
+                                <asp:TextBox ID="txtMod" runat="server" ValidationGroup="VGMod"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ErrorMessage="Ingrese un valor" ControlToValidate="txtMod" ValidationGroup="VGMod" CssClass="validators"></asp:RequiredFieldValidator><br />
+                                <div style="display:none">
+                                    <asp:Button ID="btnUPModificar" runat="server" Text="modficar auto" />
+                                </div>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btnManos" runat="server" Text="Guardar" ValidationGroup="VGManos" />
+                    <asp:Button ID="btnMod" runat="server" Text="Guardar" ValidationGroup="VGMod" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
@@ -414,8 +337,11 @@
                     <div class="form-group">
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>
+                                <asp:UpdateProgress ID="UpdateProgress2" runat="server">
+                                    <ProgressTemplate><div class="validators">Cargando</div></ProgressTemplate>
+                                </asp:UpdateProgress>
                                 <asp:DropDownList ID="cbEliminar" runat="server"></asp:DropDownList>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Seleccione un item" ControlToValidate="cbManos" ValidationGroup="VGEliminar" CssClass="validators" InitialValue=''></asp:RequiredFieldValidator><br />
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ErrorMessage="Seleccione un item" ControlToValidate="cbEliminar" ValidationGroup="VGEliminar" CssClass="validators" InitialValue=''></asp:RequiredFieldValidator><br />
                                 <div style="display:none">
                                     <asp:Button ID="btnUPHidden" runat="server" Text="Button" />
                                 </div>

@@ -56,4 +56,12 @@ Public Class Marco
             Throw
         End Try
     End Sub
+
+    Friend Sub eliminar()
+        Try
+            db.eliminar(Me)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
 End Class
