@@ -59,6 +59,76 @@ Public Class DbHelper
         End Try
     End Function
 
+    Friend Sub actualizar(_chapa As Chapa)
+        cmd.CommandText = String.Format("UPDATE CHAPAS SET NOMBRE = '{0}' WHERE ID={1}", _chapa.nombre, _chapa.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_madera As Madera)
+        cmd.CommandText = String.Format("UPDATE MADERAS SET NOMBRE = '{0}' WHERE ID={1}", _madera.nombre, _madera.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_hojas As Hoja)
+        cmd.CommandText = String.Format("UPDATE HOJAS SET NOMBRE = '{0}' WHERE ID={1}", _hojas.nombre, _hojas.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_marco As Marco)
+        cmd.CommandText = String.Format("UPDATE MARCOS SET NOMBRE = '{0}' WHERE ID={1}", _marco.nombre, _marco.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_mano As Mano)
+        cmd.CommandText = String.Format("UPDATE MANOS SET NOMBRE = '{0}' WHERE ID={1}", _mano.nombre, _mano.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
     Friend Function getExcluidas(_tabla As tablas, _id As Integer) As DataTable
         cmd.CommandText = String.Format("SELECT * FROM {0} WHERE ID <> {1}", _tabla, _id)
         cmd.CommandType = CommandType.Text

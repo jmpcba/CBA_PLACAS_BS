@@ -104,7 +104,7 @@
         </div>
         <div class="row">
             <div id="msg" class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
                 <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label>
                 <asp:HiddenField ID="HFMsg" runat="server" />
             </div>

@@ -47,4 +47,12 @@ Public Class Chapa
             Throw
         End Try
     End Sub
+
+    Friend Sub actualizar()
+        Try
+            db.actualizar(Me)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
 End Class
