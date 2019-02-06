@@ -562,4 +562,12 @@ Public Class GestorDatos
         End Try
     End Function
 
+    Public Function getPedidos() As DataTable
+        Try
+            db = New DbHelper()
+            Return db.getPedidos()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
 End Class

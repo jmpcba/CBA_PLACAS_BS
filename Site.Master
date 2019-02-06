@@ -60,8 +60,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pedidos <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/Pedido/nuevo.aspx">Nuevo</a></li>
-                                <li><a href="/Pedido/modificar.aspx">Modificar</a></li>
-                                <li><a href="/pedido/administrar.aspx">Produccion</a></li>
+                                <li><a href="/Pedido/panelPedidos.aspx?tipo=mod">Modificar</a></li>
+                                <li><a href="/pedido/panelPedidos.aspx?tipo=prod">Produccion</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

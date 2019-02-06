@@ -1,41 +1,26 @@
 ﻿Public Class Administrar
     Inherits System.Web.UI.Page
     Dim gd As GestorDatos
-    Dim gp As GestorPedidos
     Dim sb As StatusBar
 
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Dim idPedido = Request.QueryString("idPedido")
+
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
         lblSubtitulo.Text = ""
         HFCrystal.Value = ""
         HFStock.Value = "n"
 
-    End Sub
+        ViewState("idPedido") = idPedido
+        llenarGrillasDetalle()
 
-    Protected Sub grNvos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
-        Dim idPedido As Integer
+        lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", idPedido)
 
-        Try
-            pnlPedidos.Visible = False
-            pnlDetalle.Visible = True
+        sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", idPedido))
 
-            idPedido = Convert.ToInt32(grPedidos.SelectedDataKey.Value)
-            ViewState("idPedido") = idPedido
-            gp = New GestorPedidos(idPedido)
-            HFIDPedido.Value = gp.pedido.id.ToString
 
-            validar(gp)
-            llenarGrillasDetalle(gp)
-
-            grPedidos.SelectedIndex = -1
-            lblSubtitulo.Text = "Detalles Pedido: " & gp.pedido.id
-            sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", gp.pedido.id.ToString))
-
-        Catch ex As Exception
-            sb.writeError(ex.Message)
-        End Try
     End Sub
 
     Private Sub calcularRangeValidatorsGrillasStock(_gp)
@@ -94,18 +79,22 @@
         Next
     End Sub
 
-    Private Sub validar(_gp As GestorPedidos)
+    Private Sub validar()
+        Dim idPedido As Integer
+        idPedido = ViewState("idPedido")
 
-        If _gp.pedido.estado.id >= Estado.estados.deposito Then
+        Dim gp As New GestorPedidos(idPedido)
+
+        If gp.pedido.estado.id >= Estado.estados.deposito Then
             HFBtnProd.Value = "disabled"
 
-            If _gp.pedido.estado.id = Estado.estados.deposito Then
+            If gp.pedido.estado.id = Estado.estados.deposito Then
                 lblModalDepo.Text = "El Pedido esta listo para ser enviado"
 
-            ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
+            ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
                 lblModalDepo.Text = "Pedido en camino. confirmar recepcion con el cliente"
 
-            ElseIf _gp.pedido.estado.id = Estado.estados.entregado Then
+            ElseIf gp.pedido.estado.id = Estado.estados.entregado Then
                 lblModalDepo.Text = "Pedido entregado al cliente"
             End If
         Else
@@ -113,14 +102,14 @@
             lblModalDepo.Text = "El Pedido NO esta listo para ser enviado"
         End If
 
-        If _gp.pedido.estado.id = Estado.estados.entregado Then
+        If gp.pedido.estado.id = Estado.estados.entregado Then
             HFBtnDepo.Value = "disabled"
             HFBtnProd.Value = "disabled"
         Else
             HFBtnDepo.Value = ""
         End If
 
-        If _gp.pedido.estado.id > Estado.estados.recibido Then
+        If gp.pedido.estado.id > Estado.estados.recibido Then
             HFBtnOrden.Value = "disabled"
         Else
             HFBtnOrden.Value = ""
@@ -128,26 +117,25 @@
             HFBtnDepo.Value = "disabled"
         End If
 
-        If _gp.pedido.estado.id = Estado.estados.enCola Then
+        If gp.pedido.estado.id = Estado.estados.enCola Then
             HFBtnDepo.Value = "disabled"
         End If
 
-        If _gp.pedido.estado.id = Estado.estados.enProduccion And _gp.pedido.getPAlmacenar = 0 Then
+        If gp.pedido.estado.id = Estado.estados.enProduccion And gp.pedido.getPAlmacenar = 0 Then
             HFBtnDepo.Value = "disabled"
         End If
 
-        HFEstado.Value = _gp.pedido.estado.id
+        HFEstado.Value = gp.pedido.estado.id
 
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
-        pnlDetalle.Visible = False
-        pnlPedidos.Visible = True
-        grPedidos.DataBind()
+
     End Sub
 
     Protected Sub btnEnviarProd_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
         Try
+            Dim gp As GestorPedidos
 
             Dim idPedido As Integer
             idPedido = ViewState("idPedido")
@@ -159,16 +147,23 @@
                 HFStock.Value = "y"
             End If
 
-            llenarGrillasDetalle(gp)
-            validar(gp)
+            llenarGrillasDetalle()
+            validar()
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
     End Sub
 
-    Public Sub llenarGrillasDetalle(_gp As GestorPedidos)
+    Public Sub llenarGrillasDetalle()
         Dim items As DataTable
         Dim materiales As Boolean
+        Dim _gp As GestorPedidos
+        Dim idPedido As Integer
+
+        idPedido = ViewState("idPedido")
+
+        'refrescar el objeto pedidos desde la DB
+        _gp = New GestorPedidos(idPedido)
         items = gd.getItems(_gp.pedido.id)
 
         grDetalle.DataSource = items
@@ -192,7 +187,7 @@
         grEtiquetasStock.DataBind()
         grCambiarStock.DataBind()
 
-        If gp.pedido.estado.id = Estado.estados.recibido Then
+        If _gp.pedido.estado.id = Estado.estados.recibido Then
             If materiales Then
                 HFMat.Value = "True"
                 lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
@@ -214,15 +209,15 @@
         lblClienteDet.Text = _gp.pedido.cliente.nombre.ToUpper
 
         'BOTON MODAL DEPOSITO
-        If gp.pedido.getPAlmacenar > 0 Then
+        If _gp.pedido.getPAlmacenar > 0 Then
             btnAccionDepo.Text = "Almacenar"
             HFDepo.Value = "almc"
 
-        ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
+        ElseIf _gp.pedido.estado.id = Estado.estados.deposito Then
             btnAccionDepo.Text = "Enviar a Cliente"
             HFDepo.Value = "remito"
 
-        ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
+        ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
             btnAccionDepo.Text = "Confirmar Recepcion"
             HFDepo.Value = "recepcion"
         End If
@@ -231,7 +226,7 @@
         'PEDIENTES
         bltPendientes.Items.Clear()
 
-        For Each msg As String In gp.pendientes(HFExIcon)
+        For Each msg As String In _gp.pendientes(HFExIcon)
             bltPendientes.Items.Add(msg)
         Next
 
@@ -254,14 +249,16 @@
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click
         Try
+            Dim gp As GestorPedidos
+
             Dim idPedido As Integer
             idPedido = ViewState("idPedido")
+
             gp = New GestorPedidos(idPedido)
 
             gp.actualizarEnCurso(grEnCurso)
-            validar(gp)
-            llenarGrillasDetalle(gp)
-            Session("gp") = gp
+            validar()
+            llenarGrillasDetalle()
 
             sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
         Catch ex As Exception
@@ -272,10 +269,9 @@
     Protected Sub btnRefrescar_Click(sender As Object, e As EventArgs) Handles btnRefrescar.Click
         Dim idPedido As Integer
         idPedido = ViewState("idPedido")
-        gp = New GestorPedidos(idPedido)
 
-        llenarGrillasDetalle(gp)
-        validar(gp)
+        llenarGrillasDetalle()
+        validar()
     End Sub
 
     Protected Sub btnImprimirCompra_Click(sender As Object, e As EventArgs) Handles btnImprimirCompra.Click
@@ -283,6 +279,7 @@
     End Sub
 
     Protected Sub btnAccionDepo_Click(sender As Object, e As EventArgs) Handles btnAccionDepo.Click
+        Dim gp As GestorPedidos
 
         Try
             Dim idPedido As Integer
@@ -303,8 +300,8 @@
                 sb.write(String.Format("Pedido {0} - ENTREGADO", gp.pedido.id))
             End If
 
-            validar(gp)
-            llenarGrillasDetalle(gp)
+            validar()
+            llenarGrillasDetalle()
 
         Catch ex As Exception
             sb.writeError(ex.Message)
@@ -312,6 +309,8 @@
     End Sub
 
     Protected Sub btnCambiarStock_Click(sender As Object, e As EventArgs) Handles btnCambiarStock.Click
+        Dim gp As GestorPedidos
+
         Try
             Dim idPedido As Integer
             idPedido = ViewState("idPedido")
@@ -325,8 +324,8 @@
                 HFStock.Value = "r"
             End If
 
-            llenarGrillasDetalle(gp)
-            validar(gp)
+            llenarGrillasDetalle()
+            validar()
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try

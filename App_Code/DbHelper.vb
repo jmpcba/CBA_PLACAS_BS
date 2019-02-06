@@ -1439,4 +1439,19 @@ Public Class DbHelper
             Throw
         End Try
     End Function
+
+    Public Function getPedidos() As DataTable
+        Dim query = "SELECT * FROM VW_PEDIDOS_EN_CURSO"
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "PEDIDOS")
+            Return ds.Tables("PEDIDOS")
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        End Try
+    End Function
+
 End Class

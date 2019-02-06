@@ -5,9 +5,8 @@
                 <h1>Pedidos</h1>
                 <p class="lead">Administre pedidos existentes y envie nuevos pedidos desde aqui.</p>
                 <p><a href="Pedido/nuevo.aspx" class="btn btn-primary btn-lg">Nuevo&raquo;</a></p>
-                <p><a href="Pedido/modificar.aspx" class="btn btn-primary btn-lg">Modificar&raquo;</a></p>
-                <p><a href="pedido/consultar.aspx" class="btn btn-primary btn-lg">Consultar&raquo;</a></p>
-                <p><a href="pedido/administrar.aspx" class="btn btn-primary btn-lg">Administrar&raquo;</a></p>
+                <p><a href="Pedido/panelPedidos.aspx?tipo=mod" class="btn btn-primary btn-lg">Modificar&raquo;</a></p>
+                <p><a href="Pedido/panelPedidos.aspx?tipo=prod" class="btn btn-primary btn-lg">Produccion&raquo;</a></p>
             </div>
 
             <div class="row">

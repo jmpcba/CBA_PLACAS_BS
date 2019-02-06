@@ -269,6 +269,7 @@
     <Content Include="Pedido\modificar.aspx" />
     <Content Include="Pedido\modificarDetalle.aspx" />
     <Content Include="Pedido\nuevo.aspx" />
+    <Content Include="Pedido\panelPedidos.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
     <Content Include="producto\productos.aspx" />
@@ -576,6 +577,13 @@
     </Compile>
     <Compile Include="Pedido\nuevo.aspx.vb">
       <DependentUpon>nuevo.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\panelPedidos.aspx.designer.vb">
+      <DependentUpon>panelPedidos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\panelPedidos.aspx.vb">
+      <DependentUpon>panelPedidos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Pedido\tests.aspx.designer.vb">
