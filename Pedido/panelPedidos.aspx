@@ -81,7 +81,7 @@
                             <ItemStyle CssClass="numCol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
-                        <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
+                        <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
                         <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
                             <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
@@ -115,7 +115,7 @@
                             <ItemStyle CssClass="hiddencol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
-                        <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
+                        <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
                         <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
                             <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>

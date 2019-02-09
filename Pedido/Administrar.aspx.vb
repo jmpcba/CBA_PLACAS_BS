@@ -16,6 +16,7 @@
         ViewState("idPedido") = idPedido
         llenarGrillasDetalle()
 
+
         lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", idPedido)
 
         sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", idPedido))
@@ -148,7 +149,7 @@
             End If
 
             llenarGrillasDetalle()
-            validar()
+
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
@@ -244,7 +245,7 @@
                 r.ForeColor = Drawing.Color.Gray
             End If
         Next
-
+        validar()
     End Sub
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click
@@ -257,7 +258,7 @@
             gp = New GestorPedidos(idPedido)
 
             gp.actualizarEnCurso(grEnCurso)
-            validar()
+
             llenarGrillasDetalle()
 
             sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
@@ -271,7 +272,7 @@
         idPedido = ViewState("idPedido")
 
         llenarGrillasDetalle()
-        validar()
+
     End Sub
 
     Protected Sub btnImprimirCompra_Click(sender As Object, e As EventArgs) Handles btnImprimirCompra.Click
@@ -300,7 +301,7 @@
                 sb.write(String.Format("Pedido {0} - ENTREGADO", gp.pedido.id))
             End If
 
-            validar()
+
             llenarGrillasDetalle()
 
         Catch ex As Exception
@@ -325,7 +326,7 @@
             End If
 
             llenarGrillasDetalle()
-            validar()
+
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try

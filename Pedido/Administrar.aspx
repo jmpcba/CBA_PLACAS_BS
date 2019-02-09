@@ -4,9 +4,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            
-            iniciarDropDowns(dropdowns)
-
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
