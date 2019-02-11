@@ -144,7 +144,7 @@
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
-        Response.Redirect("modificar.aspx")
+        Response.Redirect("panelPedidos.aspx")
     End Sub
 
     Protected Sub btnEliminarItems_Click(sender As Object, e As EventArgs) Handles btnEliminarItems.Click

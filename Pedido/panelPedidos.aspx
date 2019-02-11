@@ -9,8 +9,8 @@
     </script>
     <div class="page-header">
         <h1 class="text-center">
-            <asp:Label ID="lblTitulo" runat="server" Text="Label"></asp:Label><br /><small>
-        <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
+            Pedidos<br /><small>
+        Pedidos en curso</small></h1>
     </div>
     <div class="row">
         <div id="msg" class="alert alert-success alert-dismissible" role="alert">
@@ -32,7 +32,8 @@
             </div>
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body table-responsive">
-                <asp:GridView ID="grNuevos" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed"><Columns>
+                <asp:GridView ID="grNuevos" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed">
+                    <Columns>
                         <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
                         <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" SortExpression="Cantidad" >
@@ -44,12 +45,18 @@
                             <HeaderStyle CssClass="hiddencol" />
                             <ItemStyle CssClass="hiddencol" />
                         </asp:BoundField>
+                        <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
+                            <ControlStyle CssClass="hiddencol" />
+                            <FooterStyle CssClass="hiddencol" />
+                            <HeaderStyle CssClass="hiddencol" />
+                            <ItemStyle CssClass="hiddencol" />
+                        </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                            <ControlStyle CssClass="imageButtons" />
+                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
+                            <ControlStyle CssClass="imageButtons"></ControlStyle>
                         </asp:CommandField>
-                        </Columns>
+                    </Columns>
                     </asp:GridView>
               </div>
             </div>
@@ -82,8 +89,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                            <ControlStyle CssClass="imageButtons" />
+                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
+                            <ControlStyle CssClass="imageButtons"></ControlStyle>
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>
@@ -116,8 +123,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                            <ControlStyle CssClass="imageButtons" />
+                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
+                            <ControlStyle CssClass="imageButtons"></ControlStyle>
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>

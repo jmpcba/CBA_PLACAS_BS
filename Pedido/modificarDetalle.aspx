@@ -31,7 +31,7 @@
     <asp:HiddenField ID="HFIdPedido" runat="server" Value="0" />
     <asp:HiddenField ID="HFIsPostBack" runat="server" Value="0" />
     <div class="page-header">
-        <h1 class="text-center">Modificar Pedidos <br /><small>
+        <h1 class="text-center">Modificar Pedido <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">

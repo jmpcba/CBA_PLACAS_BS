@@ -2,13 +2,17 @@
     Inherits System.Web.UI.Page
     Dim gd As New GestorDatos
     Dim sb As StatusBar
-    Dim tipo As String
+
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         sb = New StatusBar(HFMsg, lblMessage)
-        tipo = Request.QueryString("tipo")
         llenarGrillas()
     End Sub
+
+    Private Enum redireccion
+        produccion
+        modificar
+    End Enum
 
     Private Sub llenarGrillas()
         Try
@@ -32,40 +36,56 @@
             lblNuevos.Text = grNuevos.Rows.Count
             lblEnCurso.Text = grEnCurso.Rows.Count
             lblDeposito.Text = grDeposito.Rows.Count
-            If tipo = "prod" Then
-                lblTitulo.Text = "Administrar Pedidos"
-            ElseIf tipo = "mod" Then
-                lblTitulo.Text = "Modificar Pedidos"
-            End If
+
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
     End Sub
 
-    Public Sub redirigir(_idPedido As Integer)
-        If tipo = "prod" Then
-            Response.Redirect("administrar.aspx?idPedido=" & _idPedido)
-        ElseIf tipo = "mod" Then
+    Private Sub redirigir(_idPedido As Integer, _tipo As redireccion)
+
+        If _tipo = redireccion.modificar Then
+
             Response.Redirect("modificarDetalle.aspx?idPedido=" & _idPedido)
+        ElseIf _tipo = redireccion.produccion Then
+            Response.Redirect("administrar.aspx?idPedido=" & _idPedido)
         End If
 
-    End Sub
-
-    Protected Sub grEnCurso_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grEnCurso.SelectedIndexChanged
-        Dim row = grEnCurso.SelectedRow
-        Dim idPedido = Convert.ToInt32(grEnCurso.SelectedDataKey.Value)
-        redirigir(idPedido)
     End Sub
 
     Protected Sub grNuevos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grNuevos.SelectedIndexChanged
         Dim row = grNuevos.SelectedRow
         Dim idPedido = Convert.ToInt32(grNuevos.SelectedDataKey.Value)
-        redirigir(idPedido)
+        redirigir(idPedido, redireccion.produccion)
+    End Sub
+
+    Protected Sub grNuevos_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grNuevos.RowEditing
+        Dim idPedido As Integer
+        idPedido = Convert.ToInt32(grNuevos.DataKeys(e.NewEditIndex).Value)
+        redirigir(idPedido, redireccion.modificar)
+    End Sub
+
+    Protected Sub grDeposito_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grDeposito.RowEditing
+        Dim idPedido As Integer
+        idPedido = Convert.ToInt32(grDeposito.DataKeys(e.NewEditIndex).Value)
+        redirigir(idPedido, redireccion.modificar)
     End Sub
 
     Protected Sub grDeposito_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grDeposito.SelectedIndexChanged
         Dim row = grDeposito.SelectedRow
         Dim idPedido = Convert.ToInt32(grDeposito.SelectedDataKey.Value)
-        redirigir(idPedido)
+        redirigir(idPedido, redireccion.produccion)
+    End Sub
+
+    Protected Sub grEnCurso_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grEnCurso.RowEditing
+        Dim idPedido As Integer
+        idPedido = Convert.ToInt32(grEnCurso.DataKeys(e.NewEditIndex).Value)
+        redirigir(idPedido, redireccion.modificar)
+    End Sub
+
+    Protected Sub grEnCurso_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grEnCurso.SelectedIndexChanged
+
+        Dim idPedido = Convert.ToInt32(grEnCurso.SelectedDataKey.Value)
+        redirigir(idPedido, redireccion.produccion)
     End Sub
 End Class
