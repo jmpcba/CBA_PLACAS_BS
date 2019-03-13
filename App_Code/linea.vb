@@ -21,6 +21,12 @@ Public Class Linea
         nombre = t.Rows(0)("nombre")
     End Sub
 
+    Public Sub New(_nombre As String)
+        nombre = _nombre
+        db = New DbHelper("lineas")
+    End Sub
+
+
     Public Function getLineas() As DataTable
         Try
             Return db.getTable()
@@ -40,6 +46,22 @@ Public Class Linea
                     db.insertar(Me)
                 End If
             End If
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
+    Friend Sub eliminar()
+        Try
+            db.eliminar(Me)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
+    Friend Sub actualizar()
+        Try
+            db.actualizar(Me)
         Catch ex As Exception
             Throw
         End Try

@@ -15,6 +15,10 @@ Public Class DbHelper
     Public Enum tablas
         CHAPAS
         MADERAS
+        HOJAS
+        LINEAS
+        MANOS
+        MARCOS
     End Enum
 
     Public Enum tipoItem
@@ -75,6 +79,9 @@ Public Class DbHelper
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
+            If ex.Message.ToLower.Contains(codigoError(tablas.CHAPAS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.CHAPAS))
+            End If
             Throw
         Finally
             cnn.Close()
@@ -96,7 +103,30 @@ Public Class DbHelper
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
-            Throw
+            If ex.Message.ToLower.Contains(codigoError(tablas.MADERAS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.MADERAS))
+            Else
+                Throw
+            End If
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_linea As Linea)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("DELETE LINEAS WHERE ID={0}", _linea.id)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            If ex.Message.ToLower.Contains(codigoError(tablas.LINEAS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.LINEAS))
+            Else
+                Throw
+            End If
         Finally
             cnn.Close()
         End Try
@@ -110,7 +140,11 @@ Public Class DbHelper
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
-            Throw
+            If ex.Message.ToLower.Contains(codigoError(tablas.HOJAS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.HOJAS))
+            Else
+                Throw
+            End If
         Finally
             cnn.Close()
         End Try
@@ -124,7 +158,11 @@ Public Class DbHelper
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
-            Throw
+            If ex.Message.ToLower.Contains(codigoError(tablas.MARCOS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.MARCOS))
+            Else
+                Throw
+            End If
         Finally
             cnn.Close()
         End Try
@@ -138,7 +176,11 @@ Public Class DbHelper
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
-            Throw
+            If ex.Message.ToLower.Contains(codigoError(tablas.MANOS)) Then
+                Throw New Exception(mensajeExcepcion(tablas.MANOS))
+            Else
+                Throw
+            End If
         Finally
             cnn.Close()
         End Try
@@ -146,6 +188,20 @@ Public Class DbHelper
 
     Friend Sub actualizar(_madera As Madera)
         cmd.CommandText = String.Format("UPDATE MADERAS SET NOMBRE = '{0}' WHERE ID={1}", _madera.nombre, _madera.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(_linea As Linea)
+        cmd.CommandText = String.Format("UPDATE LINEAS SET NOMBRE = '{0}' WHERE ID={1}", _linea.nombre, _linea.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -1454,4 +1510,43 @@ Public Class DbHelper
         End Try
     End Function
 
+    Private Function codigoError(tipo As tablas) As String
+        'Select Case tipo
+        '    Case tablas.CHAPAS
+        '        Return "fk_productos_chapas"
+        '    Case tablas.HOJAS
+        '        Return "fk_productos_hojas"
+        '    Case tablas.LINEAS
+        '        Return "fk_productos_lineas"
+        '    Case tablas.MADERAS
+        '        Return "fk_productos_maderas"
+        '    Case tablas.MANOS
+        '        Return "fk_productos_manos"
+        '    Case tablas.MARCOS
+        '        Return "fk_productos_marcos"
+        'End Select
+
+        Return "reference 'fk"
+
+    End Function
+
+    Private Function mensajeExcepcion(tipo As tablas) As String
+        Dim estaEste As String
+        Dim borr As String
+        Dim asoc As String
+        Dim strTipo = tipo.ToString
+
+        If tipo = tablas.MARCOS Then
+            estaEste = "ESTE"
+            asoc = "ASOCIADO"
+            borr = "BORRADO"
+        Else
+            estaEste = "ESTA"
+            asoc = "ASOCIADA"
+            borr = "BORRADA"
+        End If
+
+        Return String.Format("{0} {1} ESTA {2} A PRODUCTOS EXISTENTES Y NO PUEDE SER {3}", estaEste, strTipo.Substring(0, strTipo.Length - 1), asoc, borr)
+
+    End Function
 End Class

@@ -41,6 +41,9 @@
             ElseIf tipo = "Mano" Then
                 Dim mano = New Mano(nvoNombre)
                 mano.insertar()
+            ElseIf tipo = "Linea" Then
+                Dim linea As New Linea(nvoNombre)
+                linea.insertar()
             End If
 
             iniciarGrillas()
@@ -79,6 +82,9 @@
             ElseIf tipo = "Mano" Then
                 Dim man As New Mano
                 cbEliminar.DataSource = man.getManos()
+            ElseIf tipo = "Linea" Then
+                Dim linea As New Linea
+                cbEliminar.DataSource = linea.getLineas()
             End If
             cbEliminar.DataTextField = "nombre"
             cbEliminar.DataValueField = "id"
@@ -108,6 +114,9 @@
             ElseIf tipo = "Mano" Then
                 Dim man As New Mano
                 cbModificar.DataSource = man.getManos()
+            ElseIf tipo = "Linea" Then
+                Dim linea As New Linea
+                cbModificar.DataSource = linea.getLineas()
             End If
             cbModificar.DataTextField = "nombre"
             cbModificar.DataValueField = "id"
@@ -151,6 +160,10 @@
                 Dim man As New Mano(id)
                 man.nombre = val
                 man.actualizar()
+            ElseIf tipo = "Linea" Then
+                Dim linea As New Linea(id)
+                linea.nombre = val
+                linea.actualizar
             End If
 
             iniciarGrillas()
@@ -192,6 +205,9 @@
             ElseIf tipo = "Mano" Then
                 Dim man As New Mano(id)
                 man.eliminar()
+            ElseIf tipo = "Linea" Then
+                Dim lin As New Linea(id)
+                lin.eliminar()
             End If
 
             iniciarGrillas()
@@ -199,7 +215,5 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
-
-
     End Sub
 End Class
