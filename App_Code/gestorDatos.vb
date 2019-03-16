@@ -570,4 +570,32 @@ Public Class GestorDatos
             Throw
         End Try
     End Function
+
+    Public Function getLineas() As DataTable
+        Try
+            Dim l As New Linea
+            Return l.getLineas
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
+    Public Function getProductos(_idLinea As Integer) As DataTable
+        Try
+            Dim db As New DbHelper
+            Dim l As New Linea(_idLinea)
+            Return db.getProductos(l)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
+    Public Function getProductos() As DataTable
+        Try
+            Dim db As New DbHelper
+            Return db.getProductos()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
 End Class

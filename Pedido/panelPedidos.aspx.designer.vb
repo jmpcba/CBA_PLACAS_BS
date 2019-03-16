@@ -14,24 +14,6 @@ Option Explicit On
 Partial Public Class panelPedidos
     
     '''<summary>
-    '''Control lblTitulo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lblTitulo As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
-    '''Control lblSubtitulo.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lblSubtitulo As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
     '''Control lblMessage.
     '''</summary>
     '''<remarks>

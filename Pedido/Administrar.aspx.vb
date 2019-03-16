@@ -131,7 +131,7 @@
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
-
+        Response.Redirect("panelPedidos.aspx")
     End Sub
 
     Protected Sub btnEnviarProd_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click

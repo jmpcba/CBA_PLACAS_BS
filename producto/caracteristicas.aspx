@@ -102,8 +102,8 @@
                         <div class="col-md-2">
                         <div class="btn-group-vertical">
                             <button id="btnAgregarLinea" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregar" data-tipo="Linea">Agregar</button>
-                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Linea">Modificar</button>
-                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-target="#mdlAgregar" data-toggle="modal" data-tipo="Linea">Eliminar</button>
+                            <button id="btnModificarLinea" type="button" class="btn btn-primary" data-target="#mdlModificar" data-toggle="modal" data-tipo="Linea">Modificar</button>
+                            <button id="btnEliminarLinea" type="button" class="btn btn-primary" data-target="#mdlEliminar" data-toggle="modal" data-tipo="Linea">Eliminar</button>
                         </div>
                     </div>
                       </div>
@@ -326,7 +326,7 @@
         </div>
     </div>
     <!--MODAL ELIMINAR-->
-    <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="mdlAgregar">
+    <div class="modal fade" id="mdlEliminar" tabindex="-1" role="dialog" aria-labelledby="mdlEliminar">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

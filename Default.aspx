@@ -1,36 +1,53 @@
 ﻿<%@ Page Title="Home Page" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="CBA_PLACAS_BS._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="jumbotron">
-                <h1>Pedidos</h1>
-                <p class="lead">Administre pedidos existentes y envie nuevos pedidos desde aqui.</p>
-                <p><a href="Pedido/nuevo.aspx" class="btn btn-primary btn-lg">Nuevo&raquo;</a></p>
-                <p><a href="Pedido/panelPedidos.aspx?tipo=mod" class="btn btn-primary btn-lg">Modificar&raquo;</a></p>
-                <p><a href="Pedido/panelPedidos.aspx?tipo=prod" class="btn btn-primary btn-lg">Produccion&raquo;</a></p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <h2>Productos</h2>
-                    <p>
-                        Administre desde aqui sus productos.</p>
-                    <p><a class="btn btn-default" href="App_pages/productos/ProductoNuevo.aspx">Nuevo &raquo;</a></p>
-                    <p><a class="btn btn-default" href="App_pages/productos/modificarProductos.aspx">Modificar &raquo;</a></p>
-                    <p><a class="btn btn-default" href="App_pages/productos/materiales.aspx">Materiales&raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Clientes</h2>
-                    <p>
-                        Administracion de Clientes.
-                    </p>
-                    <p><a class="btn btn-default" href="cliente/clientes.aspx">Buscar &raquo;</a></p>
-                </div>
-                <div class="col-md-4">
-                    <h2>Reportes</h2>
-                    <p>
-                        Informacion historica del sistema</p>
-                    <p><a class="btn btn-default" href="App_pages/reportes/reportePedidosCliente.aspx">Ventas Por Cliente &raquo;</a></p>
-                    <p><a class="btn btn-default" href="App_pages/reportes/reportePedidosProducto.aspx">Ventas Por Producto &raquo;</a></p>
-                </div>
-            </div>
+    <div class="page-header">
+        <h1 class="text-center">MG Placas SRL<br /><small>
+        <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+        <div class="thumbnail">
+          <img src="images/stock.png" alt="Pedidos">
+          <div class="caption">
+            <h3>Pedidos</h3>
+            <p>Controle el estado e ignrese nuevos pedidos</p>
+            <p><a href="Pedido/nuevo.aspx" class="btn btn-primary" role="button">Nuevo</a> <a href="Pedido/panelPedido.aspx" class="btn btn-default" role="button">Existente</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="thumbnail">
+          <img src="images/cliente.png" alt="clientes">
+          <div class="caption">
+            <h3>Clientes</h3>
+            <p>Liste, modifique e ingrese nuevos clientes</p>
+            <p><a href="cliente/clientes.aspx" class="btn btn-primary" role="button">Clientes</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--SEGUNDA COLUMNA-->
+    <div class="row">
+      <div class="col-md-4 col-md-offset-2">
+        <div class="thumbnail">
+          <img src="images/produccion.png" alt="Pedidos">
+          <div class="caption">
+            <h3>Productos</h3>
+            <p>Productos disponibles</p>
+            <p><a href="Pedido/nuevo.aspx" class="btn btn-primary" role="button">Nuevo</a> <a href="Pedido/panelPedido.aspx" class="btn btn-default" role="button">Existente</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="thumbnail">
+          <img src="images/grafico.png" class="tb" alt="Reportes">
+          <div class="caption">
+            <h3>Reportes</h3>
+            <p>Reportes historicos</p>
+            <p><a href="cliente/clientes.aspx" class="btn btn-primary" role="button">Clientes</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
 </asp:Content>
