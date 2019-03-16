@@ -1478,7 +1478,7 @@ Public Class DbHelper
     End Function
 
     Public Function getProductos() As DataTable
-        Dim query = "SELECT * FROM VW_PRODUCTOS WHERE "
+        Dim query = "SELECT * FROM VW_PRODUCTOS "
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query

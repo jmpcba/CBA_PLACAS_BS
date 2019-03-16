@@ -589,4 +589,13 @@ Public Class GestorDatos
             Throw
         End Try
     End Function
+
+    Public Function getProductos() As DataTable
+        Try
+            Dim db As New DbHelper
+            Return db.getProductos()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
 End Class
