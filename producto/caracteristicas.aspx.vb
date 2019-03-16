@@ -17,7 +17,7 @@
         Dim msg = " Nuevo "
         Dim finMsg = "o"
 
-        nvoNombre = txtNombre.Text.Trim
+        nvoNombre = txtNombre.Text.Trim.ToUpper
 
         If tipo = "Madera" Or tipo = "Linea" Or tipo = "Hoja" Or tipo = "Chapa" Then
             msg = "Nueva "

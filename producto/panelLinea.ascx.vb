@@ -35,4 +35,14 @@
             Return HFPanel.Value
         End Get
     End Property
+
+    Public Property productos As DataTable
+        Set(value As DataTable)
+            grProductos.DataSource = value
+            grProductos.DataBind()
+        End Set
+        Get
+            Return grProductos.DataSource
+        End Get
+    End Property
 End Class

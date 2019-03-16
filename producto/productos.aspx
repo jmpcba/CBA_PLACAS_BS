@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="productos.aspx.vb" Inherits="CBA_PLACAS_BS.productos1" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="productos.aspx.vb" Inherits="CBA_PLACAS_BS.productos1" Theme="default" %>
 
 <%@ Register Src="~/producto/panelLinea.ascx" TagPrefix="pl" TagName="panelLinea" %>
 

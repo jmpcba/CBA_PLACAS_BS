@@ -1458,8 +1458,27 @@ Public Class DbHelper
         End Try
     End Function
 
+    Public Function getProductos(_l As Linea, Optional todos As Boolean = False) As DataTable
+        Dim query As String
+
+        If Not todos Then
+            query = String.Format("SELECT CHAPA, HOJA, MARCO, MADERA, ID_CHAPA, ID_HOJA, ID_MARCO, ID_MADERA FROM VW_PRODUCTOS WHERE ID_LINEA={0} GROUP BY CHAPA, HOJA, MADERA, MARCO, ID_CHAPA, ID_HOJA, ID_MARCO, ID_MADERA ORDER BY ID_MADERA, ID_HOJA, ID_MARCO, ID_CHAPA", _l.id)
+        End If
+
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "PRODUCTOS")
+            Return ds.Tables("PRODUCTOS")
+        Catch ex As Exception
+            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Function
+
     Public Function getProductos() As DataTable
-        Dim query = "SELECT * FROM VW_PRODUCTOS"
+        Dim query = "SELECT * FROM VW_PRODUCTOS WHERE "
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
