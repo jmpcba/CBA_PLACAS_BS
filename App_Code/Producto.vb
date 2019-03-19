@@ -1,16 +1,17 @@
 ﻿Imports System.Data
 Public Class Producto
-    Public id As Integer
-    Public hoja As Hoja
-    Public marco As Marco
-    Public madera As Madera
-    Public chapa As Chapa
-    Public precioUnitario As Decimal
-    Public mano As Mano
-    Public linea As Linea
-    Public stock As Integer
-    Public despiece As DataTable
-    Dim db As DbHelper
+    Private _idProd As Integer
+    Private _hoja As Hoja
+    Private _marco As Marco
+    Private _madera As Madera
+    Private _chapa As Chapa
+    Private _precioUnitario As Decimal
+    Private _mano As Mano
+    Private _linea As Linea
+    Private _stock As Integer
+    Private _despiece As DataTable
+    Private db As DbHelper
+    Private modificado = False
 
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
@@ -24,7 +25,6 @@ Public Class Producto
             chapa = _chapa
             mano = _mano
 
-            'dt = db.getProducto(_linea.id, _chapa.id, _hoja.id, _marco.id, _madera.id, _mano.id)
             dt = db.buscar(Me)
             If dt.Rows.Count > 0 Then
                 id = dt(0)("id")
@@ -69,10 +69,104 @@ Public Class Producto
 
     End Sub
 
+    Public Property id As Integer
+        Set(value As Integer)
+            _idProd = value
+            modificado = True
+        End Set
+        Get
+            Return _idProd
+        End Get
+    End Property
+    Public Property hoja As Hoja
+        Set(value As Hoja)
+            _hoja = value
+            modificado = True
+        End Set
+        Get
+            Return _hoja
+        End Get
+    End Property
+    Public Property marco As Marco
+        Set(value As Marco)
+            _marco = value
+            modificado = True
+        End Set
+        Get
+            Return _marco
+        End Get
+    End Property
+    Public Property madera As Madera
+        Set(value As Madera)
+            _madera = value
+            modificado = True
+        End Set
+        Get
+            Return _madera
+        End Get
+    End Property
+    Public Property chapa As Chapa
+        Set(value As Chapa)
+            _chapa = value
+            modificado = True
+        End Set
+        Get
+            Return _chapa
+        End Get
+    End Property
+    Public Property precioUnitario As Decimal
+        Set(value As Decimal)
+            _precioUnitario = value
+            modificado = True
+        End Set
+        Get
+            Return _precioUnitario
+        End Get
+    End Property
+    Public Property mano As Mano
+        Set(value As Mano)
+            _mano = value
+            modificado = True
+        End Set
+        Get
+            Return _mano
+        End Get
+    End Property
+    Public Property linea As Linea
+        Set(value As Linea)
+            _linea = value
+            modificado = True
+        End Set
+        Get
+            Return _linea
+        End Get
+    End Property
+    Public Property stock As Integer
+        Set(value As Integer)
+            _stock = value
+            modificado = True
+        End Set
+        Get
+            Return _stock
+        End Get
+    End Property
+    Public Property despiece As DataTable
+        Set(value As DataTable)
+            _despiece = value
+        End Set
+        Get
+            Return _despiece
+        End Get
+    End Property
+
     Friend Sub actualizar()
         Try
-            db = New DbHelper()
-            db.actualizar(Me)
+            If modificado Then
+                db = New DbHelper()
+                db.actualizar(Me)
+            Else
+                Throw New Exception("No se hicieron modificaciones")
+            End If
         Catch ex As Exception
             Throw
         End Try

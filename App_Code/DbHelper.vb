@@ -1515,6 +1515,21 @@ Public Class DbHelper
         End Try
     End Function
 
+    Public Function existeProducto(_prod As Producto) As Integer
+        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND ID<>{6}", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.id)
+        cmd.Connection = cnn
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+        Try
+            cnn.Open()
+            Return cmd.ExecuteScalar()
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
     Public Function getPedidos() As DataTable
         Dim query = "SELECT * FROM VW_PEDIDOS_EN_CURSO"
 

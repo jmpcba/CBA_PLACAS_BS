@@ -4,6 +4,7 @@ Public Class GestorProductos
     Dim despiece As DataTable
     Dim gd As GestorDatos
     Dim db As DbHelper
+
     Public Sub New(_idProducto As Integer)
         gd = New GestorDatos
         producto = New Producto(_idProducto)
@@ -87,5 +88,19 @@ Public Class GestorProductos
             End If
         Next
         producto.despiece = despiece
+    End Sub
+
+    Friend Sub modificar()
+        Try
+            db = New DbHelper("PRODUCTOS")
+            Dim existe = db.existeProducto(producto)
+            If Not IsNothing(existe) Then
+                Throw New Exception("Ya existe un producto con estas caracteristicas con el codig: " & existe)
+            Else
+                producto.actualizar()
+            End If
+        Catch ex As Exception
+            Throw
+        End Try
     End Sub
 End Class

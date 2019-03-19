@@ -272,6 +272,7 @@
     <Content Include="Pedido\panelPedidos.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
+    <Content Include="producto\modificarProducto.aspx" />
     <Content Include="producto\panelLinea.ascx" />
     <Content Include="producto\productos.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
@@ -599,6 +600,13 @@
     </Compile>
     <Compile Include="producto\caracteristicas.aspx.vb">
       <DependentUpon>caracteristicas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="producto\modificarProducto.aspx.designer.vb">
+      <DependentUpon>modificarProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\modificarProducto.aspx.vb">
+      <DependentUpon>modificarProducto.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="producto\panelLinea.ascx.designer.vb">

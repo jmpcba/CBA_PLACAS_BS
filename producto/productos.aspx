@@ -144,6 +144,13 @@
                     }
                 }
             }
+
+            $("#btnLimpiarFiltro").click(function () {
+                table = document.getElementById('<%= grProductos.ClientID %>');
+                limpiarFiltro(table)
+
+                iniciarDropDowns(dropdowns)
+            })
         })
 
     </script>
@@ -161,25 +168,17 @@
     <div class="form-group">
         <div class="row">
             <div class="col-md-4">
-                <strong>LINEA:</strong>
-            </div>
-            <div class="col-md-4">
-                <strong>CHAPA:</strong>
-            </div>
-            <div class="col-md-4">
-                <strong>MADERA:</strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
+                <strong>LINEA:</strong><br />
                 <asp:DropDownList ID="DPFiltroLinea" runat="server" DataSourceID="DSLinea" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSLinea" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [LINEAS]"></asp:SqlDataSource>
             </div>
             <div class="col-md-4">
+                <strong>CHAPA:</strong><br />
                 <asp:DropDownList ID="DPFiltroChapa" runat="server" DataSourceID="DSChapa" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSChapa" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [CHAPAS]"></asp:SqlDataSource>
             </div>
             <div class="col-md-4">
+                <strong>MADERA:</strong><br />
                 <asp:DropDownList ID="DPFiltroMadera" runat="server" DataSourceID="DSMadera" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSMadera" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [MADERAS]"></asp:SqlDataSource>
             </div>
@@ -187,28 +186,24 @@
         <br />
         <div class="row">
             <div class="col-md-4">
-                <strong>HOJA:</strong>
-            </div>
-            <div class="col-md-4">
-                <strong>MARCO:</strong>
-            </div>
-            <div class="col-md-4">
-                <strong>MANO:</strong>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
+                <strong>HOJA:</strong><br />
                 <asp:DropDownList ID="DPFiltroHoja" runat="server" DataSourceID="HSHojas" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="HSHojas" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [HOJAS]"></asp:SqlDataSource>
             </div>
             <div class="col-md-4">
+                <strong>MARCO:</strong><br />
                 <asp:DropDownList ID="DPFiltroMarco" runat="server" DataSourceID="DSMarco" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSMarco" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [MARCOS]"></asp:SqlDataSource>
             </div>
             <div class="col-md-4">
+                <strong>MANO:</strong><br />
                 <asp:DropDownList ID="DPFiltroMano" runat="server" DataSourceID="DSMano" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSMano" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [MANOS]"></asp:SqlDataSource>
             </div>
+        </div>
+        <div class="row">
+            <br />
+            <button id="btnLimpiarFiltro" class="btn btn-primary pull-right" type="submit">Limpiar Filtros</button>
         </div>
     </div>
     <hr>
@@ -259,7 +254,7 @@
                     <asp:BoundField DataField="HOJA" HeaderText="HOJA" />
                     <asp:BoundField DataField="MARCO" HeaderText="MARCO" />
                     <asp:BoundField DataField="MANO" HeaderText="MANO" />
-                    <asp:BoundField DataField="PRECIO" HeaderText="PRECIO" />
+                    <asp:BoundField DataField="PRECIO" HeaderText="PRECIO" DataFormatString="{0:C}" />
                     <asp:BoundField DataField="STOCK" HeaderText="STOCK" />
                     <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
                         <ControlStyle CssClass="imageButtons" />
