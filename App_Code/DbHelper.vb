@@ -113,6 +113,56 @@ Public Class DbHelper
         End Try
     End Sub
 
+    Friend Sub desactivarProducto(_prod As Producto)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.CommandText = String.Format("UPDATE PRODUCTOS SET ACTIVO=0 WHERE ID={0}", _prod.id)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub reActivarProducto(_id As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.CommandText = String.Format("UPDATE PRODUCTOS SET ACTIVO=1 WHERE ID={0}", _id)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Function pedidosProducto(_prod As Producto) As Boolean
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT COUNT(I.ID) FROM ITEMS I INNER JOIN PRODUCTOS P ON P.ID = I.ID_PRODUCTO WHERE ID_PRODUCTO={0} AND P.ACTIVO=1", _prod.id)
+            Dim re = cmd.ExecuteScalar()
+
+            'SI HAY ITEMS CON ESTE PRODUCTO DEVUELVE TRUE
+            If re <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
     Friend Sub eliminar(_linea As Linea)
         cmd.CommandType = CommandType.Text
         Try
@@ -1060,7 +1110,7 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_recibido <= '" & _fecRecHasta & "'"
+            query = query & " P.fecha_recibido <='" & _fecRecHasta & "'"
             firstParam = False
 
         ElseIf _fecRecDesde <> Date.MinValue Then
@@ -1083,7 +1133,7 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_modificado <= '" & _fecModHasta & "'"
+            query = query & " P.fecha_modificado <='" & _fecModHasta & "'"
             firstParam = False
 
         ElseIf _fecModDesde <> Date.MinValue Then
@@ -1168,20 +1218,15 @@ Public Class DbHelper
         End Try
     End Sub
 
-    Public Sub actualizar(_producto As Producto)
-        Dim strPrecio = _producto.precioUnitario.ToString()
+    Public Sub actualizar(_p As Producto)
+        Dim strPrecio = _p.precioUnitario.ToString()
 
         strPrecio = strPrecio.Replace(",", ".")
 
 
         cmd.Connection = cnn
-        cmd.CommandText = "SP_UPDATE_PRODUCTO"
-        cmd.CommandType = CommandType.StoredProcedure
-
-        cmd.Parameters.Clear()
-        cmd.Parameters.AddWithValue("@ID_PRODUCTO", _producto.id)
-        cmd.Parameters.AddWithValue("@PRECIO", _producto.precioUnitario)
-        cmd.Parameters.AddWithValue("@STOCK", _producto.stock)
+        cmd.CommandText = String.Format("UPDATE PRODUCTOS SET IDLINEA={0}, IDCHAPA={1}, IDHOJA={2}, IDMARCO={3}, IDMADERA={4}, IDMANO={5}, PRECIO={6}, STOCK={7} WHERE ID={8}", _p.linea.id, _p.chapa.id, _p.hoja.id, _p.marco.id, _p.madera.id, _p.mano.id, strPrecio, _p.stock, _p.id)
+        cmd.CommandType = CommandType.Text
 
         Try
             cnn.Open()
@@ -1478,7 +1523,7 @@ Public Class DbHelper
     End Function
 
     Public Function getProductos() As DataTable
-        Dim query = "SELECT * FROM VW_PRODUCTOS "
+        Dim query = "SELECT * FROM VW_PRODUCTOS"
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
@@ -1515,11 +1560,18 @@ Public Class DbHelper
         End Try
     End Function
 
-    Public Function existeProducto(_prod As Producto) As Integer
-        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND ID<>{6}", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.id)
+    Public Function existeProducto(_prod As Producto, Optional activo As Boolean = True) As Integer
+        Dim acParam = 1
+
+        If Not activo Then
+            acParam = 0
+        End If
+
+        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND ID<>{6} AND ACTIVO={7}", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.id, acParam)
         cmd.Connection = cnn
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
+
         Try
             cnn.Open()
             Return cmd.ExecuteScalar()

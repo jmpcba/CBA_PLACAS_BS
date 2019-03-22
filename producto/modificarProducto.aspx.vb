@@ -5,12 +5,17 @@
     Dim gp As GestorProductos
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim idProducto = Request.QueryString("idProducto")
 
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
 
         If Not IsPostBack Then
+            Dim idProducto = Request.QueryString("idProducto")
+
+            If IsNothing(idProducto) Then
+                Response.Redirect("productos.aspx")
+            End If
+
             ViewState("idProducto") = idProducto
             llenarGrillaDetalle()
 
@@ -56,46 +61,56 @@
         gp = New GestorProductos(idProducto)
 
         If DPLinea.SelectedValue <> gp.producto.linea.id Then
-            gp.producto.linea.id = DPLinea.SelectedValue
+            Dim idLinea As Integer
+            idLinea = DPLinea.SelectedValue
+            gp.producto.linea = New Linea(idLinea)
         End If
 
         If DPChapa.SelectedValue <> gp.producto.chapa.id Then
-            gp.producto.chapa.id = DPChapa.SelectedValue
+            Dim id As Integer
+            id = DPChapa.SelectedValue
+            gp.producto.chapa = New Chapa(id)
         End If
 
         If DPMadera.SelectedValue <> gp.producto.madera.id Then
-            gp.producto.madera.id = DPMadera.SelectedValue
+            Dim id As Integer
+            id = DPMadera.SelectedValue
+            gp.producto.madera = New Madera(id)
         End If
 
         If DPMarco.SelectedValue <> gp.producto.marco.id Then
-            gp.producto.marco.id = DPMarco.SelectedValue
+            Dim id As Integer
+            id = DPMarco.SelectedValue
+            gp.producto.marco = New Marco(id)
         End If
 
         If DPHoja.SelectedValue <> gp.producto.hoja.id Then
-            gp.producto.hoja.id = DPHoja.SelectedValue
+            Dim id As Integer
+            id = DPHoja.SelectedValue
+            gp.producto.hoja = New Hoja(id)
         End If
 
         If DPMano.SelectedValue <> gp.producto.mano.id Then
-            gp.producto.mano.id = DPMano.SelectedValue
+            Dim id As Integer
+            id = DPMano.SelectedValue
+            gp.producto.mano = New Mano(id)
         End If
 
         If txtPrecio.Text <> gp.producto.precioUnitario Then
-            gp.producto.precioUnitario = txtPrecio.Text
+            gp.producto.precioUnitario = txtPrecio.Text.Trim
         End If
 
         If txtStock.Text <> gp.producto.stock Then
-            gp.producto.stock = txtStock.Text
+            gp.producto.stock = txtStock.Text.Trim
         End If
 
         Try
-            gp.modificar()
-            sb.write("Producto Modificado")
+            Dim msg = gp.modificar()
+            ViewState("idProducto") = gp.producto.id
+            llenarGrillaDetalle()
+            sb.write(msg)
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
-
-
-
-
     End Sub
 End Class

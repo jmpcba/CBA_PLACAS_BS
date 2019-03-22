@@ -90,17 +90,42 @@ Public Class GestorProductos
         producto.despiece = despiece
     End Sub
 
-    Friend Sub modificar()
+    Friend Function modificar() As String
+        Dim retMsg As String
         Try
             db = New DbHelper("PRODUCTOS")
             Dim existe = db.existeProducto(producto)
-            If Not IsNothing(existe) Then
-                Throw New Exception("Ya existe un producto con estas caracteristicas con el codig: " & existe)
+            If existe <> 0 Then
+                Throw New Exception("Ya existe un producto con estas caracteristicas con el codigo: " & existe)
             Else
-                producto.actualizar()
+                Dim prodDesactivado = db.existeProducto(producto, False)
+
+                If db.pedidosProducto(producto) Then
+                    If prodDesactivado Then
+                        db.desactivarProducto(producto)
+                        db.reActivarProducto(prodDesactivado)
+                        producto = New Producto(prodDesactivado)
+                        retMsg = "Se encontraron pedidos que utilizan este producto" & vbCrLf & "Se reactivo el producto: " & prodDesactivado
+                    Else
+                        db.desactivarProducto(producto)
+                        producto = New Producto(db.insertar(producto))
+                        retMsg = "Se encontraron pedidos que utilizan este producto" & vbCrLf & "Se ingreso un nuevo producto bajo el numero: " & prodDesactivado
+                    End If
+                Else
+                    If prodDesactivado Then
+                        db.desactivarProducto(producto)
+                        db.reActivarProducto(prodDesactivado)
+                        producto = New Producto(prodDesactivado)
+                        retMsg = "Se reactivo el producto: " & prodDesactivado
+                    Else
+                        db.actualizar(producto)
+                        retMsg = "Producto modificado"
+                    End If
+                End If
             End If
+            Return retMsg
         Catch ex As Exception
             Throw
         End Try
-    End Sub
+    End Function
 End Class
