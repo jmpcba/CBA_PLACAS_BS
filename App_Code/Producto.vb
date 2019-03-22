@@ -173,14 +173,19 @@ Public Class Producto
 
     End Sub
 
-    Friend Sub insertar()
+    Friend Sub insertar(Optional desactivado As Boolean = False)
         Try
             db = New DbHelper
 
-            id = db.insertar(Me)
-            If Not IsNothing(despiece) Then
-                db.insertDespiece(id, despiece)
+            If desactivado Then
+                id = db.insertar(Me, True)
+            Else
+                id = db.insertar(Me)
+                If Not IsNothing(despiece) Then
+                    db.insertDespiece(id, despiece)
+                End If
             End If
+
         Catch ex As Exception
             Throw
         End Try

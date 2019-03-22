@@ -113,6 +113,71 @@ Public Class DbHelper
         End Try
     End Sub
 
+    Friend Sub activarProducto(idProd As Integer, prodDesactivado As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", idProd, prodDesactivado)
+            cmd.ExecuteNonQuery()
+            cmd.CommandText = "DELETE PRODUCTOS_DESACTIVADOS WHERE ID=" & prodDesactivado
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub desactivarProducto(nvoId As Integer, viejoId As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", nvoId, viejoId)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Function existeProdDesactivado(prod As Producto) As Integer
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT ID FROM PRODUCTOS_DESACTIVADOS WHERE IDLINEA={0} IDCHAPA={1}, IDHOJA={2}, IDMARCO={3}, IDMADERA={4}, IDMANO{5}",
+                                            prod.linea.id, prod.chapa.id, prod.hoja.id, prod.marco.id, prod.madera.id, prod.mano.id)
+            Dim ret = cmd.ExecuteScalar()
+            Return ret
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
+    Friend Function existePedido(prod As Producto) As Integer
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT COUNT(ID) FROM ITEMS WHERE ID_PRODUCTO={0}", prod.id)
+            Dim ret = cmd.ExecuteScalar()
+            Return ret
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
     Friend Sub eliminar(_linea As Linea)
         cmd.CommandType = CommandType.Text
         Try
@@ -780,7 +845,7 @@ Public Class DbHelper
 
     End Sub
 
-    Public Function insertar(_prod As Producto) As Integer
+    Public Function insertar(_prod As Producto, Optional desactivado As Boolean = False) As Integer
         Try
             cmd.Connection = cnn
             cmd.CommandText = "SP_INSERT_PRODUCTO"
@@ -794,6 +859,10 @@ Public Class DbHelper
             cmd.Parameters.AddWithValue("@ID_MADERA", _prod.madera.id)
             cmd.Parameters.AddWithValue("@ID_MANO", _prod.mano.id)
             cmd.Parameters.AddWithValue("@PRECIO", _prod.precioUnitario)
+
+            If desactivado Then
+                cmd.Parameters.AddWithValue("@DESACTIVADO", 1)
+            End If
 
             cnn.Open()
             Return cmd.ExecuteScalar()

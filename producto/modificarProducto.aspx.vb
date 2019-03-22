@@ -5,18 +5,23 @@
     Dim gp As GestorProductos
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Dim idProducto = Request.QueryString("idProducto")
 
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
 
         If Not IsPostBack Then
-            ViewState("idProducto") = idProducto
-            llenarGrillaDetalle()
+            Dim idProducto = Request.QueryString("idProducto")
 
-            lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.id)
+            If IsNothing(idProducto) Then
+                Response.Redirect("productos.aspx")
+            Else
+                ViewState("idProducto") = idProducto
+                llenarGrillaDetalle()
 
-            sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.id))
+                lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.id)
+
+                sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.id))
+            End If
         End If
 
     End Sub
@@ -90,12 +95,9 @@
         Try
             gp.modificar()
             sb.write("Producto Modificado")
+            llenarGrillaDetalle()
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
-
-
-
-
     End Sub
 End Class
