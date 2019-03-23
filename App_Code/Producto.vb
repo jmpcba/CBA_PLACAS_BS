@@ -1,6 +1,7 @@
 ﻿Imports System.Data
 Public Class Producto
     Private _idProd As Integer
+    Private _cod As Integer
     Private _hoja As Hoja
     Private _marco As Marco
     Private _madera As Madera
@@ -11,26 +12,28 @@ Public Class Producto
     Private _stock As Integer
     Private _despiece As DataTable
     Private db As DbHelper
-    Private modificado = False
+    Private _modificado As Boolean = False
+    Private _modificaStock As Boolean = False
 
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
             'Crear objecto desde cero
             db = New DbHelper("PRODUCTOS")
             Dim dt = New DataTable
-            linea = _linea
-            hoja = _hoja
-            marco = _marco
-            madera = _madera
-            chapa = _chapa
-            mano = _mano
+            _linea = _linea
+            _hoja = _hoja
+            _marco = _marco
+            _madera = _madera
+            _chapa = _chapa
+            _mano = _mano
 
             dt = db.buscar(Me)
             If dt.Rows.Count > 0 Then
-                id = dt(0)("id")
+                _idProd = dt(0)("id")
                 precioUnitario = dt(0)("precio")
-                stock = dt(0)("stock")
-                precioUnitario = Math.Round(precioUnitario, 2)
+                _stock = dt(0)("stock")
+                _cod = dt(0)("COD")
+                _precioUnitario = Math.Round(precioUnitario, 2)
             End If
         Catch ex As Exception
             Throw
@@ -49,9 +52,9 @@ Public Class Producto
         db = New DbHelper("PRODUCTOS")
         dt = db.getProducto(_id)
 
-        id = dt(0)("id")
-        precioUnitario = dt(0)("precio")
-        stock = dt(0)("stock")
+        _idProd = dt(0)("id")
+        _precioUnitario = dt(0)("precio")
+        _stock = dt(0)("stock")
 
         idHoja = dt(0)("idHoja")
         idMarco = dt(0)("idMarco")
@@ -59,21 +62,24 @@ Public Class Producto
         idChapa = dt(0)("idChapa")
         idMano = dt(0)("idMano")
         idLinea = dt(0)("idLinea")
+        _cod = dt(0)("COD")
 
-        hoja = New Hoja(idHoja)
-        marco = New Marco(idMarco)
-        madera = New Madera(idMadera)
-        chapa = New Chapa(idChapa)
-        mano = New Mano(idMano)
-        linea = New Linea(idLinea)
+        _hoja = New Hoja(idHoja)
+        _marco = New Marco(idMarco)
+        _madera = New Madera(idMadera)
+        _chapa = New Chapa(idChapa)
+        _mano = New Mano(idMano)
+        _linea = New Linea(idLinea)
 
     End Sub
 
-    Public Property id As Integer
-        Set(value As Integer)
-            _idProd = value
-            modificado = True
-        End Set
+    Public ReadOnly Property modificado As Boolean
+        Get
+            Return _modificado
+        End Get
+    End Property
+
+    Public ReadOnly Property id As Integer
         Get
             Return _idProd
         End Get
@@ -81,7 +87,7 @@ Public Class Producto
     Public Property hoja As Hoja
         Set(value As Hoja)
             _hoja = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _hoja
@@ -90,7 +96,7 @@ Public Class Producto
     Public Property marco As Marco
         Set(value As Marco)
             _marco = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _marco
@@ -99,7 +105,7 @@ Public Class Producto
     Public Property madera As Madera
         Set(value As Madera)
             _madera = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _madera
@@ -108,7 +114,7 @@ Public Class Producto
     Public Property chapa As Chapa
         Set(value As Chapa)
             _chapa = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _chapa
@@ -117,7 +123,7 @@ Public Class Producto
     Public Property precioUnitario As Decimal
         Set(value As Decimal)
             _precioUnitario = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _precioUnitario
@@ -126,7 +132,7 @@ Public Class Producto
     Public Property mano As Mano
         Set(value As Mano)
             _mano = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _mano
@@ -135,7 +141,7 @@ Public Class Producto
     Public Property linea As Linea
         Set(value As Linea)
             _linea = value
-            modificado = True
+            _modificado = True
         End Set
         Get
             Return _linea
@@ -144,7 +150,7 @@ Public Class Producto
     Public Property stock As Integer
         Set(value As Integer)
             _stock = value
-            modificado = True
+            updateStock = True
         End Set
         Get
             Return _stock
@@ -159,11 +165,29 @@ Public Class Producto
         End Get
     End Property
 
+    Public Property codigo As Integer
+        Set(value As Integer)
+            _cod = value
+        End Set
+        Get
+            Return _cod
+        End Get
+    End Property
+
+    Public Property updateStock As Boolean
+        Set(value As Boolean)
+            _modificaStock = value
+        End Set
+        Get
+            Return _modificaStock
+        End Get
+    End Property
+
     Friend Sub actualizar()
         Try
-            If modificado Then
+            If _modificado Or _modificaStock Then
                 db = New DbHelper()
-                db.actualizar(Me)
+                _idProd = db.actualizar(Me)
             Else
                 Throw New Exception("No se hicieron modificaciones")
             End If
@@ -177,7 +201,7 @@ Public Class Producto
         Try
             db = New DbHelper
 
-            id = db.insertar(Me)
+            _idProd = db.insertar(Me)
             If Not IsNothing(despiece) Then
                 db.insertDespiece(id, despiece)
             End If

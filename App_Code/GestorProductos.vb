@@ -94,8 +94,9 @@ Public Class GestorProductos
         Try
             db = New DbHelper("PRODUCTOS")
             Dim existe = db.existeProducto(producto)
-            If Not IsNothing(existe) Then
-                Throw New Exception("Ya existe un producto con estas caracteristicas con el codig: " & existe)
+
+            If existe <> 0 Then
+                Throw New Exception("Ya existe un producto con estas caracteristicas con el codigo: " & existe)
             Else
                 producto.actualizar()
             End If

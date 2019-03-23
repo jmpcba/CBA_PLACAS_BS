@@ -10,7 +10,7 @@ Public Class DbHelper
     Private ds As DataSet
     Private table As String
     Private conStr As String = "Data Source=USER-PC;Initial Catalog=cbaPlacas;Integrated Security=True"
-
+    Private CI As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
 
     Public Enum tablas
         CHAPAS
@@ -36,6 +36,15 @@ Public Class DbHelper
         ds = New DataSet()
         cmd.Connection = cnn
     End Sub
+
+    Private Sub CIES()
+        System.Threading.Thread.CurrentThread.CurrentCulture = CI
+    End Sub
+
+    Private Sub CIEN()
+        System.Threading.Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("en-US")
+    End Sub
+
 
     Friend Sub eliminarPieza(_idProducto As Integer, _idPieza As Integer)
         Try
@@ -112,6 +121,71 @@ Public Class DbHelper
             cnn.Close()
         End Try
     End Sub
+
+    Friend Sub activarProducto(idProd As Integer, prodDesactivado As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", idProd, prodDesactivado)
+            cmd.ExecuteNonQuery()
+            cmd.CommandText = "DELETE PRODUCTOS_DESACTIVADOS WHERE ID=" & prodDesactivado
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub desactivarProducto(nvoId As Integer, viejoId As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", nvoId, viejoId)
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Function existeProdDesactivado(prod As Producto) As Integer
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT ID FROM PRODUCTOS_DESACTIVADOS WHERE IDLINEA={0} IDCHAPA={1}, IDHOJA={2}, IDMARCO={3}, IDMADERA={4}, IDMANO{5}",
+                                            prod.linea.id, prod.chapa.id, prod.hoja.id, prod.marco.id, prod.madera.id, prod.mano.id)
+            Dim ret = cmd.ExecuteScalar()
+            Return ret
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
+    Friend Function existePedido(prod As Producto) As Integer
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT COUNT(ID) FROM ITEMS WHERE ID_PRODUCTO={0}", prod.id)
+            Dim ret = cmd.ExecuteScalar()
+            Return ret
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
 
     Friend Sub eliminar(_linea As Linea)
         cmd.CommandType = CommandType.Text
@@ -1168,30 +1242,48 @@ Public Class DbHelper
         End Try
     End Sub
 
-    Public Sub actualizar(_producto As Producto)
-        Dim strPrecio = _producto.precioUnitario.ToString()
-
-        strPrecio = strPrecio.Replace(",", ".")
-
-
-        cmd.Connection = cnn
-        cmd.CommandText = "SP_UPDATE_PRODUCTO"
-        cmd.CommandType = CommandType.StoredProcedure
-
-        cmd.Parameters.Clear()
-        cmd.Parameters.AddWithValue("@ID_PRODUCTO", _producto.id)
-        cmd.Parameters.AddWithValue("@PRECIO", _producto.precioUnitario)
-        cmd.Parameters.AddWithValue("@STOCK", _producto.stock)
-
+    Public Function actualizar(_producto As Producto) As Integer
+        CIEN()
+        Dim ret As Integer
         Try
-            cnn.Open()
-            cmd.ExecuteNonQuery()
+
+            If _producto.updateStock Then
+                cmd.Connection = cnn
+                cmd.CommandText = String.Format("UPDATE PRODUCTOS SET STOCK={0} WHERE ID={1}", _producto.stock, _producto.id)
+                cmd.CommandType = CommandType.Text
+                cnn.Open()
+                cmd.ExecuteScalar()
+                ret = _producto.id
+            End If
+
+            If _producto.modificado Then
+                cmd.Connection = cnn
+                cmd.CommandText = "SP_UPDATE_PRODUCTO"
+                cmd.CommandType = CommandType.StoredProcedure
+
+                cmd.Parameters.Clear()
+                cmd.Parameters.AddWithValue("@ID_PRODUCTO", _producto.id)
+                cmd.Parameters.AddWithValue("@ID_LINEA", _producto.linea.id)
+                cmd.Parameters.AddWithValue("@ID_CHAPA", _producto.chapa.id)
+                cmd.Parameters.AddWithValue("@ID_HOJA", _producto.hoja.id)
+                cmd.Parameters.AddWithValue("@ID_MARCO", _producto.marco.id)
+                cmd.Parameters.AddWithValue("@ID_MADERA", _producto.madera.id)
+                cmd.Parameters.AddWithValue("@ID_MANO", _producto.mano.id)
+                cmd.Parameters.AddWithValue("@PRECIO", _producto.precioUnitario)
+
+                cnn.Open()
+                ret = cmd.ExecuteScalar()
+            End If
+
+            Return ret
+
         Catch ex As SqlException
             Throw
         Finally
             cnn.Close()
+            CIES()
         End Try
-    End Sub
+    End Function
 
     Public Function getStock(ByVal _idHoja As Integer, ByVal _idMarco As Integer, ByVal _idMadera As Integer, ByVal _idChapa As Integer, ByVal _idMano As Integer, ByVal _idLinea As Integer) As DataTable
 
@@ -1245,7 +1337,7 @@ Public Class DbHelper
 
             Return ds.Tables("tabla_combos")
         Catch ex As SqlException
-            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+            Throw New Exception("ERROR DE BASE DE DATOS:    " & ex.Message)
         End Try
     End Function
 
@@ -1478,7 +1570,7 @@ Public Class DbHelper
     End Function
 
     Public Function getProductos() As DataTable
-        Dim query = "SELECT * FROM VW_PRODUCTOS "
+        Dim query = "SELECT * FROM VW_PRODUCTOS ORDER BY COD"
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
@@ -1516,7 +1608,8 @@ Public Class DbHelper
     End Function
 
     Public Function existeProducto(_prod As Producto) As Integer
-        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND ID<>{6}", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.id)
+        CIEN()
+        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND PRECIO={6} AND ID<>{7} AND VALIDO_HASTA IS NOT NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.precioUnitario, _prod.id)
         cmd.Connection = cnn
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
@@ -1527,6 +1620,7 @@ Public Class DbHelper
             Throw
         Finally
             cnn.Close()
+            CIES()
         End Try
     End Function
 

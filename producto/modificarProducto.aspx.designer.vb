@@ -68,15 +68,6 @@ Partial Public Class modificarProducto
     Protected WithEvents btnRefrescarDetalle As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
-    '''Control lblCodido.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents lblCodido As Global.System.Web.UI.WebControls.Label
-    
-    '''<summary>
     '''Control lblLinea.
     '''</summary>
     '''<remarks>
@@ -147,6 +138,15 @@ Partial Public Class modificarProducto
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lblStock As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control grMateriales.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents grMateriales As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
     '''Control RequiredFieldValidator1.

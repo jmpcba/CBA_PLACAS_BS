@@ -30,14 +30,17 @@
         </div>
     </div>
     <hr />
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <asp:Label ID="lblCodido" runat="server" Text=""></asp:Label>
-            </h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
+    <div class="panel-group" id="accordion">
+	<!--panel detalle-->
+	<div class="panel panel-default panel-primary">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#detalle">Detalle Del Producto</a>
+			</h4>
+		</div>
+		<div id="detalle" class="panel-collapse collapse in">
+			<div class="panel-body">
+				<div class="row">
                 <div class="col-md-3">
                     <strong>Linea: </strong><asp:Label ID="lblLinea" runat="server" Text="Label"></asp:Label>
                 </div>
@@ -65,8 +68,67 @@
                     <strong>Stock: </strong><asp:Label ID="lblStock" runat="server" Text="Label"></asp:Label>
                 </div>
             </div>
-        </div>
+			</div>
+		</div>
+	</div>
+	<!--DESPIECE-->
+	<div class="panel panel-default panel-primary">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#produccion">Materiales</a>
+			</h4>
+		</div>
+		<div id="produccion" class="panel-collapse collapse">
+			<div class="panel-body">
+				<div class="table-responsive">
+					<asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
+                            <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
+                            <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
+                            <ItemStyle CssClass="numCol" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
+                            <ItemStyle CssClass="numCol" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
+                            <ItemStyle CssClass="numCol" />
+                            </asp:BoundField>
+                        </Columns>
+                    </asp:GridView>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--panel registro-->
+	<div class="panel panel-default panel-primary">
+	    <div class="panel-heading">
+		    <h4 class="panel-title">
+			    <a data-toggle="collapse" data-parent="#accordion" href="#log">Registro De Cambios</a>
+		    </h4>
+	    </div>
+	    <div id="log" class="panel-collapse collapse">
+		    <div class="panel-body">
+			    <button class="btn btn-primary" data-target="#mdlRegistro" data-toggle="modal" type="button">
+				    <span class="glyphicon glyphicon-list-alt"></span> Mostrar Registro
+			    </button>
+		    </div>
+	    </div>
     </div>
+    <!--HISTORICO DE PEDIDOS-->
+    <div class="panel panel-default panel-primary">
+	    <div class="panel-heading">
+		    <h4 class="panel-title">
+			    <a data-toggle="collapse" data-parent="#accordion" href="#pedidos">Pedidos para este producto</a>
+		    </h4>
+	    </div>
+	    <div id="pedidos" class="panel-collapse collapse">
+		    <div class="panel-body table-responsive">
+			    <!--historico de pedidos aca-->
+		    </div>
+	    </div>
+    </div>
+</div>
     <br />
     <!--modal modificar-->
     <div class="modal fade" id="mdlDetalle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
