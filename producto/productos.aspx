@@ -211,6 +211,12 @@
         <div class="table-responsive">
             <asp:GridView ID="grProductos" runat="server" AutoGenerateColumns="False" ToolTip="Productos" CssClass="table" DataKeyNames="ID">
                 <Columns>
+                    <asp:BoundField DataField="ID" HeaderText="ID_LINEA" SortExpression="ID" >
+                        <ControlStyle CssClass="hiddencol" />
+                        <FooterStyle CssClass="hiddencol" />
+                        <HeaderStyle CssClass="hiddencol" />
+                        <ItemStyle CssClass="hiddencol" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="ID_LINEA" HeaderText="ID_LINEA" SortExpression="ID_LINEA" >
                         <ControlStyle CssClass="hiddencol" />
                         <FooterStyle CssClass="hiddencol" />
@@ -247,7 +253,7 @@
                         <HeaderStyle CssClass="hiddencol" />
                         <ItemStyle CssClass="hiddencol" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="ID" HeaderText="COD" />
+                    <asp:BoundField DataField="COD" HeaderText="COD" />
                     <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
                     <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
                     <asp:BoundField DataField="MADERA" HeaderText="MADERA" />

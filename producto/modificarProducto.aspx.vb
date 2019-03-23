@@ -17,10 +17,7 @@
             Else
                 ViewState("idProducto") = idProducto
                 llenarGrillaDetalle()
-
-                lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.id)
-
-                sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.id))
+                sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.codigo))
             End If
         End If
 
@@ -34,7 +31,7 @@
         'refrescar el objeto pedidos desde la DB
         gp = New GestorProductos(idProducto)
 
-        lblCodido.Text = "PRODUCTO: " & gp.producto.id
+        lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.codigo)
         lblLinea.Text = gp.producto.linea.nombre
         lblChapa.Text = gp.producto.chapa.nombre
         lblMadera.Text = gp.producto.madera.nombre
@@ -53,6 +50,9 @@
         txtPrecio.Text = gp.producto.precioUnitario
         txtStock.Text = gp.producto.stock
 
+        grMateriales.DataSource = gp.producto.despiece
+        grMateriales.DataBind()
+
     End Sub
 
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
@@ -61,43 +61,64 @@
         gp = New GestorProductos(idProducto)
 
         If DPLinea.SelectedValue <> gp.producto.linea.id Then
-            gp.producto.linea.id = DPLinea.SelectedValue
+            Dim idLinea As Integer
+            idLinea = DPLinea.SelectedValue
+            gp.producto.linea = New Linea(idLinea)
         End If
 
         If DPChapa.SelectedValue <> gp.producto.chapa.id Then
-            gp.producto.chapa.id = DPChapa.SelectedValue
+            Dim id As Integer
+            id = DPChapa.SelectedValue
+            gp.producto.chapa = New Chapa(id)
         End If
 
         If DPMadera.SelectedValue <> gp.producto.madera.id Then
-            gp.producto.madera.id = DPMadera.SelectedValue
+            Dim id As Integer
+            id = DPMadera.SelectedValue
+            gp.producto.madera = New Madera(id)
         End If
 
         If DPMarco.SelectedValue <> gp.producto.marco.id Then
-            gp.producto.marco.id = DPMarco.SelectedValue
+            Dim id As Integer
+            id = DPMarco.SelectedValue
+            gp.producto.marco = New Marco(id)
         End If
 
         If DPHoja.SelectedValue <> gp.producto.hoja.id Then
-            gp.producto.hoja.id = DPHoja.SelectedValue
+            Dim id As Integer
+            id = DPHoja.SelectedValue
+            gp.producto.hoja = New Hoja(id)
         End If
 
         If DPMano.SelectedValue <> gp.producto.mano.id Then
-            gp.producto.mano.id = DPMano.SelectedValue
+            Dim id As Integer
+            id = DPMano.SelectedValue
+            gp.producto.mano = New Mano(id)
         End If
 
-        If txtPrecio.Text <> gp.producto.precioUnitario Then
-            gp.producto.precioUnitario = txtPrecio.Text
+        If txtPrecio.Text.Trim <> gp.producto.precioUnitario Then
+            gp.producto.precioUnitario = txtPrecio.Text.Trim
         End If
 
-        If txtStock.Text <> gp.producto.stock Then
-            gp.producto.stock = txtStock.Text
+        If txtStock.Text.Trim <> gp.producto.stock Then
+            gp.producto.stock = txtStock.Text.Trim
         End If
 
         Try
             gp.modificar()
+            ViewState("idProducto") = gp.producto.id
             sb.write("Producto Modificado")
             llenarGrillaDetalle()
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
+        Response.Redirect("Producto/productos.aspx")
+    End Sub
+
+    Protected Sub btnRefrescarDetalle_Click(sender As Object, e As EventArgs) Handles btnRefrescarDetalle.Click
+        Response.Redirect(Request.RawUrl)
     End Sub
 End Class
