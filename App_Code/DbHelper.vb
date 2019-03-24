@@ -1368,6 +1368,7 @@ Public Class DbHelper
         cmd.CommandText = "SP_DESPIECE_PRODUCTO"
         cmd.CommandType = CommandType.StoredProcedure
 
+        cmd.Parameters.Clear()
         cmd.Parameters.AddWithValue("@ID_PROD", _idProducto)
 
         Try

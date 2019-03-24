@@ -14,6 +14,7 @@ Public Class Producto
     Private db As DbHelper
     Private _modificado As Boolean = False
     Private _modificaStock As Boolean = False
+    Private _modificaDespiece As Boolean = False
 
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
@@ -126,7 +127,7 @@ Public Class Producto
             _modificado = True
         End Set
         Get
-            Return _precioUnitario
+            Return Math.Round(_precioUnitario, 2)
         End Get
     End Property
     Public Property mano As Mano
@@ -159,8 +160,10 @@ Public Class Producto
     Public Property despiece As DataTable
         Set(value As DataTable)
             _despiece = value
+            _modificaDespiece = True
         End Set
         Get
+            _despiece = db.getDespiece(_idProd)
             Return _despiece
         End Get
     End Property
@@ -180,6 +183,12 @@ Public Class Producto
         End Set
         Get
             Return _modificaStock
+        End Get
+    End Property
+
+    Public ReadOnly Property modificaDespiece As Boolean
+        Get
+            Return _modificaDespiece
         End Get
     End Property
 

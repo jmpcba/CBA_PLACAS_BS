@@ -91,9 +91,6 @@
                             <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
-                            <ItemStyle CssClass="numCol" />
-                            </asp:BoundField>
                         </Columns>
                     </asp:GridView>
 				</div>
