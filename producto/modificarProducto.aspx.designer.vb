@@ -14,6 +14,15 @@ Option Explicit On
 Partial Public Class modificarProducto
     
     '''<summary>
+    '''Control HFEliminar.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFEliminar As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control lblSubtitulo.
     '''</summary>
     '''<remarks>
@@ -32,6 +41,15 @@ Partial Public Class modificarProducto
     Protected WithEvents lblMessage As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control aUndo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents aUndo As Global.System.Web.UI.WebControls.LinkButton
+    
+    '''<summary>
     '''Control HFMsg.
     '''</summary>
     '''<remarks>
@@ -48,15 +66,6 @@ Partial Public Class modificarProducto
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnVolver As Global.System.Web.UI.WebControls.Button
-    
-    '''<summary>
-    '''Control btnEliminar.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents btnEliminar As Global.System.Web.UI.WebControls.Button
     
     '''<summary>
     '''Control btnRefrescarDetalle.
@@ -399,4 +408,13 @@ Partial Public Class modificarProducto
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents Button1 As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btnEliminarProd.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnEliminarProd As Global.System.Web.UI.WebControls.Button
 End Class

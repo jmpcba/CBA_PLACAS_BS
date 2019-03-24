@@ -122,20 +122,35 @@ Public Class DbHelper
         End Try
     End Sub
 
-    Friend Sub activarProducto(idProd As Integer, prodDesactivado As Integer)
-        cmd.CommandType = CommandType.Text
+    Friend Sub eliminar(_prod As Producto)
         Try
+
+            cmd.CommandText = String.Format("UPDATE PRODUCTOS SET VALIDO_HASTA='{0}' WHERE ID={1}", Today.Date.ToShortDateString, _prod.id)
             cnn.Open()
 
-            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", idProd, prodDesactivado)
             cmd.ExecuteNonQuery()
-            cmd.CommandText = "DELETE PRODUCTOS_DESACTIVADOS WHERE ID=" & prodDesactivado
+        Catch ex As Exception
+            Throw
+        Finally
+
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub activarProducto(idProd As Integer)
+        cmd.CommandType = CommandType.Text
+        Try
+            CIEN()
+            cnn.Open()
+
+            cmd.CommandText = String.Format("UPDATE PRODUCTOS SET VALIDO_HASTA=NULL WHERE ID={0}", idProd)
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
             Throw
         Finally
             cnn.Close()
+            CIES()
         End Try
     End Sub
 

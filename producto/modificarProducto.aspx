@@ -5,8 +5,16 @@
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
+
+            //botondesacer
+            if ($("#" + '<%= HFEliminar.ClientID %>').val() == 0) {
+                $("#" + '<%= aUndo.ClientID %>').hide()
+            } else {
+                $("#" + '<%= aUndo.ClientID %>').show()
+            }
         })
     </script>
+    <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
     <div class="page-header">
         <h1 class="text-center">Administrar Producto<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -14,7 +22,7 @@
     <div class="row">
         <div id="msg" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label><asp:LinkButton ID="aUndo" runat="server"> Deshacer</asp:LinkButton>
             <asp:HiddenField ID="HFMsg" runat="server" />
         </div>
     </div>
@@ -23,9 +31,9 @@
         <div class="btn-group" role="group" aria-label="...">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
-                Modificar
-            </button>
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" />
+                Modificar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
+                Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
         </div>
     </div>
@@ -85,10 +93,7 @@
                         <Columns>
                             <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
                             <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
-                            <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
-                            <ItemStyle CssClass="numCol" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
+                            <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO"  DataFormatString="{0:F}" >
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                         </Columns>
@@ -257,4 +262,22 @@
         </div>
       </div>
     </div>
+    <!--confirmacion eliminar-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlConfEliminar">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger"">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                    </div>
+                <div class="modal-body">
+                        <p>Desea dar de baja este producto? </p>
+                    </div>
+                <div class="modal-footer">
+                    <asp:Button ID="btnEliminarProd" runat="server" Text="Si" />
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlModificarItems" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </asp:Content>

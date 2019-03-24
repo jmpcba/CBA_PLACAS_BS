@@ -8,6 +8,7 @@
 
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
+        HFEliminar.Value = 0
 
         If Not IsPostBack Then
             Dim idProducto = Request.QueryString("idProducto")
@@ -20,7 +21,6 @@
                 sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.codigo))
             End If
         End If
-
     End Sub
 
     Private Sub llenarGrillaDetalle()
@@ -115,10 +115,37 @@
     End Sub
 
     Protected Sub btnVolver_Click(sender As Object, e As EventArgs) Handles btnVolver.Click
-        Response.Redirect("Producto/productos.aspx")
+        Response.Redirect("productos.aspx")
     End Sub
 
     Protected Sub btnRefrescarDetalle_Click(sender As Object, e As EventArgs) Handles btnRefrescarDetalle.Click
         Response.Redirect(Request.RawUrl)
+    End Sub
+
+    Protected Sub btnEliminarProd_Click(sender As Object, e As EventArgs) Handles btnEliminarProd.Click
+        Dim idProd As Integer
+        idProd = ViewState("idProducto")
+        gp = New GestorProductos(idProd)
+
+        Try
+            gp.eliminarProducto()
+            HFEliminar.Value = 1
+            sb.write("Producto eliminado")
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub aUndo_Click(sender As Object, e As EventArgs) Handles aUndo.Click
+        Dim idProd As Integer
+        idProd = ViewState("idProducto")
+        gp = New GestorProductos(idProd)
+
+        Try
+            gp.reActivarProducto()
+            sb.write("Producto reactivado")
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class

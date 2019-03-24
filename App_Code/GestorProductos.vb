@@ -104,4 +104,22 @@ Public Class GestorProductos
             Throw
         End Try
     End Sub
+
+    Friend Sub eliminarProducto()
+        Try
+            db = New DbHelper("PRODUCTOS")
+            db.eliminar(producto)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
+    Friend Sub reActivarProducto()
+        Try
+            db = New DbHelper("PRODUCTOS")
+            db.activarProducto(producto.id)
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class
