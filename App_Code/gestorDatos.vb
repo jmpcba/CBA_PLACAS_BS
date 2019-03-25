@@ -57,70 +57,71 @@ Public Class GestorDatos
         End Try
     End Function
 
-    Friend Function actualizarMateriales(_grMateriales As GridView) As List(Of Integer)
-        Dim db = New DbHelper()
-        Dim lineasActualizadas = New List(Of Integer)
+    'PARA BORRAR
+    'Friend Function actualizarMateriales(_grMateriales As GridView) As List(Of Integer)
+    '    Dim db = New DbHelper()
+    '    Dim lineasActualizadas = New List(Of Integer)
 
-        For Each r As GridViewRow In _grMateriales.Rows
-            Dim txt As TextBox
-            Dim cant As Decimal
-            Dim idPieza As Integer
+    '    For Each r As GridViewRow In _grMateriales.Rows
+    '        Dim txt As TextBox
+    '        Dim cant As Decimal
+    '        Dim idPieza As Integer
 
-            txt = r.FindControl("txtAgregar")
-            cant = txt.Text.Trim
-            idPieza = r.Cells(0).Text
+    '        txt = r.FindControl("txtAgregar")
+    '        cant = txt.Text.Trim
+    '        idPieza = r.Cells(0).Text
 
-            If cant <> 0 Then
-                Try
-                    db.updateMaterial(idPieza, cant)
-                    lineasActualizadas.Add(r.RowIndex)
-                Catch ex As Exception
-                    Throw
-                End Try
-            End If
-        Next
+    '        If cant <> 0 Then
+    '            Try
+    '                db.updateMaterial(idPieza, cant)
+    '                lineasActualizadas.Add(r.RowIndex)
+    '            Catch ex As Exception
+    '                Throw
+    '            End Try
+    '        End If
+    '    Next
 
-        Return lineasActualizadas
+    '    Return lineasActualizadas
 
-    End Function
+    'End Function
 
-    Friend Function getDespiece(_prod As Producto) As DataTable
-        Try
-            db = New DbHelper
-            Return db.getDespiece(_prod)
-        Catch ex As Exception
-            Throw
-        End Try
+    'Friend Function getDespiece(_prod As Producto) As DataTable
+    '    Try
+    '        db = New DbHelper
+    '        Return db.getDespiece(_prod)
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
 
-    End Function
+    'End Function
 
-    Friend Function getGrilla(_tipo As grillas) As DataTable
-        Dim db = New DbHelper
-        Dim dt = New DataTable()
-        Try
-            If _tipo = grillas.pedidosModificar Then
-                dt = db.getPedidosModificar()
-            ElseIf _tipo = grillas.productos Then
-                dt = db.getProductos()
-            End If
-        Catch ex As Exception
-            Throw
-        End Try
-        Return dt
-    End Function
+    'Friend Function getGrilla(_tipo As grillas) As DataTable
+    '    Dim db = New DbHelper
+    '    Dim dt = New DataTable()
+    '    Try
+    '        If _tipo = grillas.pedidosModificar Then
+    '            dt = db.getPedidosModificar()
+    '        ElseIf _tipo = grillas.productos Then
+    '            dt = db.getProductos()
+    '        End If
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    '    Return dt
+    'End Function
 
-    Friend Sub buscarCliente(_cliente As Cliente, _gv As GridView)
-        Dim dt As New DataTable
-        db = New DbHelper("CLIENTES")
+    'Friend Sub buscarCliente(_cliente As Cliente, _gv As GridView)
+    '    Dim dt As New DataTable
+    '    db = New DbHelper("CLIENTES")
 
-        Try
-            dt = db.buscar(_cliente)
-            _gv.DataSource = dt
-            _gv.DataBind()
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
+    '    Try
+    '        dt = db.buscar(_cliente)
+    '        _gv.DataSource = dt
+    '        _gv.DataBind()
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Sub
 
     Public Sub fillCombos(ByVal _cbLinea As DropDownList, ByVal _cbChapa As DropDownList, ByVal _cbMarco As DropDownList, ByVal _cbMadera As DropDownList, ByVal _cbHoja As DropDownList, ByVal _cbMano As DropDownList)
         Dim db = New DbHelper()
@@ -198,10 +199,10 @@ Public Class GestorDatos
 
     End Sub
 
-    Friend Function buscarProductos(_idLinea As Object, _idChapa As Object, _idHoja As Object, _idMarco As Object, _idMadera As Object, _idMano As Object) As DataTable
-        db = New DbHelper()
-        Return db.buscarPedidos(_idLinea, _idChapa, _idHoja, _idMarco, _idMadera, _idMano)
-    End Function
+    'Friend Function buscarProductos(_idLinea As Object, _idChapa As Object, _idHoja As Object, _idMarco As Object, _idMadera As Object, _idMano As Object) As DataTable
+    '    db = New DbHelper()
+    '    Return db.buscarPedidos(_idLinea, _idChapa, _idHoja, _idMarco, _idMadera, _idMano)
+    'End Function
 
     Public Sub getCombos(ByVal _cb As DropDownList, ByVal _comboName As combos)
         Try
@@ -232,28 +233,28 @@ Public Class GestorDatos
         End Try
     End Sub
 
-    Public Sub getCombos(ByVal _lst As ListBox, ByVal _comboName As combos)
-        Try
-            If _comboName = combos.estados Then
+    'Public Sub getCombos(ByVal _lst As ListBox, ByVal _comboName As combos)
+    '    Try
+    '        If _comboName = combos.estados Then
 
-                Dim estado As New Estado()
-                _lst.DataSource = estado.getEstados()
-                _lst.DataTextField = "nombre"
-                _lst.DataValueField = "id"
-                _lst.DataBind()
+    '            Dim estado As New Estado()
+    '            _lst.DataSource = estado.getEstados()
+    '            _lst.DataTextField = "nombre"
+    '            _lst.DataValueField = "id"
+    '            _lst.DataBind()
 
-            ElseIf _comboName = combos.clientes Then
+    '        ElseIf _comboName = combos.clientes Then
 
-                Dim cliente As New Cliente()
-                _lst.DataSource = cliente.getClientes()
-                _lst.DataTextField = "nombre"
-                _lst.DataValueField = "id"
-                _lst.DataBind()
-            End If
-        Catch ex As Exception
-            Throw
-        End Try
-    End Sub
+    '            Dim cliente As New Cliente()
+    '            _lst.DataSource = cliente.getClientes()
+    '            _lst.DataTextField = "nombre"
+    '            _lst.DataValueField = "id"
+    '            _lst.DataBind()
+    '        End If
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Sub
 
     Public Sub mostrarGrillaItems(ByVal _grilla As GridView, ByVal _pedido As Pedido, Optional _withStock As Boolean = False)
         'definicion de tabla
@@ -330,29 +331,29 @@ Public Class GestorDatos
         End Try
     End Function
 
-    Public Function getItems(_pedido As Integer, _estado As Estado, Optional _stock As Boolean = False) As DataTable
-        Try
-            Dim db = New DbHelper("ITEMS")
+    'Public Function getItems(_pedido As Integer, _estado As Estado, Optional _stock As Boolean = False) As DataTable
+    '    Try
+    '        Dim db = New DbHelper("ITEMS")
 
-            Return db.getItems(_pedido, _estado, _stock)
+    '        Return db.getItems(_pedido, _estado, _stock)
 
-        Catch ex As Exception
-            Throw
-        End Try
-    End Function
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Function
 
-    Public Function getItems(_idPedido As Integer, _tipo As tipoItems) As DataTable
-        Dim db = New DbHelper()
-        Dim dt As DataTable
-        dt = New DataTable
+    'Public Function getItems(_idPedido As Integer, _tipo As tipoItems) As DataTable
+    '    Dim db = New DbHelper()
+    '    Dim dt As DataTable
+    '    dt = New DataTable
 
-        If _tipo = tipoItems.busqueda Then
-            dt = db.getItemsBusqueda(_idPedido)
-        End If
+    '    If _tipo = tipoItems.busqueda Then
+    '        dt = db.getItemsBusqueda(_idPedido)
+    '    End If
 
-        Return dt
+    '    Return dt
 
-    End Function
+    'End Function
 
     Public Function getItems(_pedido As Integer) As DataTable
         Try
@@ -386,68 +387,68 @@ Public Class GestorDatos
         End Try
     End Function
 
-    Public Function getStock(_item As Item) As DataTable
-        Dim db = New DbHelper("Stock")
-        Return db.getStock(_item.getProducto.hoja.id, _item.getProducto.marco.id, _item.getProducto.madera.id, _item.getProducto.chapa.id, _item.getProducto.mano.id, _item.getProducto.linea.id)
-    End Function
+    'Public Function getStock(_item As Item) As DataTable
+    '    Dim db = New DbHelper("Stock")
+    '    Return db.getStock(_item.getProducto.hoja.id, _item.getProducto.marco.id, _item.getProducto.madera.id, _item.getProducto.chapa.id, _item.getProducto.mano.id, _item.getProducto.linea.id)
+    'End Function
 
-    Public Function calcularMateriales(_item As Item, gr As GridView) As Boolean
-        Dim materiales = _item.getDespiece()
-        Dim result = True
-        Dim redRows = New List(Of Integer)
+    'Public Function calcularMateriales(_item As Item, gr As GridView) As Boolean
+    '    Dim materiales = _item.getDespiece()
+    '    Dim result = True
+    '    Dim redRows = New List(Of Integer)
 
-        materiales.Columns.Add("REQUERIDO", GetType(Decimal))
-        materiales.Columns.Add("FALTANTE", GetType(Decimal))
+    '    materiales.Columns.Add("REQUERIDO", GetType(Decimal))
+    '    materiales.Columns.Add("FALTANTE", GetType(Decimal))
 
-        Dim i = 0
+    '    Dim i = 0
 
-        For Each r As DataRow In materiales.Rows
-            Dim requerido = r("CONSUMO") * _item.getCant()
+    '    For Each r As DataRow In materiales.Rows
+    '        Dim requerido = r("CONSUMO") * _item.getCant()
 
-            r("REQUERIDO") = requerido
+    '        r("REQUERIDO") = requerido
 
-            If requerido > r("STOCK_DISPONIBLE") Then
-                result = False
-                r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
-                redRows.Add(i)
-            End If
-            i += 1
-        Next
+    '        If requerido > r("STOCK_DISPONIBLE") Then
+    '            result = False
+    '            r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
+    '            redRows.Add(i)
+    '        End If
+    '        i += 1
+    '    Next
 
-        gr.DataSource = materiales
-        gr.DataBind()
+    '    gr.DataSource = materiales
+    '    gr.DataBind()
 
-        For Each i In redRows
-            gr.Rows(i).ForeColor = Drawing.Color.Red
-        Next
+    '    For Each i In redRows
+    '        gr.Rows(i).ForeColor = Drawing.Color.Red
+    '    Next
 
-        Return result
-    End Function
+    '    Return result
+    'End Function
 
-    Public Function calcularMateriales(_item As Item) As Boolean
-        Dim materiales = _item.getDespiece()
-        Dim result = True
-        Dim redRows = New List(Of Integer)
+    'Public Function calcularMateriales(_item As Item) As Boolean
+    '    Dim materiales = _item.getDespiece()
+    '    Dim result = True
+    '    Dim redRows = New List(Of Integer)
 
-        materiales.Columns.Add("REQUERIDO", GetType(Decimal))
-        materiales.Columns.Add("FALTANTE", GetType(Decimal))
+    '    materiales.Columns.Add("REQUERIDO", GetType(Decimal))
+    '    materiales.Columns.Add("FALTANTE", GetType(Decimal))
 
-        Dim i = 0
+    '    Dim i = 0
 
-        For Each r As DataRow In materiales.Rows
-            Dim requerido = r("CONSUMO") * _item.getCant()
+    '    For Each r As DataRow In materiales.Rows
+    '        Dim requerido = r("CONSUMO") * _item.getCant()
 
-            r("REQUERIDO") = requerido
+    '        r("REQUERIDO") = requerido
 
-            If requerido > r("STOCK_DISPONIBLE") Then
-                result = False
-                r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
-                redRows.Add(i)
-            End If
-            i += 1
-        Next
-        Return result
-    End Function
+    '        If requerido > r("STOCK_DISPONIBLE") Then
+    '            result = False
+    '            r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
+    '            redRows.Add(i)
+    '        End If
+    '        i += 1
+    '    Next
+    '    Return result
+    'End Function
 
     Public Function calcularMateriales(_pedido As Pedido, _gr As GridView, Optional _recalc As Boolean = False) As Boolean
 
@@ -482,59 +483,59 @@ Public Class GestorDatos
         Return result
     End Function
 
-    Friend Function getItemsEnsamblados(_id As Integer) As DataTable
-        Dim db = New DbHelper()
-        Try
-            Return db.getItemsEnsamblados(_id)
-        Catch ex As Exception
-            Throw
-        End Try
-    End Function
+    'Friend Function getItemsEnsamblados(_id As Integer) As DataTable
+    '    Dim db = New DbHelper()
+    '    Try
+    '        Return db.getItemsEnsamblados(_id)
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Function
 
-    Public Sub consultarPedido(_pedido As Pedido, grDetalle As GridView, _grRegistro As GridView)
-        Dim dt = New DataTable()
+    'Public Sub consultarPedido(_pedido As Pedido, grDetalle As GridView, _grRegistro As GridView)
+    '    Dim dt = New DataTable()
 
-        'GRILLA DETALLE
-        dt.Columns.Add("ID", GetType(String))
-        dt.Columns.Add("ESTADO", GetType(String))
-        dt.Columns.Add("LINEA", GetType(String))
-        dt.Columns.Add("HOJA", GetType(String))
-        dt.Columns.Add("MARCO", GetType(String))
-        dt.Columns.Add("MADERA", GetType(String))
-        dt.Columns.Add("CHAPA", GetType(String))
-        dt.Columns.Add("MANO", GetType(String))
-        dt.Columns.Add("MONTO", GetType(Decimal))
-        dt.Columns.Add("CANTIDAD", GetType(Integer))
-        dt.Columns.Add("STOCK", GetType(Decimal))
-        dt.Columns.Add("ENSAMBLADAS", GetType(Decimal))
-        dt.Columns.Add("PENDIENTES", GetType(Decimal))
+    '    'GRILLA DETALLE
+    '    dt.Columns.Add("ID", GetType(String))
+    '    dt.Columns.Add("ESTADO", GetType(String))
+    '    dt.Columns.Add("LINEA", GetType(String))
+    '    dt.Columns.Add("HOJA", GetType(String))
+    '    dt.Columns.Add("MARCO", GetType(String))
+    '    dt.Columns.Add("MADERA", GetType(String))
+    '    dt.Columns.Add("CHAPA", GetType(String))
+    '    dt.Columns.Add("MANO", GetType(String))
+    '    dt.Columns.Add("MONTO", GetType(Decimal))
+    '    dt.Columns.Add("CANTIDAD", GetType(Integer))
+    '    dt.Columns.Add("STOCK", GetType(Decimal))
+    '    dt.Columns.Add("ENSAMBLADAS", GetType(Decimal))
+    '    dt.Columns.Add("PENDIENTES", GetType(Decimal))
 
-        For Each item As Item In _pedido.items
-            Dim row = dt.NewRow()
-            row("ID") = item.id
-            row("ESTADO") = item.getEstado().nombre
-            row("LINEA") = item.getProducto.linea.nombre
-            row("HOJA") = item.getProducto.hoja.nombre
-            row("MARCO") = item.getProducto.marco.nombre
-            row("MADERA") = item.getProducto.madera.nombre
-            row("CHAPA") = item.getProducto.chapa.nombre
-            row("MANO") = item.getProducto.mano.nombre
-            row("CANTIDAD") = item.getCant()
-            row("MONTO") = item.monto
-            row("STOCK") = item.stock
-            row("ENSAMBLADAS") = item.getEnsamblados
-            row("PENDIENTES") = item.getCant() - item.getEnsamblados() - item.stock
+    '    For Each item As Item In _pedido.items
+    '        Dim row = dt.NewRow()
+    '        row("ID") = item.id
+    '        row("ESTADO") = item.getEstado().nombre
+    '        row("LINEA") = item.getProducto.linea.nombre
+    '        row("HOJA") = item.getProducto.hoja.nombre
+    '        row("MARCO") = item.getProducto.marco.nombre
+    '        row("MADERA") = item.getProducto.madera.nombre
+    '        row("CHAPA") = item.getProducto.chapa.nombre
+    '        row("MANO") = item.getProducto.mano.nombre
+    '        row("CANTIDAD") = item.getCant()
+    '        row("MONTO") = item.monto
+    '        row("STOCK") = item.stock
+    '        row("ENSAMBLADAS") = item.getEnsamblados
+    '        row("PENDIENTES") = item.getCant() - item.getEnsamblados() - item.stock
 
-            dt.Rows.Add(row)
-        Next
+    '        dt.Rows.Add(row)
+    '    Next
 
-        'actualizacion de grilla
-        grDetalle.DataSource = dt
-        grDetalle.DataBind()
+    '    'actualizacion de grilla
+    '    grDetalle.DataSource = dt
+    '    grDetalle.DataBind()
 
-        'GRILLA REGISTRO
-        getRegistro(_pedido, _grRegistro)
-    End Sub
+    '    'GRILLA REGISTRO
+    '    getRegistro(_pedido, _grRegistro)
+    'End Sub
 
     Public Sub getRegistro(_pedido As Pedido, _grRegistro As GridView)
         Dim DTR = New DataTable
@@ -571,29 +572,38 @@ Public Class GestorDatos
         End Try
     End Function
 
-    Public Function getLineas() As DataTable
-        Try
-            Dim l As New Linea
-            Return l.getLineas
-        Catch ex As Exception
-            Throw
-        End Try
-    End Function
+    'Public Function getLineas() As DataTable
+    '    Try
+    '        Dim l As New Linea
+    '        Return l.getLineas
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Function
 
-    Public Function getProductos(_idLinea As Integer) As DataTable
-        Try
-            Dim db As New DbHelper
-            Dim l As New Linea(_idLinea)
-            Return db.getProductos(l)
-        Catch ex As Exception
-            Throw
-        End Try
-    End Function
+    'Public Function getProductos(_idLinea As Integer) As DataTable
+    '    Try
+    '        Dim db As New DbHelper
+    '        Dim l As New Linea(_idLinea)
+    '        Return db.getProductos(l)
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Function
 
     Public Function getProductos() As DataTable
         Try
             Dim db As New DbHelper
             Return db.getProductos()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
+    Public Function getPiezas() As DataTable
+        Dim db As New DbHelper
+        Try
+            Return db.getPiezas()
         Catch ex As Exception
             Throw
         End Try

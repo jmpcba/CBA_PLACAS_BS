@@ -25,11 +25,15 @@
 
     Private Sub llenarGrillaDetalle()
         Dim idProducto As Integer
+        Dim despiece As New DataTable
+        Dim piezas As New DataTable
 
         idProducto = ViewState("idProducto")
 
         'refrescar el objeto pedidos desde la DB
         gp = New GestorProductos(idProducto)
+        despiece = gp.producto.despiece()
+        piezas = gd.getPiezas()
 
         lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.codigo)
         lblLinea.Text = gp.producto.linea.nombre
@@ -50,8 +54,28 @@
         txtPrecio.Text = gp.producto.precioUnitario
         txtStock.Text = gp.producto.stock
 
-        grMateriales.DataSource = gp.producto.despiece
+        grMateriales.DataSource = despiece
+        grModMateriales.DataSource = piezas
+
         grMateriales.DataBind()
+        grModMateriales.DataBind()
+
+        For Each r As GridViewRow In grModMateriales.Rows
+            Dim txt As TextBox
+            Dim idPieza As Integer
+            Dim sel As DataRow()
+            idPieza = grModMateriales.DataKeys(r.RowIndex).Value
+            txt = r.FindControl("txtConsumo")
+
+            sel = despiece.Select("ID_PIEZA=" & idPieza)
+
+            If sel.Length = 0 Then
+                txt.Text = 0
+            Else
+                txt.Text = sel(0)("CONSUMO")
+                r.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold")
+            End If
+        Next
 
     End Sub
 

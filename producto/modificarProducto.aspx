@@ -32,6 +32,8 @@
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
                 Modificar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlMateriales">
+                Modificar Materiales</button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
                 Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
@@ -280,4 +282,36 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+    <!--modal modificar materiales-->
+    <div class="modal fade" id="mdlMateriales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="lblMdlMateriales">Modificar Materiales</h4>
+          </div>
+          <div class="modal-body form-group">
+            <div class="table-responsive">
+                <asp:GridView ID="grModMateriales" runat="server" ToolTip="Despiece" DataKeyNames="ID" AutoGenerateColumns="False">
+                    <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="CODIGO" />
+                        <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
+                        <asp:TemplateField HeaderText="CONSUMO">
+                            <ItemTemplate>
+                                <asp:TextBox ID="txtConsumo" runat="server"></asp:TextBox>
+                            </ItemTemplate>
+                            <ItemStyle CssClass="numCols" />
+                        </asp:TemplateField>
+                        <asp:BoundField DataField="UNIDAD" HeaderText="UNIDAD" />
+                    </Columns>
+                </asp:GridView>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <asp:Button ID="Button2" runat="server" Text="Guardar" />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </asp:Content>

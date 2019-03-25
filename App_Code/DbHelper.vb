@@ -656,6 +656,18 @@ Public Class DbHelper
 
     End Function
 
+    Friend Function getPiezas() As DataTable
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = "SELECT * FROM MATERIALES"
+
+        Try
+            da.Fill(ds, "MATERIALES")
+            Return ds.Tables("MATERIALES")
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Friend Sub insertar(_cliente As Cliente)
         Try
             String.Format("SELECT COUNT(CUIT) FROM CLIENTES WHERE CUIT={0}", _cliente.CUIT)
