@@ -288,7 +288,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="lblMdlMateriales">Modificar Materiales</h4>
+            <h4 class="modal-title" id="lblMdlMateriales">Modificar Consumo de Materiales</h4>
           </div>
           <div class="modal-body form-group">
             <div class="table-responsive">
@@ -308,7 +308,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <asp:Button ID="Button2" runat="server" Text="Guardar" />
+            <asp:Button ID="btnModMat" runat="server" Text="Guardar" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

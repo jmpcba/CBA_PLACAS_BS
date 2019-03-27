@@ -45,11 +45,6 @@ Public Class GestorProductos
 
     End Sub
 
-    Friend Sub actualizarDespiece(_idPieza As Integer, _consumo As Decimal)
-        db = New DbHelper()
-        db.actualizarDespiece(producto.id, _idPieza, _consumo)
-    End Sub
-
     Public Sub agregarProducto()
         Try
             Dim testProd = New Producto(producto.hoja, producto.marco, producto.madera, producto.chapa, producto.mano, producto.linea)
@@ -121,5 +116,40 @@ Public Class GestorProductos
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Friend Sub actualizarDespiece(_ListaPiezas As DataTable)
+        Dim despInterno As New DataTable
+        Dim des = producto.despiece
+        Dim modi As Boolean = False
+
+        For Each r As DataRow In _ListaPiezas.Rows
+            Dim f = des.Select("ID_PIEZA=" & r("ID_PIEZA"))
+            If f.Length = 1 Then
+                If f(0)("CONSUMO") <> r("CONSUMO") Then
+                    f(0)("CONSUMO") = r("CONSUMO")
+                    modi = True
+                End If
+            Else
+                If r("CONSUMO") <> 0 Then
+                    Dim newR = des.NewRow
+                    newR("CONSUMO") = r("CONSUMO")
+                    newR("ID_PIEZA") = r("ID_PIEZA")
+                    des.Rows.Add(newR)
+                    modi = True
+                End If
+            End If
+        Next
+
+        If modi Then
+            Try
+                producto.despiece = des
+                producto.actualizarDespiece()
+            Catch ex As Exception
+                Throw
+            End Try
+        Else
+            Throw New Exception("No se realizaron cambios")
+        End If
     End Sub
 End Class

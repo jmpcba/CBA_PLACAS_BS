@@ -428,11 +428,11 @@ Partial Public Class modificarProducto
     Protected WithEvents grModMateriales As Global.System.Web.UI.WebControls.GridView
     
     '''<summary>
-    '''Control Button2.
+    '''Control btnModMat.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents btnModMat As Global.System.Web.UI.WebControls.Button
 End Class

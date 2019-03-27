@@ -172,4 +172,35 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub btnModMat_Click(sender As Object, e As EventArgs) Handles btnModMat.Click
+        Dim dt As New DataTable
+        dt.Columns.Add("ID_PIEZA", GetType(Integer))
+        dt.Columns.Add("CONSUMO", GetType(Decimal))
+
+        gp = New GestorProductos(ViewState("idProducto"))
+
+        For Each r As GridViewRow In grModMateriales.Rows
+            Dim txt As TextBox
+            Dim idPieza As Integer
+            Dim f As DataRow = dt.NewRow()
+            Dim consumo As Decimal
+            txt = r.FindControl("txtConsumo")
+            idPieza = grModMateriales.DataKeys(r.RowIndex).Value
+            consumo = txt.Text.Trim
+
+            f("ID_PIEZA") = idPieza
+            f("CONSUMO") = consumo
+            dt.Rows.Add(f)
+        Next
+
+        Try
+            gp.actualizarDespiece(dt)
+            ViewState("idProducto") = gp.producto.id
+            llenarGrillaDetalle()
+            sb.write("Despiece Modificado")
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
 End Class

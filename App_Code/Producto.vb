@@ -14,7 +14,6 @@ Public Class Producto
     Private db As DbHelper
     Private _modificado As Boolean = False
     Private _modificaStock As Boolean = False
-    Private _modificaDespiece As Boolean = False
 
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
@@ -71,6 +70,7 @@ Public Class Producto
         _chapa = New Chapa(idChapa)
         _mano = New Mano(idMano)
         _linea = New Linea(idLinea)
+        _despiece = db.getDespiece(_idProd)
 
     End Sub
 
@@ -160,13 +160,21 @@ Public Class Producto
     Public Property despiece As DataTable
         Set(value As DataTable)
             _despiece = value
-            _modificaDespiece = True
+            _modificado = True
         End Set
         Get
-            _despiece = db.getDespiece(_idProd)
             Return _despiece
         End Get
     End Property
+
+    Friend Sub actualizarDespiece()
+        Try
+            Dim db As New DbHelper
+            _idProd = db.actualizarDespiece(Me)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
 
     Public Property codigo As Integer
         Set(value As Integer)
@@ -183,12 +191,6 @@ Public Class Producto
         End Set
         Get
             Return _modificaStock
-        End Get
-    End Property
-
-    Public ReadOnly Property modificaDespiece As Boolean
-        Get
-            Return _modificaDespiece
         End Get
     End Property
 

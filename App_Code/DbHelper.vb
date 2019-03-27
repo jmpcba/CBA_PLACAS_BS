@@ -137,13 +137,44 @@ Public Class DbHelper
         End Try
     End Sub
 
+    Friend Function actualizarDespiece(_prod As Producto) As Integer
+        Try
+            Dim newIdProd As Integer
+
+            newIdProd = actualizar(_prod, False)
+            cnn.Open()
+            cmd.CommandType = CommandType.Text
+
+            For Each r As DataRow In _prod.despiece.Rows
+                Dim consumo As String
+                consumo = r("CONSUMO")
+
+                Dim strConsumo = consumo.ToString
+
+                strConsumo = strConsumo.Replace(",", ".")
+
+                If r("CONSUMO") > 0 Then
+                    cmd.CommandText = String.Format("INSERT INTO DESPIECE (ID_PROD, ID_PIEZA, CONSUMO, EN_PROGRESO) VALUES({0}, {1}, {2}, 0)", newIdProd, r("ID_PIEZA"), strConsumo.ToString)
+                    cmd.ExecuteNonQuery()
+                End If
+            Next
+
+            Return newIdProd
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+
+        End Try
+    End Function
+
     Friend Sub activarProducto(idProd As Integer)
         cmd.CommandType = CommandType.Text
         Try
             CIEN()
             cnn.Open()
 
-            cmd.CommandText = String.Format("UPDATE PRODUCTOS SET VALIDO_HASTA=NULL WHERE ID={0}", idProd)
+            cmd.CommandText = String.Format("UPDATE PRODUCTOS Set VALIDO_HASTA=NULL WHERE ID={0}", idProd)
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
@@ -159,7 +190,7 @@ Public Class DbHelper
         Try
             cnn.Open()
 
-            cmd.CommandText = String.Format("UPDATE ITEMS SET ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", nvoId, viejoId)
+            cmd.CommandText = String.Format("UPDATE ITEMS Set ID_PRODUCTO={0} WHERE ID_PRODUCTO={1}", nvoId, viejoId)
             cmd.ExecuteNonQuery()
 
         Catch ex As Exception
@@ -174,7 +205,7 @@ Public Class DbHelper
         Try
             cnn.Open()
 
-            cmd.CommandText = String.Format("SELECT ID FROM PRODUCTOS_DESACTIVADOS WHERE IDLINEA={0} IDCHAPA={1}, IDHOJA={2}, IDMARCO={3}, IDMADERA={4}, IDMANO{5}",
+            cmd.CommandText = String.Format("Select ID FROM PRODUCTOS_DESACTIVADOS WHERE IDLINEA={0} IDCHAPA={1}, IDHOJA = {2}, IDMARCO = {3}, IDMADERA = {4}, IDMANO{5}",
                                             prod.linea.id, prod.chapa.id, prod.hoja.id, prod.marco.id, prod.madera.id, prod.mano.id)
             Dim ret = cmd.ExecuteScalar()
             Return ret
@@ -191,7 +222,7 @@ Public Class DbHelper
         Try
             cnn.Open()
 
-            cmd.CommandText = String.Format("SELECT COUNT(ID) FROM ITEMS WHERE ID_PRODUCTO={0}", prod.id)
+            cmd.CommandText = String.Format("Select COUNT(ID) FROM ITEMS WHERE ID_PRODUCTO={0}", prod.id)
             Dim ret = cmd.ExecuteScalar()
             Return ret
 
@@ -276,7 +307,7 @@ Public Class DbHelper
     End Sub
 
     Friend Sub actualizar(_madera As Madera)
-        cmd.CommandText = String.Format("UPDATE MADERAS SET NOMBRE = '{0}' WHERE ID={1}", _madera.nombre, _madera.id)
+        cmd.CommandText = String.Format("UPDATE MADERAS Set NOMBRE = '{0}' WHERE ID={1}", _madera.nombre, _madera.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -359,17 +390,17 @@ Public Class DbHelper
         End Try
     End Sub
 
-    Friend Function getExcluidas(_tabla As tablas, _id As Integer) As DataTable
-        cmd.CommandText = String.Format("SELECT * FROM {0} WHERE ID <> {1}", _tabla, _id)
-        cmd.CommandType = CommandType.Text
+    'Friend Function getExcluidas(_tabla As tablas, _id As Integer) As DataTable
+    '    cmd.CommandText = String.Format("SELECT * FROM {0} WHERE ID <> {1}", _tabla, _id)
+    '    cmd.CommandType = CommandType.Text
 
-        Try
-            da.Fill(ds, _tabla)
-            Return ds.Tables(_tabla)
-        Catch ex As Exception
-            Throw
-        End Try
-    End Function
+    '    Try
+    '        da.Fill(ds, _tabla)
+    '        Return ds.Tables(_tabla)
+    '    Catch ex As Exception
+    '        Throw
+    '    End Try
+    'End Function
 
     Friend Sub insertarPiezaProducto(_idProducto As Integer, _idPieza As Integer, _consumo As Decimal)
         Dim strConsumo = _consumo.ToString
@@ -1269,7 +1300,7 @@ Public Class DbHelper
         End Try
     End Sub
 
-    Public Function actualizar(_producto As Producto) As Integer
+    Public Function actualizar(_producto As Producto, Optional _CopiarDesp As Boolean = True) As Integer
         CIEN()
         Dim ret As Integer
         Try
@@ -1297,6 +1328,9 @@ Public Class DbHelper
                 cmd.Parameters.AddWithValue("@ID_MADERA", _producto.madera.id)
                 cmd.Parameters.AddWithValue("@ID_MANO", _producto.mano.id)
                 cmd.Parameters.AddWithValue("@PRECIO", _producto.precioUnitario)
+                If Not _CopiarDesp Then
+                    cmd.Parameters.AddWithValue("@DESP", 0)
+                End If
 
                 cnn.Open()
                 ret = cmd.ExecuteScalar()
