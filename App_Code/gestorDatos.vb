@@ -572,6 +572,15 @@ Public Class GestorDatos
         End Try
     End Function
 
+    Public Function getPedidos(prod As Producto) As DataTable
+        Try
+            db = New DbHelper()
+            Return db.getPedidos(prod)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     'Public Function getLineas() As DataTable
     '    Try
     '        Dim l As New Linea

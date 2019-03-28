@@ -203,4 +203,14 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub btnUPHidden_Click(sender As Object, e As EventArgs) Handles btnUPHidden.Click
+        Try
+            gp = New GestorProductos(ViewState("idProducto"))
+            grPedidos.DataSource = gd.getPedidos(gp.producto)
+            grPedidos.DataBind()
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

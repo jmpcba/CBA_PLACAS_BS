@@ -57,7 +57,7 @@
                             <ControlStyle CssClass="imageButtons"></ControlStyle>
                         </asp:CommandField>
                     </Columns>
-                    </asp:GridView>
+                </asp:GridView>
               </div>
             </div>
           </div>

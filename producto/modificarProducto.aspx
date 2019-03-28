@@ -6,12 +6,17 @@
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
-            //botondesacer
+            //botondeshacer
             if ($("#" + '<%= HFEliminar.ClientID %>').val() == 0) {
                 $("#" + '<%= aUndo.ClientID %>').hide()
             } else {
                 $("#" + '<%= aUndo.ClientID %>').show()
             }
+
+            $('#mdlPedidos').on('show.bs.modal', function (event) {
+                console.log("consola")
+                $("#" + '<%= btnUPHidden.ClientID %>').click()
+            })
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
@@ -128,7 +133,16 @@
 	    </div>
 	    <div id="pedidos" class="panel-collapse collapse">
 		    <div class="panel-body table-responsive">
-			    <!--historico de pedidos aca-->
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-primary" data-target="#mdlPedidos" data-toggle="modal" type="button">
+				            <span class="glyphicon glyphicon-list-alt"></span> Mostrar Pedidos
+			            </button>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="pull-left">Se mostraran pedidos que incluyen este producto en el ultimo año</p>
+                    </div>
+                </div>
 		    </div>
 	    </div>
     </div>
@@ -311,6 +325,48 @@
             <asp:Button ID="btnModMat" runat="server" Text="Guardar" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="mdlPedidos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="lblPedidos">Pedidos que incluyen este producto</h4>
+          </div>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
+                  <asp:UpdateProgress ID="UpdateProgress2" runat="server">
+                        <ProgressTemplate><div class="validators">Cargando</div></ProgressTemplate>
+                    </asp:UpdateProgress>
+                  <div class="modal-body form-group">
+                    <div class="table-responsive">
+                        <asp:GridView ID="grPedidos" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed">
+                            <Columns>
+                                <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
+                                <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
+                                <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" SortExpression="Cantidad" >
+                                <ItemStyle CssClass="numCol" />
+                                </asp:BoundField>
+                                <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
+                                <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
+                                <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
+                                    <ControlStyle CssClass="imageButtons"></ControlStyle>
+                                </asp:CommandField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <div style="display:none">
+	                    <asp:Button ID="btnUPHidden" runat="server" Text="Button" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <asp:Button ID="Button2" runat="server" Text="Guardar" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                  </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
       </div>
     </div>

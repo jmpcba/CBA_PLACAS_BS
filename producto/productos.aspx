@@ -11,37 +11,64 @@
                 $("#" + '<%= DPFiltroMarco.ClientID %>'),
                 $("#" + '<%= DPFiltroMano.ClientID %>')
             ]
+
+
             iniciarDropDowns(dropDowns)
+            iniciarTextBoxes([$("#txtFiltroCod")])
 
             //iniciar barra de estado
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
             $("#" + '<%= DPFiltroLinea.ClientID %>').change(function () {
-                filtro() 
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
             })
 
             $("#" + '<%= DPFiltroChapa.ClientID %>').change(function () {
-                filtro()
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
             })
 
             $("#" + '<%= DPFiltroMadera.ClientID %>').change(function () {
-                filtro() 
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
             })
 
-             $("#" + '<%= DPFiltroHoja.ClientID %>').change(function () {
-                filtro() 
+            $("#" + '<%= DPFiltroHoja.ClientID %>').change(function () {
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
              })
 
             $("#" + '<%= DPFiltroMarco.ClientID %>').change(function () {
-                filtro() 
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
             })
 
             $("#" + '<%= DPFiltroMano.ClientID %>').change(function () {
-                filtro() 
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                filtroProd()
             })
 
-            function filtro() {
+            $("#txtFiltroCod").keyup(function () {
+                var texto = this.value;
+                var table = document.getElementById('<%= grProductos.ClientID %>');
+                if (texto) {
+                    iniciarDropDowns(dropDowns)
+                    limpiarFiltro(table)
+                    filtro(table, texto, 7)
+                }
+            })
+
+            $("#btnLimpiarFiltro").click(function () {
+
+                iniciarDropDowns(dropDowns)
+                iniciarTextBoxes([$("#txtFiltroCod")])
+                table = document.getElementById('<%= grProductos.ClientID %>');
+                limpiarFiltro(table)
+            })
+
+            function filtroProd() {
 
                 var linea = $("#" + '<%= DPFiltroLinea.ClientID %>').val();
                 var chapa = $("#" + '<%= DPFiltroChapa.ClientID %>').val()
@@ -144,13 +171,6 @@
                     }
                 }
             }
-
-            $("#btnLimpiarFiltro").click(function () {
-                table = document.getElementById('<%= grProductos.ClientID %>');
-                limpiarFiltro(table)
-
-                iniciarDropDowns(dropdowns)
-            })
         })
 
     </script>
@@ -166,6 +186,15 @@
         </div>
     </div>
     <div class="form-group">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>CODIGO:</strong><br />
+                <input id="txtFiltroCod" class="form-control" type="text" /><br />
+            </div>
+            <div class="col-md-6">
+                <input id="btnLimpiarFiltro" class="btn btn-primary pull-right" type="button" value="Limpiar Filtro" />
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <strong>LINEA:</strong><br />
@@ -200,10 +229,6 @@
                 <asp:DropDownList ID="DPFiltroMano" runat="server" DataSourceID="DSMano" DataTextField="nombre" DataValueField="id"></asp:DropDownList>
                 <asp:SqlDataSource ID="DSMano" runat="server" ConnectionString="<%$ ConnectionStrings:cbaPlacasConnectionString1 %>" SelectCommand="SELECT * FROM [MANOS]"></asp:SqlDataSource>
             </div>
-        </div>
-        <div class="row">
-            <br />
-            <button id="btnLimpiarFiltro" class="btn btn-primary pull-right" type="submit">Limpiar Filtros</button>
         </div>
     </div>
     <hr>

@@ -1700,6 +1700,23 @@ Public Class DbHelper
         End Try
     End Function
 
+    Public Function getPedidos(_prod As Producto) As DataTable
+        Dim query = "select * from vw_PEDIDOS_en_curso P
+                        inner join items I ON P.ID=I.ID_PEDIDO
+                        INNER JOIN PRODUCTOS PR ON I.ID_PRODUCTO = PR.ID
+                        WHERE I.ID_PRODUCTO=" & _prod.id
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "PEDIDOS")
+            Return ds.Tables("PEDIDOS")
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        End Try
+    End Function
+
     Private Function codigoError(tipo As tablas) As String
         'Select Case tipo
         '    Case tablas.CHAPAS
