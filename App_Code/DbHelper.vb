@@ -217,6 +217,46 @@ Public Class DbHelper
         End Try
     End Function
 
+    'Friend Sub registrar(p As Producto)
+    '    cmd.CommandType = CommandType.Text
+    '    Try
+    '        Dim query As String = "INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ("
+
+    '        For Each r In p.registro
+    '            query += "'" & r & "'" + "+CHAR(13)+"
+    '        Next
+
+    '        query = query.Substring(0, query.Length - 1)
+    '        query += String.Format(", {0}, 'MANU'", p.codigo)
+
+    '        cnn.Open()
+    '        cmd.CommandText = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU')", p.registro, p.codigo)
+    '        cmd.ExecuteNonQuery()
+
+    '    Catch ex As Exception
+    '        Throw
+    '    Finally
+    '        cnn.Close()
+    '    End Try
+    'End Sub
+
+    Friend Sub registrar(p As Producto)
+        cmd.CommandType = CommandType.Text
+        Try
+            Dim query As String = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU'", p.registro, p.codigo)
+
+            cnn.Open()
+            cmd.CommandText = query
+            cmd.ExecuteNonQuery()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+
     Friend Function existePedido(prod As Producto) As Integer
         cmd.CommandType = CommandType.Text
         Try
@@ -577,6 +617,19 @@ Public Class DbHelper
             Return ds.Tables("PEDIDOS_MODIFICAR")
         Catch ex As Exception
             Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Function
+
+    Friend Function getRegistro(_p As Producto) As DataTable
+        Try
+            cmd.Connection = cnn
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = "SELECT * FROM REGISTRO_PRODUCTOS WHERE COD_PRODUCTO=" & _p.codigo
+            da.Fill(ds, "REGISTRO")
+
+            Return ds.Tables("REGISTRO")
+        Catch ex As SqlException
+            Throw
         End Try
     End Function
 
@@ -1671,7 +1724,7 @@ Public Class DbHelper
 
     Public Function existeProducto(_prod As Producto) As Integer
         CIEN()
-        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND PRECIO={6} AND ID<>{7} AND VALIDO_HASTA IS NOT NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.precioUnitario, _prod.id)
+        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND PRECIO={6} AND ID<>{7} AND VALIDO_HASTA <> NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.precioUnitario, _prod.id)
         cmd.Connection = cnn
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
@@ -1704,7 +1757,7 @@ Public Class DbHelper
         Dim query = "select * from vw_PEDIDOS_en_curso P
                         inner join items I ON P.ID=I.ID_PEDIDO
                         INNER JOIN PRODUCTOS PR ON I.ID_PRODUCTO = PR.ID
-                        WHERE I.ID_PRODUCTO=" & _prod.id
+                        WHERE PR.COD=" & _prod.codigo
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query

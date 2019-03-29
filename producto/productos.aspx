@@ -78,12 +78,12 @@
                 var mano = $("#" + '<%= DPFiltroMano.ClientID %>').val()
                 var table = document.getElementById('<%= grProductos.ClientID %>');
 
-                var colLinea = 0
-                var colChapa = 1
-                var colMad = 2
-                var colHoj = 3
-                var colMar = 4
-                var colMan = 5
+                var colLinea = 1
+                var colChapa = 2
+                var colMad = 3
+                var colHoj = 4
+                var colMar = 5
+                var colMan = 6
                 var filasOcultar =[]
 
                 tr = table.getElementsByTagName("tr");

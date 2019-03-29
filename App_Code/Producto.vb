@@ -14,6 +14,7 @@ Public Class Producto
     Private db As DbHelper
     Private _modificado As Boolean = False
     Private _modificaStock As Boolean = False
+    Private _regCambios As New list(Of String)
 
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
@@ -87,6 +88,7 @@ Public Class Producto
     End Property
     Public Property hoja As Hoja
         Set(value As Hoja)
+            _regCambios.Add(String.Format("HOJA ANTERIOR: {0}, NUEVA {1}", hoja.nombre, value.nombre))
             _hoja = value
             _modificado = True
         End Set
@@ -96,6 +98,7 @@ Public Class Producto
     End Property
     Public Property marco As Marco
         Set(value As Marco)
+            _regCambios.Add(String.Format("MARCO ANTERIOR: {0}, NUEVO {1}", marco.nombre, value.nombre))
             _marco = value
             _modificado = True
         End Set
@@ -105,6 +108,7 @@ Public Class Producto
     End Property
     Public Property madera As Madera
         Set(value As Madera)
+            _regCambios.Add(String.Format("MADERA ANTERIOR: {0}, NUEVA {1}", madera.nombre, value.nombre))
             _madera = value
             _modificado = True
         End Set
@@ -114,6 +118,7 @@ Public Class Producto
     End Property
     Public Property chapa As Chapa
         Set(value As Chapa)
+            _regCambios.Add(String.Format("CHAPA ANTERIOR: {0}, NUEVA {1}", chapa.nombre, value.nombre))
             _chapa = value
             _modificado = True
         End Set
@@ -123,6 +128,7 @@ Public Class Producto
     End Property
     Public Property precioUnitario As Decimal
         Set(value As Decimal)
+            _regCambios.Add(String.Format("PRECIO ANTERIOR: {0}, NUEVO {1}", precioUnitario.ToString, value.ToString))
             _precioUnitario = value
             _modificado = True
         End Set
@@ -132,6 +138,7 @@ Public Class Producto
     End Property
     Public Property mano As Mano
         Set(value As Mano)
+            _regCambios.Add(String.Format("MANO ANTERIOR: {0}, NUEVA {1}", mano.nombre, value.nombre))
             _mano = value
             _modificado = True
         End Set
@@ -141,6 +148,7 @@ Public Class Producto
     End Property
     Public Property linea As Linea
         Set(value As Linea)
+            _regCambios.Add(String.Format("LINEA ANTERIOR: {0}, NUEVA {1}", linea.nombre, value.nombre))
             _linea = value
             _modificado = True
         End Set
@@ -150,6 +158,7 @@ Public Class Producto
     End Property
     Public Property stock As Integer
         Set(value As Integer)
+            _regCambios.Add(String.Format("STOCK ANTERIOR: {0}, NUEVO {1}", stock.ToString, value.ToString))
             _stock = value
             updateStock = True
         End Set
@@ -159,6 +168,7 @@ Public Class Producto
     End Property
     Public Property despiece As DataTable
         Set(value As DataTable)
+            _regCambios.Add("CAMBIOS EN DESPIECE")
             _despiece = value
             _modificado = True
         End Set
@@ -194,10 +204,17 @@ Public Class Producto
         End Get
     End Property
 
+    Public ReadOnly Property registro As String
+        Get
+            Return String.Join(vbCrLf, _regCambios)
+        End Get
+    End Property
+
     Friend Sub actualizar()
         Try
             If _modificado Or _modificaStock Then
                 db = New DbHelper()
+                db.registrar(Me)
                 _idProd = db.actualizar(Me)
             Else
                 Throw New Exception("No se hicieron modificaciones")

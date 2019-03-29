@@ -14,8 +14,11 @@
             }
 
             $('#mdlPedidos').on('show.bs.modal', function (event) {
-                console.log("consola")
                 $("#" + '<%= btnUPHidden.ClientID %>').click()
+            })
+
+            $('#mdlHistorial').on('show.bs.modal', function (event) {
+                $("#" + '<%= btnHistorial.ClientID %>').click()
             })
         })
     </script>
@@ -118,7 +121,7 @@
 	    </div>
 	    <div id="log" class="panel-collapse collapse">
 		    <div class="panel-body">
-			    <button class="btn btn-primary" data-target="#mdlRegistro" data-toggle="modal" type="button">
+			    <button class="btn btn-primary" data-target="#mdlHistorial" data-toggle="modal" type="button">
 				    <span class="glyphicon glyphicon-list-alt"></span> Mostrar Registro
 			    </button>
 		    </div>
@@ -140,7 +143,7 @@
 			            </button>
                     </div>
                     <div class="col-md-8">
-                        <p class="pull-left">Se mostraran pedidos que incluyen este producto en el ultimo año</p>
+                        <p class="pull-left">Se mostraran pedidos en curso para este porducto</p>
                     </div>
                 </div>
 		    </div>
@@ -248,31 +251,27 @@
             <h4 class="modal-title" id="lblHistorial">Historial de Pedidos</h4>
           </div>
           <div class="modal-body form-group">
-            <div class="table-responsive">
-                <asp:GridView ID="grHistorialPedidos" runat="server" DataKeyNames="ID" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
-                        <asp:BoundField DataField="CANT_TOTAL" HeaderText="Cantidad" SortExpression="CANT_TOTAL" >
-                        <ItemStyle CssClass="numCol" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
-                            <ControlStyle CssClass="hiddencol" />
-                            <FooterStyle CssClass="hiddencol" />
-                            <HeaderStyle CssClass="hiddencol" />
-                            <ItemStyle CssClass="hiddencol" />
-                        </asp:BoundField>
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
-                        <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
-                            <ControlStyle CssClass="imageButtons" />
-                        </asp:CommandField>
-                    </Columns>
-                </asp:GridView>
-            </div>
+              <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
+                  <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+                        <ProgressTemplate><div class="validators">Cargando</div></ProgressTemplate>
+                    </asp:UpdateProgress>
+                    <div class="table-responsive">
+                        <asp:GridView ID="grHistorial" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" CssClass="table-condensed">
+                            <Columns>
+                                <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
+                                <asp:BoundField DataField="CAMBIOS" HeaderText="CAMBIOS" SortExpression="CAMBIOS" />
+                                <asp:BoundField DataField="USUARIO" HeaderText="USUARIO" SortExpression="USUARIO" />
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <div style="display:none">
+	                    <asp:Button ID="btnHistorial" runat="server" Text="Button" />
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
           </div>
           <div class="modal-footer">
-            <asp:Button ID="Button1" runat="server" Text="Guardar" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
@@ -328,12 +327,13 @@
         </div>
       </div>
     </div>
+    <!--MODAL PEDIDOS-->
     <div class="modal fade" id="mdlPedidos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="lblPedidos">Pedidos que incluyen este producto</h4>
+            <h4 class="modal-title" id="lblPedidos">Pedidos en curso que incluyen este producto</h4>
           </div>
             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                 <ContentTemplate>
@@ -362,7 +362,6 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <asp:Button ID="Button2" runat="server" Text="Guardar" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                   </div>
                 </ContentTemplate>

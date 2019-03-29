@@ -554,6 +554,15 @@ Public Class GestorDatos
         _grRegistro.DataBind()
     End Sub
 
+    Public Function getRegistro(p As Producto) As DataTable
+        Try
+            Dim db As New DbHelper
+            Return db.getRegistro(p)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Public Function getDespieceProducto(_idProducto As Integer) As DataTable
         Try
             db = New DbHelper()

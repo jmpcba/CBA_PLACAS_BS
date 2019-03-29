@@ -210,7 +210,21 @@
             grPedidos.DataSource = gd.getPedidos(gp.producto)
             grPedidos.DataBind()
         Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
 
+    Protected Sub grPedidos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
+
+    End Sub
+
+    Protected Sub btnHistorial_Click(sender As Object, e As EventArgs) Handles btnHistorial.Click
+        Try
+            gp = New GestorProductos(ViewState("idProducto"))
+            grHistorial.DataSource = gd.getRegistro(gp.producto)
+            grHistorial.DataBind()
+        Catch ex As Exception
+            sb.writeError(ex.Message)
         End Try
     End Sub
 End Class
