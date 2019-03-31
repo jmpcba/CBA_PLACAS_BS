@@ -248,7 +248,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="lblHistorial">Historial de Pedidos</h4>
+            <h4 class="modal-title" id="lblHistorial">Registro de Cambios</h4>
           </div>
           <div class="modal-body form-group">
               <asp:UpdatePanel ID="UpdatePanel2" runat="server">

@@ -12,6 +12,7 @@
             ]
 
             //INICIAR CONTROLES
+            console.log("inicio dropdowns")
             iniciarDropDowns(dropDowns)
             iniciarTextBoxes([$("#" + '<%= txtPrecio.ClientID %>')])
             iniciarGrillaMateriales()
@@ -37,6 +38,7 @@
             //EVENTO CAMBIO DE DROPDOWN
             $("select").change(function () {
                 validarCaracteristicas()
+                console.log("cambio en dropdown")
             })
 
             //EVENTO CAMBIO EN PRECIO
@@ -48,7 +50,25 @@
 
             //EVENTO CAMBIO EN MATERIAL
             $("td > input").keyup(function () {
+                var colores = ["#EFF3FB", "White"]
+                var i = 0
                 validarMateriales()
+                $("#tablaResumenMateriales").find("tr:gt(0)").remove()
+                
+                $("td > input").each(function () {
+
+                    if (i == 2) {
+                        i = 0
+                    }
+
+                    if ($(this).val() != "") {
+                        var consumo = $(this).val()
+                        var rowHtml = $(this).closest("tr").clone().html()
+                        rowHtml = rowHtml.replace(/<input.*>/, consumo)
+                        $('#tablaResumenMateriales tbody').append('<tr style="background-color:'+ colores[i] + ';" align="left">' + rowHtml + '</tr>')
+                        i++
+                    }
+                })
             })
 
             //VALIDACIONES AL ABRIR UN PANEL
@@ -251,7 +271,7 @@
                 <div id="pnlResumen" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                     <div class="panel-body">
                         <!--INICIO RESUMEN-->
-                        <div class="panel panel-info">
+                        <div class="panel panel-success">
                             <div class="panel-heading">CARACTERISTICAS</div>
                             <div class="panel-body">
                                 <!--INICIO RESUMEN CARACTERISTICAS-->
@@ -291,17 +311,26 @@
                                 <!--FIN RESUMEN CARACTERISTICAS-->
                             </div>
                         </div><br />
-                        <div class="panel panel-info">
+                        <div class="panel panel-success">
                             <div class="panel-heading">MATERIALES</div>
-                            <div class="panel-body">
+                            <div class="panel-body table-responsive">
                                 <!--INICIO RESUMEN MATERIALES-->
+                                <table id="tablaResumenMateriales" title="Despiece" class="table-responsive table table-striped table-bordered table-hover table-condensed" id="MainContent_grMateriales" style="color:#333333;border-width:1px;border-style:Solid;border-collapse:collapse;" cellspacing="0" cellpadding="4" align="Center">
+                                    <tbody>
+                                        <tr style="color:White;background-color:#428BCA;border-color:Black;border-width:2px;border-style:Solid;font-weight:bold;" align="center">
+			                                <th scope="col">CODIGO</th>
+                                            <th scope="col">NOMBRE</th>
+                                            <th scope="col">CONSUMO</th>
+                                            <th scope="col">UNIDAD</th>
+		                                </tr>
+                                    </tbody>
+                                </table>
                                 <!--FIN RESUMEN MATERIALES-->
                             </div>
                         </div><br />
                         <!--FIN RESUMEN-->
                         <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlMateriales" aria-expanded="false" aria-controls="pnlPedido">
-                            Anterior
-                        </button>
+                            Anterior</button>
                         <button class="btn btn-primary pull-right" type="button" data-toggle="modal" data-parent="#accordion" data-target="#mdlConfirmacion" aria-expanded="false" aria-controls="pnlPedido">
                             Enviar
                         </button>

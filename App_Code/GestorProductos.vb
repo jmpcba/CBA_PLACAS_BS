@@ -11,9 +11,9 @@ Public Class GestorProductos
         despiece = gd.getDespieceProducto(_idProducto)
     End Sub
 
-    Public Sub New(hoja As Hoja, marco As Marco, madera As Madera, chapa As Chapa, mano As Mano, linea As Linea)
+    Public Sub New(hoja As Hoja, marco As Marco, madera As Madera, chapa As Chapa, mano As Mano, linea As Linea, precio As Decimal)
         despiece = New DataTable
-        producto = New Producto(hoja, marco, madera, chapa, mano, linea)
+        producto = New Producto(hoja, marco, madera, chapa, mano, linea, precio)
         db = New DbHelper("productos")
         despiece.Columns.Add("ID_PIEZA", GetType(Integer))
         despiece.Columns.Add("CONSUMO", GetType(Decimal))
@@ -45,15 +45,18 @@ Public Class GestorProductos
 
     End Sub
 
-    Public Sub agregarProducto()
+    Friend Sub insertar()
         Try
-            Dim testProd = New Producto(producto.hoja, producto.marco, producto.madera, producto.chapa, producto.mano, producto.linea)
-            If testProd.id = 0 Then
-                producto.insertar()
-            Else
-                Throw New Exception("YA EXISTE UN PRODUCTO CON ESTAS CARACTERISTICAS")
-            End If
+            Dim db As New DbHelper
+            db = New DbHelper("PRODUCTOS")
+            Dim existe = db.existeProducto(producto, False)
 
+            If existe <> 0 Then
+                Throw New Exception("Ya existe un producto con estas caracteristicas con el codigo: " & existe)
+            Else
+                producto.insertar()
+                db.registrar(producto)
+            End If
         Catch ex As Exception
             Throw
         End Try

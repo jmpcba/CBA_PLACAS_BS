@@ -947,7 +947,7 @@ Public Class DbHelper
 
     End Sub
 
-    Public Function insertar(_prod As Producto) As Integer
+    Public Function insertar(_prod As Producto) As Integer()
         Try
             cmd.Connection = cnn
             cmd.CommandText = "SP_INSERT_PRODUCTO"
@@ -963,8 +963,13 @@ Public Class DbHelper
             cmd.Parameters.AddWithValue("@PRECIO", _prod.precioUnitario)
 
             cnn.Open()
-            Return cmd.ExecuteScalar()
+            Dim id = cmd.ExecuteScalar()
 
+            cmd.CommandText = "SELECT MAX(COD) FROM PRODUCTOS"
+            cmd.CommandType = CommandType.Text
+            Dim cod = cmd.ExecuteScalar()
+
+            Return {id, cod}
         Catch ex As SqlException
             Throw
         Finally
@@ -1024,7 +1029,7 @@ Public Class DbHelper
 
         Try
             For Each r As DataRow In _despiece.Rows
-                Dim query = String.Format("INSERT INTO DESPIECE VALUES ({0}, {1}, {2})", _idProducto, r("ID_PIEZA"), r("CONSUMO"))
+                Dim query = String.Format("INSERT INTO DESPIECE VALUES ({0}, {1}, {2}, 1)", _idProducto, r("ID_PIEZA"), r("CONSUMO"))
                 cmd.CommandText = query
                 cmd.ExecuteNonQuery()
             Next
@@ -1702,9 +1707,18 @@ Public Class DbHelper
         End Try
     End Function
 
-    Public Function existeProducto(_prod As Producto) As Integer
+    Public Function existeProducto(_prod As Producto, Optional modProd As Boolean = True) As Integer
         CIEN()
-        Dim query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND PRECIO={6} AND ID<>{7} AND VALIDO_HASTA <> NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.precioUnitario, _prod.id)
+        Dim query As String
+
+        'para validar si existe un producto similar al modificar productos
+        If modProd Then
+            query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND PRECIO={6} AND ID<>{7} AND VALIDO_HASTA IS NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id, _prod.precioUnitario, _prod.id)
+        Else
+            'para validar si existe un prod similar al hacer un producto nuevo
+            query = String.Format("SELECT ID FROM PRODUCTOS WHERE idLinea = {0} AND IDCHAPA={1} AND IDHOJA={2} AND IDMARCO={3} AND IDMADERA={4} AND IDMANO={5} AND VALIDO_HASTA IS NULL", _prod.linea.id, _prod.chapa.id, _prod.hoja.id, _prod.marco.id, _prod.madera.id, _prod.mano.id)
+        End If
+
         cmd.Connection = cnn
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query

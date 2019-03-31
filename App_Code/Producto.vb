@@ -16,25 +16,41 @@ Public Class Producto
     Private _modificaStock As Boolean = False
     Private _regCambios As New list(Of String)
 
+    Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea, _precio As Decimal)
+        Try
+            'Crear objecto desde cero
+            db = New DbHelper("PRODUCTOS")
+            Dim dt = New DataTable
+            Me._linea = _linea
+            Me._hoja = _hoja
+            Me._marco = _marco
+            Me._madera = _madera
+            Me._chapa = _chapa
+            Me._mano = _mano
+            Me._precioUnitario = _precio
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
     Public Sub New(ByVal _hoja As Hoja, ByVal _marco As Marco, ByVal _madera As Madera, ByVal _chapa As Chapa, ByVal _mano As Mano, ByVal _linea As Linea)
         Try
             'Crear objecto desde cero
             db = New DbHelper("PRODUCTOS")
             Dim dt = New DataTable
-            _linea = _linea
-            _hoja = _hoja
-            _marco = _marco
-            _madera = _madera
-            _chapa = _chapa
-            _mano = _mano
-
+            Me._linea = _linea
+            Me._hoja = _hoja
+            Me._marco = _marco
+            Me._madera = _madera
+            Me._chapa = _chapa
+            Me._mano = _mano
             dt = db.buscar(Me)
             If dt.Rows.Count > 0 Then
-                _idProd = dt(0)("id")
-                precioUnitario = dt(0)("precio")
-                _stock = dt(0)("stock")
-                _cod = dt(0)("COD")
-                _precioUnitario = Math.Round(precioUnitario, 2)
+                Me._idProd = dt(0)("id")
+                Me.precioUnitario = dt(0)("precio")
+                Me._stock = dt(0)("stock")
+                Me._cod = dt(0)("COD")
+                Me._precioUnitario = Math.Round(precioUnitario, 2)
             End If
         Catch ex As Exception
             Throw
@@ -229,7 +245,12 @@ Public Class Producto
         Try
             db = New DbHelper
 
-            _idProd = db.insertar(Me)
+            Dim res = db.insertar(Me)
+            _idProd = res(0)
+            _cod = res(1)
+            _regCambios.Clear()
+            _regCambios.Add("Nuevo producto ingresado")
+
             If Not IsNothing(despiece) Then
                 db.insertDespiece(id, despiece)
             End If
