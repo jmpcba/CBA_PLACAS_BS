@@ -28,55 +28,58 @@
         Dim despiece As New DataTable
         Dim piezas As New DataTable
 
-        idProducto = ViewState("idProducto")
+        Try
+            idProducto = ViewState("idProducto")
 
-        'refrescar el objeto pedidos desde la DB
-        gp = New GestorProductos(idProducto)
-        despiece = gp.producto.despiece()
-        piezas = gd.getPiezas()
+            'refrescar el objeto pedidos desde la DB
+            gp = New GestorProductos(idProducto)
+            despiece = gp.producto.despiece()
+            piezas = gd.getPiezas()
 
-        lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.codigo)
-        lblLinea.Text = gp.producto.linea.nombre
-        lblChapa.Text = gp.producto.chapa.nombre
-        lblMadera.Text = gp.producto.madera.nombre
-        lblHoja.Text = gp.producto.hoja.nombre
-        lblMarco.Text = gp.producto.marco.nombre
-        lblMano.Text = gp.producto.mano.nombre
-        lblPrecio.Text = "$" & gp.producto.precioUnitario
-        lblStock.Text = gp.producto.stock
+            lblSubtitulo.Text = String.Format("Detalles Producto: {0}", gp.producto.codigo)
+            lblLinea.Text = gp.producto.linea.nombre
+            lblChapa.Text = gp.producto.chapa.nombre
+            lblMadera.Text = gp.producto.madera.nombre
+            lblHoja.Text = gp.producto.hoja.nombre
+            lblMarco.Text = gp.producto.marco.nombre
+            lblMano.Text = gp.producto.mano.nombre
+            lblPrecio.Text = "$" & gp.producto.precioUnitario
+            lblStock.Text = gp.producto.stock
 
-        DPLinea.SelectedValue = gp.producto.linea.id
-        DPChapa.SelectedValue = gp.producto.chapa.id
-        DPMadera.SelectedValue = gp.producto.madera.id
-        DPMarco.SelectedValue = gp.producto.marco.id
-        DPHoja.SelectedValue = gp.producto.hoja.id
-        DPMano.SelectedValue = gp.producto.mano.id
-        txtPrecio.Text = gp.producto.precioUnitario
-        txtStock.Text = gp.producto.stock
+            DPLinea.SelectedValue = gp.producto.linea.id
+            DPChapa.SelectedValue = gp.producto.chapa.id
+            DPMadera.SelectedValue = gp.producto.madera.id
+            DPMarco.SelectedValue = gp.producto.marco.id
+            DPHoja.SelectedValue = gp.producto.hoja.id
+            DPMano.SelectedValue = gp.producto.mano.id
+            txtPrecio.Text = gp.producto.precioUnitario
+            txtStock.Text = gp.producto.stock
 
-        grMateriales.DataSource = despiece
-        grModMateriales.DataSource = piezas
+            grMateriales.DataSource = despiece
+            grModMateriales.DataSource = piezas
 
-        grMateriales.DataBind()
-        grModMateriales.DataBind()
+            grMateriales.DataBind()
+            grModMateriales.DataBind()
 
-        For Each r As GridViewRow In grModMateriales.Rows
-            Dim txt As TextBox
-            Dim idPieza As Integer
-            Dim sel As DataRow()
-            idPieza = grModMateriales.DataKeys(r.RowIndex).Value
-            txt = r.FindControl("txtConsumo")
+            For Each r As GridViewRow In grModMateriales.Rows
+                Dim txt As TextBox
+                Dim idPieza As Integer
+                Dim sel As DataRow()
+                idPieza = grModMateriales.DataKeys(r.RowIndex).Value
+                txt = r.FindControl("txtConsumo")
 
-            sel = despiece.Select("ID_PIEZA=" & idPieza)
+                sel = despiece.Select("ID_PIEZA=" & idPieza)
 
-            If sel.Length = 0 Then
-                txt.Text = 0
-            Else
-                txt.Text = sel(0)("CONSUMO")
-                r.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold")
-            End If
-        Next
-
+                If sel.Length = 0 Then
+                    txt.Text = 0
+                Else
+                    txt.Text = sel(0)("CONSUMO")
+                    r.Style.Add(HtmlTextWriterStyle.FontWeight, "Bold")
+                End If
+            Next
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 
     Protected Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click

@@ -217,37 +217,19 @@ Public Class DbHelper
         End Try
     End Function
 
-    'Friend Sub registrar(p As Producto)
-    '    cmd.CommandType = CommandType.Text
-    '    Try
-    '        Dim query As String = "INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ("
-
-    '        For Each r In p.registro
-    '            query += "'" & r & "'" + "+CHAR(13)+"
-    '        Next
-
-    '        query = query.Substring(0, query.Length - 1)
-    '        query += String.Format(", {0}, 'MANU'", p.codigo)
-
-    '        cnn.Open()
-    '        cmd.CommandText = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU')", p.registro, p.codigo)
-    '        cmd.ExecuteNonQuery()
-
-    '    Catch ex As Exception
-    '        Throw
-    '    Finally
-    '        cnn.Close()
-    '    End Try
-    'End Sub
-
     Friend Sub registrar(p As Producto)
-        cmd.CommandType = CommandType.Text
-        Try
-            Dim query As String = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU'", p.registro, p.codigo)
 
+        cmd.CommandType = CommandType.Text
+
+        Try
+            Dim query As String
             cnn.Open()
-            cmd.CommandText = query
-            cmd.ExecuteNonQuery()
+
+            For Each r In p.registro
+                query = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU')", r, p.codigo)
+                cmd.CommandText = query
+                cmd.ExecuteNonQuery()
+            Next
 
         Catch ex As Exception
             Throw
@@ -624,7 +606,7 @@ Public Class DbHelper
         Try
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
-            cmd.CommandText = "SELECT * FROM REGISTRO_PRODUCTOS WHERE COD_PRODUCTO=" & _p.codigo
+            cmd.CommandText = String.Format("SELECT * FROM REGISTRO_PRODUCTOS WHERE COD_PRODUCTO={0} ORDER BY FECHA DESC", _p.codigo)
             da.Fill(ds, "REGISTRO")
 
             Return ds.Tables("REGISTRO")
@@ -1357,12 +1339,11 @@ Public Class DbHelper
         CIEN()
         Dim ret As Integer
         Try
-
+            cnn.Open()
             If _producto.updateStock Then
                 cmd.Connection = cnn
                 cmd.CommandText = String.Format("UPDATE PRODUCTOS SET STOCK={0} WHERE ID={1}", _producto.stock, _producto.id)
                 cmd.CommandType = CommandType.Text
-                cnn.Open()
                 cmd.ExecuteScalar()
                 ret = _producto.id
             End If
@@ -1385,7 +1366,6 @@ Public Class DbHelper
                     cmd.Parameters.AddWithValue("@DESP", 0)
                 End If
 
-                cnn.Open()
                 ret = cmd.ExecuteScalar()
             End If
 

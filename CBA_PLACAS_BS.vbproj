@@ -268,12 +268,13 @@
     <Content Include="Pedido\confirmacion.aspx" />
     <Content Include="Pedido\modificar.aspx" />
     <Content Include="Pedido\modificarDetalle.aspx" />
-    <Content Include="Pedido\nuevo.aspx" />
+    <Content Include="Pedido\nuevoPedido.aspx" />
     <Content Include="Pedido\panelPedidos.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
     <Content Include="producto\modificarProducto.aspx" />
     <Content Include="producto\panelLinea.ascx" />
+    <Content Include="producto\nuevoProducto.aspx" />
     <Content Include="producto\productos.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="WebForm1.aspx" />
@@ -574,11 +575,11 @@
       <DependentUpon>modificarDetalle.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Pedido\nuevo.aspx.designer.vb">
-      <DependentUpon>nuevo.aspx</DependentUpon>
+    <Compile Include="Pedido\nuevoPedido.aspx.designer.vb">
+      <DependentUpon>nuevoPedido.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pedido\nuevo.aspx.vb">
-      <DependentUpon>nuevo.aspx</DependentUpon>
+    <Compile Include="Pedido\nuevoPedido.aspx.vb">
+      <DependentUpon>nuevoPedido.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Pedido\panelPedidos.aspx.designer.vb">
@@ -615,6 +616,13 @@
     <Compile Include="producto\panelLinea.ascx.vb">
       <DependentUpon>panelLinea.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="producto\nuevoProducto.aspx.designer.vb">
+      <DependentUpon>nuevoProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\nuevoProducto.aspx.vb">
+      <DependentUpon>nuevoProducto.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="producto\productos.aspx.designer.vb">
       <DependentUpon>productos.aspx</DependentUpon>

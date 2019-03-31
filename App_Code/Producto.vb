@@ -204,9 +204,9 @@ Public Class Producto
         End Get
     End Property
 
-    Public ReadOnly Property registro As String
+    Public ReadOnly Property registro As List(Of String)
         Get
-            Return String.Join(vbCrLf, _regCambios)
+            Return _regCambios
         End Get
     End Property
 

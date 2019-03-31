@@ -259,7 +259,7 @@
                     <div class="table-responsive">
                         <asp:GridView ID="grHistorial" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" CssClass="table-condensed">
                             <Columns>
-                                <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" />
+                                <asp:BoundField DataField="FECHA" HeaderText="FECHA" SortExpression="FECHA" DataFormatString="{0:g}"/>
                                 <asp:BoundField DataField="CAMBIOS" HeaderText="CAMBIOS" SortExpression="CAMBIOS" />
                                 <asp:BoundField DataField="USUARIO" HeaderText="USUARIO" SortExpression="USUARIO" />
                             </Columns>
