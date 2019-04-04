@@ -24,4 +24,16 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub btnActualizarPrecio_Click(sender As Object, e As EventArgs) Handles btnActualizarPrecio.Click
+        For Each r As GridViewRow In grProductos.Rows
+            Dim chk As New CheckBox
+            Dim prods As New List(Of Integer)
+            chk = r.FindControl("check")
+
+            If chk.Checked Then
+                prods.Add(grProductos.DataKeys(r.RowIndex).Value)
+            End If
+        Next
+    End Sub
 End Class

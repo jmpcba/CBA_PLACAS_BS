@@ -147,4 +147,31 @@ Partial Public Class productos1
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents grProductos As Global.System.Web.UI.WebControls.GridView
+    
+    '''<summary>
+    '''Control rbOpcionPrecio.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents rbOpcionPrecio As Global.System.Web.UI.WebControls.RadioButtonList
+    
+    '''<summary>
+    '''Control txtPrecio.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtPrecio As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
+    '''Control btnActualizarPrecio.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btnActualizarPrecio As Global.System.Web.UI.WebControls.Button
 End Class

@@ -3,6 +3,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            var check = false
             var dropDowns = [
                 $("#" + '<%= DPFiltroLinea.ClientID %>'),
                 $("#" + '<%= DPFiltroChapa.ClientID %>'),
@@ -12,42 +13,29 @@
                 $("#" + '<%= DPFiltroMano.ClientID %>')
             ]
 
-
+            //inicio de controles
             iniciarDropDowns(dropDowns)
-            iniciarTextBoxes([$("#txtFiltroCod")])
+            iniciarTextBoxes([$("#txtFiltroCod"), $("#<%= txtPrecio.ClientID %>")])
+            $('#btnGuardarPrecio').attr("disabled", true)
+
 
             //iniciar barra de estado
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
-            $("#" + '<%= DPFiltroLinea.ClientID %>').change(function () {
+            //FILTROS 
+            
+            $("select").change(function () {
                 iniciarTextBoxes([$("#txtFiltroCod")])
                 filtroProd()
             })
 
-            $("#" + '<%= DPFiltroChapa.ClientID %>').change(function () {
-                iniciarTextBoxes([$("#txtFiltroCod")])
-                filtroProd()
-            })
-
-            $("#" + '<%= DPFiltroMadera.ClientID %>').change(function () {
-                iniciarTextBoxes([$("#txtFiltroCod")])
-                filtroProd()
-            })
-
-            $("#" + '<%= DPFiltroHoja.ClientID %>').change(function () {
-                iniciarTextBoxes([$("#txtFiltroCod")])
-                filtroProd()
-             })
-
-            $("#" + '<%= DPFiltroMarco.ClientID %>').change(function () {
-                iniciarTextBoxes([$("#txtFiltroCod")])
-                filtroProd()
-            })
-
-            $("#" + '<%= DPFiltroMano.ClientID %>').change(function () {
-                iniciarTextBoxes([$("#txtFiltroCod")])
-                filtroProd()
+            $("#btnSel").click(function () {
+                check = !check
+                console.log("click en boton sel, valor de variable: " + check)
+                console.log($("checkbox"))
+                $("input[type=checkbox]").prop('checked', check);
+                
             })
 
             $("#txtFiltroCod").keyup(function () {
@@ -68,8 +56,52 @@
                 limpiarFiltro(table)
             })
 
-            function filtroProd() {
+            $("#" + '<%= rbOpcionPrecio.ClientID %>').click(function () {
+                var rbVal = $("#" + '<%= rbOpcionPrecio.ClientID %>' + " input:checked").val()
 
+                $("#" + '<%= txtPrecio.ClientID %>').val("")
+                $("#msgValidar").hide()
+                $("#divTextBox").removeClass("has-error")
+                $("#divTextBox").removeClass("has-success")
+                $('#btnGuardarPrecio').attr("disabled", true)
+
+                if (rbVal == "PORCENTAJE") {
+                    $("#preTxtPrecio").text("%")
+                }else{
+                    $("#preTxtPrecio").text("$")
+                }
+            })
+
+            $("#" + '<%= txtPrecio.ClientID %>').keyup(function () {
+                var val = $("#" + '<%= txtPrecio.ClientID %>').val()
+
+                if (val =="") {
+                    $("#msgValidar").hide()
+                    $("#divTextBox").removeClass("has-error")
+                    $("#divTextBox").removeClass("has-success")
+                    $('#btnGuardarPrecio').attr("disabled", true)
+                }else if (isNaN(val)) {
+                    $("#msgValidar").show()
+                    $("#divTextBox").addClass("has-error")
+                    $("#divTextBox").removeClass("has-success")
+                    $("#btnGuardarPrecio").attr("disabled", true);
+                }else{
+                    $("#msgValidar").hide()
+                    $("#divTextBox").removeClass("has-error")
+                    $("#divTextBox").addClass("has-success")
+                    $('#btnGuardarPrecio').attr("disabled", false)
+
+                    var rbVal = $("#" + '<%= rbOpcionPrecio.ClientID %>' + " input:checked").val()
+                    if (rbVal == "PORCENTAJE") {
+                        $("#msgConfirmar").text("el precio de los productos seleccionados sera aumentado un " + val + "%. Desea continuar?")
+                    } else {
+                        $("#msgConfirmar").text("el precio de los productos seleccionados sera establecido en $" + val + ". Desea continuar?")
+                    }
+                }
+            })
+            
+
+            function filtroProd() {
                 var linea = $("#" + '<%= DPFiltroLinea.ClientID %>').val();
                 var chapa = $("#" + '<%= DPFiltroChapa.ClientID %>').val()
                 var mad = $("#" + '<%= DPFiltroMadera.ClientID %>').val()
@@ -233,6 +265,11 @@
     </div>
     <hr>
     <div class="row">
+        <input id="btnSel" class="btn btn-primary pull-left" type="button" value="Seleccionar Todos" />
+        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mdlPrecio">
+                Actualizar Precio</button>
+    </div><br />
+    <div class="row">    
         <div class="table-responsive">
             <asp:GridView ID="grProductos" runat="server" AutoGenerateColumns="False" ToolTip="Productos" CssClass="table" DataKeyNames="ID">
                 <Columns>
@@ -278,6 +315,12 @@
                         <HeaderStyle CssClass="hiddencol" />
                         <ItemStyle CssClass="hiddencol" />
                     </asp:BoundField>
+                    <asp:TemplateField HeaderText="SEL">
+                        <ItemTemplate>
+                            <asp:CheckBox ID="check" runat="server" />
+                        </ItemTemplate>
+                        <ItemStyle CssClass="numCols" />
+                    </asp:TemplateField>
                     <asp:BoundField DataField="COD" HeaderText="COD" />
                     <asp:BoundField DataField="LINEA" HeaderText="LINEA" />
                     <asp:BoundField DataField="CHAPA" HeaderText="CHAPA" />
@@ -294,4 +337,61 @@
             </asp:GridView>
         </div>
     </div>
+<!--modal actualizar precio-->
+<div class="modal fade" id="mdlPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Actualizar precio en los elementos seleccionados</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12 radio-inline">
+                     <asp:RadioButtonList ID="rbOpcionPrecio" runat="server" CssClass="radio-inline">
+                        <asp:ListItem Value="PORCENTAJE" Text="PORCENTAJE" Selected="True"></asp:ListItem>
+                        <asp:ListItem Value="PRECIO" Text="PRECIO"></asp:ListItem>
+                    </asp:RadioButtonList>
+                  <br />
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-md-12">
+                <div class="text-center" style="float:left; width:10%;">
+                    <h5 id="preTxtPrecio">%</h5>
+                </div>
+                <div id="divTextBox" style="float: left; padding-left: 10px; width: 90%;">
+                    <asp:TextBox ID="txtPrecio" runat="server"></asp:TextBox>
+                </div>
+                <div id="msgValidar" class="text-left has-error" style="float:left;padding-left: 10px; width:90%; display:none">
+                    <label class="control-label" for="<%= txtPrecio.ClientID %>"> Ingrese un valor numerico</label>
+                </div>
+            </div>
+          </div>    
+      </div>
+      <div class="modal-footer">
+          <button id="btnGuardarPrecio" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfPrecio" data-dismiss="modal">Guardar</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--CONFIRMAR ACTUALIZAR PRECIO-->
+<div class="modal fade" tabindex="-1" role="dialog" id="mdlConfPrecio">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger"">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirme</h4>
+                </div>
+            <div class="modal-body">
+                    <h4 id="msgConfirmar">...</h4>
+                </div>
+            <div class="modal-footer">
+                <asp:Button ID="btnActualizarPrecio" runat="server" Text="Si" />
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlPrecio" data-dismiss="modal">No</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </asp:Content>
