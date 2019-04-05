@@ -272,6 +272,7 @@
     <Content Include="Pedido\panelPedidos.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
+    <Content Include="producto\materiales.aspx" />
     <Content Include="producto\modificarProducto.aspx" />
     <Content Include="producto\panelLinea.ascx" />
     <Content Include="producto\nuevoProducto.aspx" />
@@ -469,6 +470,7 @@
     <Compile Include="App_Code\Cliente.vb" />
     <Compile Include="App_Code\DbHelper.vb" />
     <Compile Include="App_Code\Estado.vb" />
+    <Compile Include="App_Code\ExcepcionProducto.vb" />
     <Compile Include="App_Code\gestorDatos.vb" />
     <Compile Include="App_Code\GestorPedidos.vb" />
     <Compile Include="App_Code\GestorProductos.vb" />
@@ -601,6 +603,13 @@
     </Compile>
     <Compile Include="producto\caracteristicas.aspx.vb">
       <DependentUpon>caracteristicas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="producto\materiales.aspx.designer.vb">
+      <DependentUpon>materiales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\materiales.aspx.vb">
+      <DependentUpon>materiales.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="producto\modificarProducto.aspx.designer.vb">

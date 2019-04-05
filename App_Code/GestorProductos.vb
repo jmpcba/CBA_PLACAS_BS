@@ -5,6 +5,14 @@ Public Class GestorProductos
     Dim gd As GestorDatos
     Dim db As DbHelper
 
+    Public Enum tipoAumento
+        porcentaje
+        precio
+    End Enum
+
+    Public Sub New()
+
+    End Sub
     Public Sub New(_idProducto As Integer)
         gd = New GestorDatos
         producto = New Producto(_idProducto)
@@ -44,6 +52,24 @@ Public Class GestorProductos
         End Try
 
     End Sub
+
+    Friend function actualizarPreciosGrupo(_idsProducto As List(Of Integer), _tipo As tipoAumento, _valor As Decimal) As List(Of ExcepcionProducto)
+        Dim excepciones As New List(Of ExcepcionProducto)
+        For Each id As Integer In _idsProducto
+            Try
+                Dim prd As New Producto(id)
+                If _tipo = tipoAumento.precio Then
+                    prd.precioUnitario = _valor
+                Else
+                    prd.precioUnitario = prd.precioUnitario * _valor / 100
+                End If
+                prd.actualizar()
+            Catch ex As Exception
+                excepciones.Add(New ExcepcionProducto(ex.Message, id))
+            End Try
+        Next
+        Return excepciones
+    End function
 
     Friend Sub insertar()
         Try

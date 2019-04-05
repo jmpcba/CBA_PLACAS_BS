@@ -41,10 +41,12 @@
             $("#txtFiltroCod").keyup(function () {
                 var texto = this.value;
                 var table = document.getElementById('<%= grProductos.ClientID %>');
-                if (texto) {
+                if (texto !="") {
                     iniciarDropDowns(dropDowns)
                     limpiarFiltro(table)
-                    filtro(table, texto, 7)
+                    filtro(table, texto, 8)
+                } else {
+                    limpiarFiltro(table)
                 }
             })
 
@@ -67,8 +69,10 @@
 
                 if (rbVal == "PORCENTAJE") {
                     $("#preTxtPrecio").text("%")
+                    $("#msgAyuda").text("Ingrese un numero mayor a 100 para aumentar el precio o menor para disminuirlo")
                 }else{
                     $("#preTxtPrecio").text("$")
+                    $("#msgAyuda").text("Ingrese el nuevo precio")
                 }
             })
 
@@ -347,13 +351,16 @@
       </div>
       <div class="modal-body">
           <div class="row">
-              <div class="col-md-12 radio-inline">
+              <div class="col-md-4 radio-inline">
                      <asp:RadioButtonList ID="rbOpcionPrecio" runat="server" CssClass="radio-inline">
                         <asp:ListItem Value="PORCENTAJE" Text="PORCENTAJE" Selected="True"></asp:ListItem>
                         <asp:ListItem Value="PRECIO" Text="PRECIO"></asp:ListItem>
                     </asp:RadioButtonList>
-                  <br />
                 </div>
+                <div class="col-md-4">
+                    <p id="msgAyuda">Ingrese un numero mayor a 100 para aumentar el precio o menor para disminuirlo</p>
+                </div>
+                <br />
             </div>
           <div class="row">
             <div class="col-md-12">

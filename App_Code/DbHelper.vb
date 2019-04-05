@@ -1345,8 +1345,9 @@ Public Class DbHelper
         Dim ret As Integer
         Try
             cnn.Open()
+            cmd.Connection = cnn
             If _producto.updateStock Then
-                cmd.Connection = cnn
+
                 cmd.CommandText = String.Format("UPDATE PRODUCTOS SET STOCK={0} WHERE ID={1}", _producto.stock, _producto.id)
                 cmd.CommandType = CommandType.Text
                 cmd.ExecuteScalar()
@@ -1354,7 +1355,7 @@ Public Class DbHelper
             End If
 
             If _producto.modificado Then
-                cmd.Connection = cnn
+
                 cmd.CommandText = "SP_UPDATE_PRODUCTO"
                 cmd.CommandType = CommandType.StoredProcedure
 
