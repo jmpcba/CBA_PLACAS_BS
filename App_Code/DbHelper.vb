@@ -238,6 +238,27 @@ Public Class DbHelper
         End Try
     End Sub
 
+    Friend Sub registrar(p As Pieza)
+
+        cmd.CommandType = CommandType.Text
+
+        Try
+            Dim query As String
+            cnn.Open()
+
+            For Each r In p.registro
+                query = String.Format("INSERT INTO REGISTRO_MATERIALES (CAMBIOS, COD_PIEZA, USUARIO) VALUES ('{0}', {1}, 'MANU')", r, p.id)
+                cmd.CommandText = query
+                cmd.ExecuteNonQuery()
+            Next
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
 
     Friend Function existePedido(prod As Producto) As Integer
         cmd.CommandType = CommandType.Text
@@ -323,6 +344,23 @@ Public Class DbHelper
             Else
                 Throw
             End If
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub actualizar(elementoBase As elementoBase)
+        Throw New NotImplementedException()
+    End Sub
+
+    Friend Sub actualizar(_p As Pieza)
+        cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}' STOCK_DISPONIBLE = {2} WHERE ID={3}", _p.nombre, _p.unidad, _p.stock, _p.id)
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw
         Finally
             cnn.Close()
         End Try
@@ -734,6 +772,55 @@ Public Class DbHelper
         End Try
     End Function
 
+    Public Sub insertar(base As elementoBase)
+
+    End Sub
+
+    Public Function insertar(_prod As Producto) As Integer()
+        Try
+            cmd.Connection = cnn
+            cmd.CommandText = "SP_INSERT_PRODUCTO"
+            cmd.CommandType = CommandType.StoredProcedure
+
+            cmd.Parameters.Clear()
+            cmd.Parameters.AddWithValue("@ID_LINEA", _prod.linea.id)
+            cmd.Parameters.AddWithValue("@ID_CHAPA", _prod.chapa.id)
+            cmd.Parameters.AddWithValue("@ID_HOJA", _prod.hoja.id)
+            cmd.Parameters.AddWithValue("@ID_MARCO", _prod.marco.id)
+            cmd.Parameters.AddWithValue("@ID_MADERA", _prod.madera.id)
+            cmd.Parameters.AddWithValue("@ID_MANO", _prod.mano.id)
+            cmd.Parameters.AddWithValue("@PRECIO", _prod.precioUnitario)
+
+            cnn.Open()
+            Dim id = cmd.ExecuteScalar()
+
+            cmd.CommandText = "SELECT MAX(COD) FROM PRODUCTOS"
+            cmd.CommandType = CommandType.Text
+            Dim cod = cmd.ExecuteScalar()
+
+            Return {id, cod}
+        Catch ex As SqlException
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
+    Public Function insertar(_pieza As Pieza) As DataTable
+        Try
+            Dim query = String.Format("INSERT INTO MATERIALES (nombre, UNIDAD) VALUES ('{0}', '{1}')", _pieza.nombre, _pieza.unidad)
+
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = query
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+        Catch ex As SqlException
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Function
+
     Friend Sub insertar(_cliente As Cliente)
         Try
             String.Format("SELECT COUNT(CUIT) FROM CLIENTES WHERE CUIT={0}", _cliente.CUIT)
@@ -946,36 +1033,6 @@ Public Class DbHelper
         End Try
 
     End Sub
-
-    Public Function insertar(_prod As Producto) As Integer()
-        Try
-            cmd.Connection = cnn
-            cmd.CommandText = "SP_INSERT_PRODUCTO"
-            cmd.CommandType = CommandType.StoredProcedure
-
-            cmd.Parameters.Clear()
-            cmd.Parameters.AddWithValue("@ID_LINEA", _prod.linea.id)
-            cmd.Parameters.AddWithValue("@ID_CHAPA", _prod.chapa.id)
-            cmd.Parameters.AddWithValue("@ID_HOJA", _prod.hoja.id)
-            cmd.Parameters.AddWithValue("@ID_MARCO", _prod.marco.id)
-            cmd.Parameters.AddWithValue("@ID_MADERA", _prod.madera.id)
-            cmd.Parameters.AddWithValue("@ID_MANO", _prod.mano.id)
-            cmd.Parameters.AddWithValue("@PRECIO", _prod.precioUnitario)
-
-            cnn.Open()
-            Dim id = cmd.ExecuteScalar()
-
-            cmd.CommandText = "SELECT MAX(COD) FROM PRODUCTOS"
-            cmd.CommandType = CommandType.Text
-            Dim cod = cmd.ExecuteScalar()
-
-            Return {id, cod}
-        Catch ex As SqlException
-            Throw
-        Finally
-            cnn.Close()
-        End Try
-    End Function
 
     Public Sub insertar(_item As Item)
 
@@ -1804,4 +1861,5 @@ Public Class DbHelper
         Return String.Format("{0} {1} ESTA {2} A PRODUCTOS EXISTENTES Y NO PUEDE SER {3}", estaEste, strTipo.Substring(0, strTipo.Length - 1), asoc, borr)
 
     End Function
+
 End Class

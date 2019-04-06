@@ -272,6 +272,7 @@
     <Content Include="Pedido\panelPedidos.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
+    <Content Include="producto\detallePieza.aspx" />
     <Content Include="producto\materiales.aspx" />
     <Content Include="producto\modificarProducto.aspx" />
     <Content Include="producto\panelLinea.ascx" />
@@ -467,6 +468,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_Code\Chapa.vb" />
+    <Compile Include="App_Code\clasesBase\elementoBase.vb" />
     <Compile Include="App_Code\Cliente.vb" />
     <Compile Include="App_Code\DbHelper.vb" />
     <Compile Include="App_Code\Estado.vb" />
@@ -603,6 +605,13 @@
     </Compile>
     <Compile Include="producto\caracteristicas.aspx.vb">
       <DependentUpon>caracteristicas.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="producto\detallePieza.aspx.designer.vb">
+      <DependentUpon>detallePieza.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="producto\detallePieza.aspx.vb">
+      <DependentUpon>detallePieza.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="producto\materiales.aspx.designer.vb">

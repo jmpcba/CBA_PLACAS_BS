@@ -81,7 +81,6 @@ Public Class GestorProductos
                 Throw New Exception("Ya existe un producto con estas caracteristicas con el codigo: " & existe)
             Else
                 producto.insertar()
-                db.registrar(producto)
             End If
         Catch ex As Exception
             Throw

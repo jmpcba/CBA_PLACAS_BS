@@ -254,6 +254,7 @@ Public Class Producto
             If Not IsNothing(despiece) Then
                 db.insertDespiece(id, despiece)
             End If
+            db.registrar(Me)
         Catch ex As Exception
             Throw
         End Try

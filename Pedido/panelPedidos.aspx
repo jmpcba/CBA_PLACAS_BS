@@ -84,7 +84,7 @@
                             <HeaderStyle CssClass="hiddencol" />
                             <ItemStyle CssClass="hiddencol" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="PORCENT_AVANCE" HeaderText="% Completo" SortExpression="PORCENT_AVANCE">
+                        <asp:BoundField DataField="PORCENT_AVANCE" HeaderText="% Completo" SortExpression="PORCENT_AVANCE"  DataFormatString="{0:2F}">
                             <ItemStyle CssClass="numCol" />
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
