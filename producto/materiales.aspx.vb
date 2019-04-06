@@ -52,4 +52,16 @@
         Return ret
 
     End Function
+
+    Protected Sub grMateriales_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grMateriales.SelectedIndexChanged
+        Try
+            Dim row = grMateriales.SelectedRow
+            Dim idPieza = Convert.ToInt32(grMateriales.SelectedDataKey.Value)
+
+            Response.Redirect("detallePieza.aspx?idPieza=" & idPieza)
+
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+    End Sub
 End Class

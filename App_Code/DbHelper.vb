@@ -354,7 +354,7 @@ Public Class DbHelper
     End Sub
 
     Friend Sub actualizar(_p As Pieza)
-        cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}' STOCK_DISPONIBLE = {2} WHERE ID={3}", _p.nombre, _p.unidad, _p.stock, _p.id)
+        cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}', STOCK_DISPONIBLE = {2} WHERE ID={3}", _p.nombre, _p.unidad, _p.stock, _p.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -645,6 +645,19 @@ Public Class DbHelper
             cmd.Connection = cnn
             cmd.CommandType = CommandType.Text
             cmd.CommandText = String.Format("SELECT * FROM REGISTRO_PRODUCTOS WHERE COD_PRODUCTO={0} ORDER BY FECHA DESC", _p.codigo)
+            da.Fill(ds, "REGISTRO")
+
+            Return ds.Tables("REGISTRO")
+        Catch ex As SqlException
+            Throw
+        End Try
+    End Function
+
+    Friend Function getRegistro(_p As Pieza) As DataTable
+        Try
+            cmd.Connection = cnn
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = String.Format("SELECT * FROM REGISTRO_MATERIALES WHERE COD_PIEZA={0} ORDER BY FECHA DESC", _p.id)
             da.Fill(ds, "REGISTRO")
 
             Return ds.Tables("REGISTRO")
@@ -1715,6 +1728,20 @@ Public Class DbHelper
             query = String.Format("SELECT CHAPA, HOJA, MARCO, MADERA, ID_CHAPA, ID_HOJA, ID_MARCO, ID_MADERA FROM VW_PRODUCTOS WHERE ID_LINEA={0} GROUP BY CHAPA, HOJA, MADERA, MARCO, ID_CHAPA, ID_HOJA, ID_MARCO, ID_MADERA ORDER BY ID_MADERA, ID_HOJA, ID_MARCO, ID_CHAPA", _l.id)
         End If
 
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "PRODUCTOS")
+            Return ds.Tables("PRODUCTOS")
+        Catch ex As Exception
+            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Function
+
+    Public Function getProductos(_pieza As Pieza) As DataTable
+        Dim query = String.Format("SELECT ID, COD, LINEA, CHAPA, HOJA, MARCO, MADERA, MANO, D.CONSUMO from VW_PRODUCTOS P INNER JOIN DESPIECE D ON P.id=D.ID_PROD WHERE D.ID_PIEZA = {0} ORDER BY COD", _pieza.id)
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query

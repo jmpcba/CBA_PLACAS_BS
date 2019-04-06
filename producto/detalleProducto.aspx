@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="modificarProducto.aspx.vb" Inherits="CBA_PLACAS_BS.modificarProducto" theme="default"%>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="detalleProducto.aspx.vb" Inherits="CBA_PLACAS_BS.modificarProducto" theme="default"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {

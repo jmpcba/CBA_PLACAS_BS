@@ -274,7 +274,7 @@
     <Content Include="producto\caracteristicas.aspx" />
     <Content Include="producto\detallePieza.aspx" />
     <Content Include="producto\materiales.aspx" />
-    <Content Include="producto\modificarProducto.aspx" />
+    <Content Include="producto\detalleProducto.aspx" />
     <Content Include="producto\panelLinea.ascx" />
     <Content Include="producto\nuevoProducto.aspx" />
     <Content Include="producto\productos.aspx" />
@@ -621,11 +621,11 @@
       <DependentUpon>materiales.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="producto\modificarProducto.aspx.designer.vb">
-      <DependentUpon>modificarProducto.aspx</DependentUpon>
+    <Compile Include="producto\detalleProducto.aspx.designer.vb">
+      <DependentUpon>detalleProducto.aspx</DependentUpon>
     </Compile>
-    <Compile Include="producto\modificarProducto.aspx.vb">
-      <DependentUpon>modificarProducto.aspx</DependentUpon>
+    <Compile Include="producto\detalleProducto.aspx.vb">
+      <DependentUpon>detalleProducto.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="producto\panelLinea.ascx.designer.vb">

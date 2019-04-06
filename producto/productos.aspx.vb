@@ -27,7 +27,7 @@
             Dim row = grProductos.SelectedRow
             Dim idProducto = Convert.ToInt32(grProductos.SelectedDataKey.Value)
 
-            Response.Redirect("modificarProducto.aspx?idProducto=" & idProducto)
+            Response.Redirect("detalleProducto.aspx?idProducto=" & idProducto)
 
         Catch ex As Exception
             sb.writeError(ex.Message)

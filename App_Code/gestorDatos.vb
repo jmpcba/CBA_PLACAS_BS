@@ -563,6 +563,15 @@ Public Class GestorDatos
         End Try
     End Function
 
+    Public Function getRegistro(p As Pieza) As DataTable
+        Try
+            Dim db As New DbHelper
+            Return db.getRegistro(p)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Public Function getDespieceProducto(_idProducto As Integer) As DataTable
         Try
             db = New DbHelper()
@@ -618,6 +627,16 @@ Public Class GestorDatos
         End Try
     End Function
 
+    Public Function getProductos(_pieza As Pieza) As DataTable
+        'LISTA DE PRODUCTOS QUE CONTIENEN UNA PIEZA
+        Try
+            Dim db As New DbHelper
+            Return db.getProductos(_pieza)
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Public Function getPiezas() As DataTable
         Dim db As New DbHelper
         Try
@@ -626,4 +645,5 @@ Public Class GestorDatos
             Throw
         End Try
     End Function
+
 End Class
