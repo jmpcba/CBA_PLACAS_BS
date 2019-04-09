@@ -31,7 +31,7 @@
 
     Public Property nombre As String
         Set(value As String)
-            registro.Add(String.Format("NOMBRE ANTERIOR {0}, NUEVO {1}", _nombre, value))
+            registro.Add(String.Format("NOMBRE ANTERIOR: {0}, NUEVO: {1}", _nombre, value))
             _nombre = value
             _modificado = True
         End Set
@@ -82,6 +82,18 @@
                 Throw New Exception("No se realizaron cambios")
             End If
 
+        Catch ex As Exception
+            Throw
+        End Try
+    End Sub
+
+    Friend Sub eliminar()
+        Try
+
+            db.eliminar(Me)
+            registro.Clear()
+            registro.Add("pieza eliminada")
+            db.registrar(Me)
         Catch ex As Exception
             Throw
         End Try

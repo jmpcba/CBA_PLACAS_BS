@@ -20,6 +20,8 @@
             $('#mdlHistorial').on('show.bs.modal', function (event) {
                 $("#" + '<%= btnHistorial.ClientID %>').click()
             })
+
+
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />

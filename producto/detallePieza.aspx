@@ -6,11 +6,12 @@
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
-            //botondeshacer
-            if ($("#" + '<%= HFEliminar.ClientID %>').val() == 0) {
-                $("#" + '<%= aUndo.ClientID %>').hide()
+            if ($("#" + '<%= HFEliminar.ClientID %>').val() == 1) {
+                $("#btnEliminar").attr("disabled", true)
+                $("#btnMod").attr("disabled", true)
             } else {
-                $("#" + '<%= aUndo.ClientID %>').show()
+                $("#btnEliminar").attr("disabled", false)
+                $("#btnMod").attr("disabled", false)
             }
         })
     </script>
@@ -22,16 +23,16 @@
     <div class="row">
         <div id="msg" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label><asp:LinkButton ID="aUndo" runat="server"> Deshacer</asp:LinkButton>
+             <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label><%-- <asp:LinkButton ID="aUndo" runat="server"> Deshacer</asp:LinkButton>--%>   
             <asp:HiddenField ID="HFMsg" runat="server" />
         </div>
     </div>
     <div class="row">
         <!--botones grupo -->
         <div class="btn-group" role="group" aria-label="...">
-            <asp:Button ID="btnVolver" runat="server" Text="Volver" />
+            <a href="materiales.aspx" class="btn btn-primary">Volver</a>
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button id="btnMod" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Modificar
                   <span class="caret"></span>
                 </button>
@@ -40,7 +41,7 @@
                   <li><a href="#" data-toggle="modal" data-target="#mdlModStock">Modificar Stock</a></li>
                 </ul>
             </div>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
+            <button id="btnEliminar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
                 Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
         </div>
@@ -225,7 +226,7 @@
                     <h4 class="modal-title">Confirme</h4>
                     </div>
                 <div class="modal-body">
-                        <p>Desea dar de baja este producto? </p>
+                        <p>Desea eliminar esta pieza?</p>
                     </div>
                 <div class="modal-footer">
                     <asp:Button ID="btnEliminarPieza" runat="server" Text="Si" />

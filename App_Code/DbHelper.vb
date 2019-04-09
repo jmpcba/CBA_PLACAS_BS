@@ -19,6 +19,7 @@ Public Class DbHelper
         LINEAS
         MANOS
         MARCOS
+        PIEZAS
     End Enum
 
     Public Enum tipoItem
@@ -91,6 +92,49 @@ Public Class DbHelper
             If ex.Message.ToLower.Contains(codigoError(tablas.CHAPAS)) Then
                 Throw New Exception(mensajeExcepcion(tablas.CHAPAS))
             End If
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Friend Sub eliminar(_p As Pieza)
+
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+
+            cmd.CommandText = String.Format("SELECT DISTINCT COD FROM PRODUCTOS P
+                                            INNER JOIN DESPIECE D ON D.ID_PROD = P.id
+                                            WHERE D.ID_PIEZA = {0} And P.VALIDO_HASTA Is NULL", _p.id)
+
+            Dim reader = cmd.ExecuteReader()
+
+            If reader.HasRows Then
+                Dim exc As String
+                exc = "Esta pieza no puede ser borrada, esta en uso en los siguientes productos activos: "
+
+                While reader.Read
+                    Dim cod = reader.GetInt16(0)
+                    exc += cod & ", "
+                End While
+
+                exc = exc.Substring(0, exc.Length - 1)
+                Throw New Exception(exc)
+            Else
+                reader.Close()
+                cmd.CommandText = String.Format("SELECT * FROM ITEMS I INNER JOIN PRODUCTOS P ON P.ID = I.ID_PRODUCTO INNER JOIN DESPIECE D ON D.ID_PROD = P.ID WHERE D.ID_PIEZA={0} AND I.ID_ESTADO < 5 ORDER BY I.ID", _p.id)
+                If cmd.ExecuteScalar > 0 Then
+                    Throw New Exception("Esta pieza se utiliza en productos cuya fabricacion esta en curso")
+                Else
+                    cmd.CommandText = String.Format("DELETE DESPIECE WHERE ID_PIEZA = {0}", _p.id)
+                    cmd.ExecuteNonQuery()
+
+                    cmd.CommandText = String.Format("DELETE MATERIALES WHERE ID = {0}", _p.id)
+                    cmd.ExecuteNonQuery()
+                End If
+            End If
+        Catch ex As Exception
             Throw
         Finally
             cnn.Close()

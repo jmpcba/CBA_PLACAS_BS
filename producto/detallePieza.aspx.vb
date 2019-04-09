@@ -88,6 +88,17 @@
     End Sub
 
     Protected Sub btnEliminarPieza_Click(sender As Object, e As EventArgs) Handles btnEliminarPieza.Click
+        Dim idPieza As Integer
+        idPieza = ViewState("idPieza")
+        p = New Pieza(idPieza)
 
+        Try
+            p.eliminar()
+            HFEliminar.Value = 1
+            llenarGrillaDetalle()
+            sb.write("Pieza eliminada")
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class
