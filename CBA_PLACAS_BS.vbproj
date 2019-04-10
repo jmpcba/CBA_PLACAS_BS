@@ -280,6 +280,9 @@
     <Content Include="producto\productos.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="WebForm1.aspx" />
+    <Content Include="producto\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="images\add-512.png" />
     <Content Include="images\almacen.png" />

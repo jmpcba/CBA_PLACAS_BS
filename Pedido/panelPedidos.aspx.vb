@@ -7,6 +7,9 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         sb = New StatusBar(HFMsg, lblMessage)
         llenarGrillas()
+        'If HttpContext.Current.User.IsInRole("ADMINISTRACION") Then
+        '    grDeposito.Visible = False
+        'End If
     End Sub
 
     Private Enum redireccion
