@@ -17,6 +17,13 @@ Partial Public Class Login
         If Not [String].IsNullOrEmpty(returnUrl) Then
             RegisterHyperLink.NavigateUrl += "?ReturnUrl=" & returnUrl
         End If
+
+
+        If Not IsPostBack Then
+            If Page.User.Identity.IsAuthenticated Then
+                Response.Redirect("~/errors/401")
+            End If
+        End If
     End Sub
 
     Protected Sub LogIn(sender As Object, e As EventArgs)

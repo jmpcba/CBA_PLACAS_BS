@@ -277,19 +277,21 @@ Public Class GestorPedidos
             _hf.Value = "entregado"
         Else
             For Each i As Item In pedido.items
-                If fabPendFlag Then
-                    If i.getCant - i.stock - i.getEnsamblados > 0 Then
-                        ret.Add(fabPendMsg)
-                        fabPendFlag = False
-                        _hf.Value = "prod"
+                If i.getEstado.id <> Estado.estados.cancelado Then
+                    If fabPendFlag Then
+                        If i.getCant - i.stock - i.getEnsamblados > 0 Then
+                            ret.Add(fabPendMsg)
+                            fabPendFlag = False
+                            _hf.Value = "prod"
+                        End If
                     End If
-                End If
 
-                If recDepoFlag Then
-                    If i.getEnsamblados - i.getEnDeposito > 0 Then
-                        ret.Add(recDepoMsg)
-                        recDepoFlag = False
-                        _hf.Value = "depo"
+                    If recDepoFlag Then
+                        If i.getEnsamblados - i.getEnDeposito > 0 Then
+                            ret.Add(recDepoMsg)
+                            recDepoFlag = False
+                            _hf.Value = "depo"
+                        End If
                     End If
                 End If
             Next

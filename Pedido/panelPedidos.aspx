@@ -53,8 +53,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                     </Columns>
                 </asp:GridView>
@@ -89,8 +89,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>
@@ -123,8 +123,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>
