@@ -95,6 +95,9 @@
                 </div>
             </div>
         </div>
+        <span id="hfRol">
+            <asp:HiddenField ID="HFRol" runat="server" />
+        </span>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

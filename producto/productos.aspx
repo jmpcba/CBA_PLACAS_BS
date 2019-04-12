@@ -207,6 +207,13 @@
                     }
                 }
             }
+
+            if ($("input[id$=HFRol]").val() == "ENCARGADO") {
+                var controles = [$("#btnMdlPrecio"), $("#btnSel")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
+
         })
 
     </script>
@@ -270,7 +277,7 @@
     <hr>
     <div class="row">
         <input id="btnSel" class="btn btn-primary pull-left" type="button" value="Seleccionar Todos" />
-        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mdlPrecio">
+        <button id="btnMdlPrecio" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mdlPrecio">
                 Actualizar Precio</button>
     </div><br />
     <div class="row">    

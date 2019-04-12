@@ -218,7 +218,23 @@
     End Sub
 
     Protected Sub grPedidos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grPedidos.SelectedIndexChanged
+        Dim url As String = ""
+        Dim idPedido As Integer
 
+        idPedido = grPedidos.SelectedDataKey.Value
+
+        If HttpContext.Current.User.IsInRole("ADMINISTRACION") Then
+            url = "../pedido/modificarDetalle.aspx?idPedido="
+        ElseIf HttpContext.Current.User.IsInRole("ENCARGADO") Or HttpContext.Current.User.IsInRole("GERENCIA") Then
+            url = "../pedido/administrar.aspx?idPedido="
+        End If
+
+        If url <> "" Then
+            url += idPedido.ToString
+            Response.Redirect(url)
+        Else
+            Throw New Exception("El usuario no tiene un rol asignado")
+        End If
     End Sub
 
     Protected Sub btnHistorial_Click(sender As Object, e As EventArgs) Handles btnHistorial.Click

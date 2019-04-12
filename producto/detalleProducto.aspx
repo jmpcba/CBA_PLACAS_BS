@@ -22,6 +22,12 @@
             })
 
 
+            if ($("input[id$=HFRol]").val() == "ENCARGADO") {
+                var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
+
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
@@ -40,11 +46,11 @@
         <!--botones grupo -->
         <div class="btn-group" role="group" aria-label="...">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
+            <button id="btnMdlMod" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
                 Modificar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlMateriales">
+            <button id="btnMdlMat" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlMateriales">
                 Modificar Materiales</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
+            <button id="btnMdlEl" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
                 Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
         </div>
@@ -145,7 +151,7 @@
 			            </button>
                     </div>
                     <div class="col-md-8">
-                        <p class="pull-left">Se mostraran pedidos en curso para este porducto</p>
+                        <p class="pull-left">Se mostraran pedidos en curso para este producto</p>
                     </div>
                 </div>
 		    </div>
@@ -353,8 +359,8 @@
                                 </asp:BoundField>
                                 <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                                 <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                                <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                                    <ControlStyle CssClass="imageButtons"></ControlStyle>
+                                <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                                    <ControlStyle CssClass="imageButtons" />
                                 </asp:CommandField>
                             </Columns>
                         </asp:GridView>

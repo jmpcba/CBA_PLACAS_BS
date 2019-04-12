@@ -38,6 +38,10 @@ Partial Public Class Login
 
             Select Case result
                 Case SignInStatus.Success
+                    'Dim id = signinManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId
+                    'Dim rol = manager.GetRoles(id)(0)
+                    'Session("rol") = rol
+                    'Dim usr = New Usuario(HttpContext.Current.User.Identity.GetUserId)
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString("ReturnUrl"), Response)
                     Exit Select
                 Case SignInStatus.LockedOut

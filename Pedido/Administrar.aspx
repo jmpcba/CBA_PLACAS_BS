@@ -426,10 +426,10 @@
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
+                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE" DataFormatString="{0:F2}">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
+                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE" DataFormatString="{0:F2}">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                         </Columns>

@@ -287,6 +287,7 @@
     </Content>
     <Content Include="reporte\Web.config" />
     <Content Include="cliente\Web.config" />
+    <Content Include="Pedido\Web.config" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="images\add-512.png" />
     <Content Include="images\almacen.png" />
@@ -477,6 +478,7 @@
     <Compile Include="App_Code\Chapa.vb" />
     <Compile Include="App_Code\clasesBase\elementoBase.vb" />
     <Compile Include="App_Code\Cliente.vb" />
+    <Compile Include="App_Code\DB.vb" />
     <Compile Include="App_Code\DbHelper.vb" />
     <Compile Include="App_Code\Estado.vb" />
     <Compile Include="App_Code\ExcepcionProducto.vb" />
@@ -496,6 +498,7 @@
     <Compile Include="App_Code\pieza.vb" />
     <Compile Include="App_Code\Producto.vb" />
     <Content Include="App_Code\utils.vb" />
+    <Compile Include="App_Code\Usuario.vb" />
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\IdentityConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
