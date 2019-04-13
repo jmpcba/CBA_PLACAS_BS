@@ -10,6 +10,12 @@
                 console.log(controles)
                 inHabilitarControles(controles)
             }
+
+            if ($("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#liCar"), $("#aCar"), $("#liNvo"), $("#aNvo")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
         })
     </script>
     <div class="page-header">

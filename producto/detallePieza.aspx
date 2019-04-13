@@ -13,6 +13,12 @@
                 $("#btnEliminar").attr("disabled", false)
                 $("#btnMod").attr("disabled", false)
             }
+
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnEliminar"), $("#btnMod")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />

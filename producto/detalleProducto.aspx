@@ -22,7 +22,7 @@
             })
 
 
-            if ($("input[id$=HFRol]").val() == "ENCARGADO") {
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
                 var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
                 console.log(controles)
                 inHabilitarControles(controles)
@@ -46,10 +46,15 @@
         <!--botones grupo -->
         <div class="btn-group" role="group" aria-label="...">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-            <button id="btnMdlMod" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
-                Modificar</button>
-            <button id="btnMdlMat" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlMateriales">
-                Modificar Materiales</button>
+            <div class="btn-group">
+                  <button id="btnMdlMod" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Modificar <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li ><a href="#" data-target="#mdlDetalle" data-toggle="modal">Detalle</a></li>
+                    <li ><a href="#" data-target="#mdlMateriales" data-toggle="modal">Materiales</a></li>
+                  </ul>
+                </div>
             <button id="btnMdlEl" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
                 Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />

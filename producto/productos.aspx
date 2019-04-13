@@ -208,7 +208,7 @@
                 }
             }
 
-            if ($("input[id$=HFRol]").val() == "ENCARGADO") {
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
                 var controles = [$("#btnMdlPrecio"), $("#btnSel")]
                 console.log(controles)
                 inHabilitarControles(controles)

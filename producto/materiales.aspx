@@ -65,9 +65,7 @@
                 }
             }
 
-            console.log($("input[id$=HFRol]").val())
-
-            if ($("input[id$=HFRol]").val() == "ENCARGADO") {
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
                 var controles = [$("#btnMdlNvo")]
                 console.log(controles)
                 inHabilitarControles(controles)

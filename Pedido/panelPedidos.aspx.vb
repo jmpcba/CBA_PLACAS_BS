@@ -7,9 +7,6 @@
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         sb = New StatusBar(HFMsg, lblMessage)
         llenarGrillas()
-        'If HttpContext.Current.User.IsInRole("ADMINISTRACION") Then
-        '    grDeposito.Visible = False
-        'End If
     End Sub
 
     Private Sub llenarGrillas()
@@ -20,6 +17,7 @@
             dvNuevos = dt.DefaultView
 
             dvNuevos.RowFilter = "ID_ESTADO=0"
+            dvNuevos.Sort = "FECHA_RECIBIDO DESC"
             grNuevos.DataSource = dvNuevos
             grNuevos.DataBind()
 
@@ -43,9 +41,9 @@
     Private Sub redirigir(_idPedido As Integer)
         Dim url As String = ""
 
-        If HttpContext.Current.User.IsInRole("ADMINISTRACION") Then
+        If HttpContext.Current.User.IsInRole("ADMINISTRACION") Or HttpContext.Current.User.IsInRole("GERENCIA") Then
             url = "modificarDetalle.aspx?idPedido="
-        ElseIf HttpContext.Current.User.IsInRole("ENCARGADO") Or HttpContext.Current.User.IsInRole("GERENCIA") Then
+        ElseIf HttpContext.Current.User.IsInRole("ENCARGADO") Then
             url = "administrar.aspx?idPedido="
         End If
 

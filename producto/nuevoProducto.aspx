@@ -12,7 +12,6 @@
             ]
 
             //INICIAR CONTROLES
-            console.log("inicio dropdowns")
             iniciarDropDowns(dropDowns)
             iniciarTextBoxes([$("#" + '<%= txtPrecio.ClientID %>')])
             iniciarGrillaMateriales()

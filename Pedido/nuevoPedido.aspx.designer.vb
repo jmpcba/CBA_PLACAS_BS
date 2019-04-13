@@ -50,15 +50,6 @@ Partial Public Class nuevo
     Protected WithEvents HFPanelAnterior As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
-    '''Control hfCliente.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents hfCliente As Global.System.Web.UI.WebControls.HiddenField
-    
-    '''<summary>
     '''Control hfPedido.
     '''</summary>
     '''<remarks>
@@ -104,6 +95,24 @@ Partial Public Class nuevo
     Protected WithEvents HFMsg As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control UpdatePanel1.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents UpdatePanel1 As Global.System.Web.UI.UpdatePanel
+    
+    '''<summary>
+    '''Control hfCliente.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents hfCliente As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
     '''Control dpCliente.
     '''</summary>
     '''<remarks>
@@ -129,6 +138,15 @@ Partial Public Class nuevo
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents CompareValidator1 As Global.System.Web.UI.WebControls.CompareValidator
+    
+    '''<summary>
+    '''Control UpdateProgress1.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents UpdateProgress1 As Global.System.Web.UI.UpdateProgress
     
     '''<summary>
     '''Control pnlDatosCliente.
