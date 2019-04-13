@@ -11,6 +11,8 @@
                 $("#" + '<%= aUndo.ClientID %>').hide()
             } else {
                 $("#" + '<%= aUndo.ClientID %>').show()
+                var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
+                inHabilitarControles(controles)
             }
 
             $('#mdlPedidos').on('show.bs.modal', function (event) {
@@ -24,10 +26,23 @@
 
             if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
                 var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
-                console.log(controles)
                 inHabilitarControles(controles)
             }
 
+            $("td > input").keyup(function (event) {
+                var val = $(this).val()
+                var td = $(this).parent("td")
+                var div = $(this).siblings("div")
+                if (isNaN(val)){
+                    td.addClass("has-error")
+                    div.show()
+                    $("#" + '<%= btnModMat.ClientID %>').attr("disabled", true)
+                }else{
+                    td.removeClass("has-error")
+                    div.hide()
+                    $("#" + '<%= btnModMat.ClientID %>').attr("disabled", false)
+                }
+            })
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
@@ -112,13 +127,16 @@
 		<div id="produccion" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div class="table-responsive">
-					<asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False">
+					<asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False" DataKeyNames="ID_PIEZA">
                         <Columns>
                             <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
                             <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO"  DataFormatString="{0:F}" >
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
+                            <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                                <ControlStyle CssClass="imageButtons" />
+                            </asp:CommandField>
                         </Columns>
                     </asp:GridView>
 				</div>
@@ -323,8 +341,11 @@
                         <asp:BoundField DataField="ID" HeaderText="CODIGO" />
                         <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                         <asp:TemplateField HeaderText="CONSUMO">
-                            <ItemTemplate>
-                                <asp:TextBox ID="txtConsumo" runat="server"></asp:TextBox>
+                            <ItemTemplate>    
+                                <asp:TextBox ID="txtConsumo" runat="server" CssClass="txtConsumo"></asp:TextBox>
+                                <div id="msgValidar" class="text-left has-error" style="float:left;padding-left: 10px; width:90%; display:none">
+                                    <label class="control-label" for="txtConsumo"> Ingrese un valor numerico</label>
+                                </div>
                             </ItemTemplate>
                             <ItemStyle CssClass="numCols" />
                         </asp:TemplateField>
@@ -334,7 +355,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <asp:Button ID="btnModMat" runat="server" Text="Guardar" />
+            <asp:Button ID="btnModMat" runat="server" Text="Guardar" ValidationGroup="vgMat" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

@@ -6,13 +6,13 @@
             console.log($("#hfRol > input").val())
             
             if ($("input[id$=HFRol]").val() == "ENCARGADO"){
-                var controles = [$("#liCar"), $("#dpReportes"), $("#dpClientes"), $("#liNvo"), $("#aCar"), $("#aNvo")]
+                var controles = [$("#liCar"), $("#dpReportes"), $("#dpClientes"), $("#liNvo"), $("#aCar"), $("#aNvo"), $("#liNvoProd"), $("#aNvoProd")]
                 console.log(controles)
                 inHabilitarControles(controles)
             }
 
             if ($("input[id$=HFRol]").val() == "GERENCIA") {
-                var controles = [$("#liCar"), $("#aCar"), $("#liNvo"), $("#aNvo")]
+                var controles = [$("#liCar"), $("#aCar"), $("#liNvo"), $("#aNvo"), $("#liNvoProd"), $("#aNvoProd")]
                 console.log(controles)
                 inHabilitarControles(controles)
             }
@@ -34,8 +34,9 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
-                <li id="liNvo"><a id="aNvo" href="/pedido/nuevoPedido"><h4>Nuevo</h4></a></li>
-                <li><a href="/pedido/panelPedidos"><h4>En Curso</h4></a></li>
+                  <li id="liNvo"><a id="aNvo" href="/pedido/nuevoPedido"><h4>Nuevo</h4></a></li>
+                  <li><a href="/pedido/panelPedidos"><h4>En Curso</h4></a></li>
+                  <li><a href="/pedido/buscarPedidos"><h4>Buscar</h4></a></li>
               </ul>
             </div>
           </div>
@@ -73,6 +74,7 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
+                <li id="liNvoProd"><a id="aNvoProd" href="/producto/nuevoProducto"><h4>Nuevo Producto</h4></a></li>
                 <li><a href="/producto/productos"><h4>Lista de Precios</h4></a></li>
                 <li><a href="/producto/materiales"><h4>Materiales</h4></a></li>
                 <li id="liCar"><a id="aCar" href="/producto/caracteristicas"><h4>Caracteristicas</h4></a></li>

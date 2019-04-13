@@ -27,8 +27,12 @@
         Dim idProducto As Integer
         Dim despiece As New DataTable
         Dim piezas As New DataTable
-
+        Dim oldCI As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
         Try
+
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("en-US")
+
             idProducto = ViewState("idProducto")
 
             'refrescar el objeto pedidos desde la DB
@@ -79,6 +83,8 @@
             Next
         Catch ex As Exception
             sb.writeError(ex.Message)
+        Finally
+            System.Threading.Thread.CurrentThread.CurrentCulture = oldCI
         End Try
     End Sub
 
@@ -180,6 +186,9 @@
         Dim dt As New DataTable
         dt.Columns.Add("ID_PIEZA", GetType(Integer))
         dt.Columns.Add("CONSUMO", GetType(Decimal))
+        Dim oldCI As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
+
+        System.Threading.Thread.CurrentThread.CurrentCulture = New System.Globalization.CultureInfo("en-US")
 
         gp = New GestorProductos(ViewState("idProducto"))
 
@@ -204,6 +213,8 @@
             sb.write("Despiece Modificado")
         Catch ex As Exception
             sb.writeError(ex.Message)
+        Finally
+            System.Threading.Thread.CurrentThread.CurrentCulture = oldCI
         End Try
     End Sub
 
@@ -245,5 +256,11 @@
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try
+    End Sub
+
+    Protected Sub grMateriales_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grMateriales.SelectedIndexChanged
+        Dim idPieza As Integer
+        idPieza = grMateriales.SelectedDataKey.Value
+        Response.Redirect("detallePieza.aspx?idPieza=" & idPieza)
     End Sub
 End Class
