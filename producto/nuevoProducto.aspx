@@ -12,7 +12,6 @@
             ]
 
             //INICIAR CONTROLES
-            console.log("inicio dropdowns")
             iniciarDropDowns(dropDowns)
             iniciarTextBoxes([$("#" + '<%= txtPrecio.ClientID %>')])
             iniciarGrillaMateriales()
@@ -351,8 +350,8 @@
                         <p>Desea guardar este producto?</p>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                     <asp:Button ID="btnEnviar" runat="server" Text="Si" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

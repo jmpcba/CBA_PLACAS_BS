@@ -11,6 +11,8 @@
                 $("#" + '<%= aUndo.ClientID %>').hide()
             } else {
                 $("#" + '<%= aUndo.ClientID %>').show()
+                var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
+                inHabilitarControles(controles)
             }
 
             $('#mdlPedidos').on('show.bs.modal', function (event) {
@@ -22,6 +24,25 @@
             })
 
 
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnMdlMod"), $("#btnMdlMat"), $("#btnMdlEl")]
+                inHabilitarControles(controles)
+            }
+
+            $("td > input").keyup(function (event) {
+                var val = $(this).val()
+                var td = $(this).parent("td")
+                var div = $(this).siblings("div")
+                if (isNaN(val)){
+                    td.addClass("has-error")
+                    div.show()
+                    $("#" + '<%= btnModMat.ClientID %>').attr("disabled", true)
+                }else{
+                    td.removeClass("has-error")
+                    div.hide()
+                    $("#" + '<%= btnModMat.ClientID %>').attr("disabled", false)
+                }
+            })
         })
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
@@ -40,11 +61,16 @@
         <!--botones grupo -->
         <div class="btn-group" role="group" aria-label="...">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
-                Modificar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlMateriales">
-                Modificar Materiales</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
+            <div class="btn-group">
+                  <button id="btnMdlMod" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Modificar <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li ><a href="#" data-target="#mdlDetalle" data-toggle="modal">Detalle</a></li>
+                    <li ><a href="#" data-target="#mdlMateriales" data-toggle="modal">Materiales</a></li>
+                  </ul>
+                </div>
+            <button id="btnMdlEl" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
                 Eliminar</button>
             <asp:Button ID="btnRefrescarDetalle" runat="server" Text="Refrescar" />
         </div>
@@ -101,13 +127,16 @@
 		<div id="produccion" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div class="table-responsive">
-					<asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False">
+					<asp:GridView ID="grMateriales" runat="server" ToolTip="Despiece" AutoGenerateColumns="False" DataKeyNames="ID_PIEZA">
                         <Columns>
                             <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
                             <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO"  DataFormatString="{0:F}" >
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
+                            <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                                <ControlStyle CssClass="imageButtons" />
+                            </asp:CommandField>
                         </Columns>
                     </asp:GridView>
 				</div>
@@ -145,7 +174,7 @@
 			            </button>
                     </div>
                     <div class="col-md-8">
-                        <p class="pull-left">Se mostraran pedidos en curso para este porducto</p>
+                        <p class="pull-left">Se mostraran pedidos en curso para este producto</p>
                     </div>
                 </div>
 		    </div>
@@ -312,8 +341,11 @@
                         <asp:BoundField DataField="ID" HeaderText="CODIGO" />
                         <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                         <asp:TemplateField HeaderText="CONSUMO">
-                            <ItemTemplate>
-                                <asp:TextBox ID="txtConsumo" runat="server"></asp:TextBox>
+                            <ItemTemplate>    
+                                <asp:TextBox ID="txtConsumo" runat="server" CssClass="txtConsumo"></asp:TextBox>
+                                <div id="msgValidar" class="text-left has-error" style="float:left;padding-left: 10px; width:90%; display:none">
+                                    <label class="control-label" for="txtConsumo"> Ingrese un valor numerico</label>
+                                </div>
                             </ItemTemplate>
                             <ItemStyle CssClass="numCols" />
                         </asp:TemplateField>
@@ -323,7 +355,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <asp:Button ID="btnModMat" runat="server" Text="Guardar" />
+            <asp:Button ID="btnModMat" runat="server" Text="Guardar" ValidationGroup="vgMat" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
@@ -353,8 +385,8 @@
                                 </asp:BoundField>
                                 <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                                 <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                                <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                                    <ControlStyle CssClass="imageButtons"></ControlStyle>
+                                <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                                    <ControlStyle CssClass="imageButtons" />
                                 </asp:CommandField>
                             </Columns>
                         </asp:GridView>

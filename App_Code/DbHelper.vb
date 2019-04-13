@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports System.Web
 
 Imports System.Data.SqlClient
 Imports CBA_PLACAS_BS
@@ -35,6 +36,7 @@ Public Class DbHelper
         cmd = New SqlCommand()
         da = New SqlDataAdapter(cmd)
         ds = New DataSet()
+
         cmd.Connection = cnn
     End Sub
 
@@ -270,7 +272,7 @@ Public Class DbHelper
             cnn.Open()
 
             For Each r In p.registro
-                query = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, 'MANU')", r, p.codigo)
+                query = String.Format("INSERT INTO REGISTRO_PRODUCTOS (CAMBIOS, COD_PRODUCTO, USUARIO) VALUES ('{0}', {1}, '{2}')", r, p.codigo, HttpContext.Current.User.Identity.Name)
                 cmd.CommandText = query
                 cmd.ExecuteNonQuery()
             Next

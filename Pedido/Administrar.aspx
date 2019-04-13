@@ -195,6 +195,10 @@
                 urlEtiquetaSimple = "../reporte/impresion.aspx?rpt=etiquetaSimple&idPedido="
                 $("[type=checkbox]").removeAttr('checked');
             })
+
+            $(".ordenTrabajon").click(function () {
+                 $("#" + '<%= HFStock.ClientID %>').val("")
+            })
         })
     </script>
     <div class="page-header">
@@ -422,10 +426,10 @@
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE">
+                            <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE" DataFormatString="{0:F2}">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE">
+                            <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE" DataFormatString="{0:F2}">
                             <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                         </Columns>
@@ -847,14 +851,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Cambio Los Productos Cubiertos Con Stock Existente</h4>
+        <h3 class="modal-title">Cambio Los Productos Cubiertos Con Stock Existente</h3>
       </div>
       <div class="modal-body">
-        <p>Desea re-imprimir la orden de trabajo ahora?</p>
+        <h5>Desea re-imprimir la orden de trabajo ahora?</h5>
       </div>
       <div class="modal-footer">
-        <button id="btnReImprimirOrden" type="button" class="btn btn-primary" data-dismiss="modal">Si</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button id="btnReImprimirOrden" type="button" class="btn btn-primary ordenTrabajon" data-dismiss="modal">Si</button>
+        <button type="button" class="btn btn-default ordenTrabajon" data-dismiss="modal">No</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

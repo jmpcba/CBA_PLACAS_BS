@@ -1,5 +1,14 @@
 ﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="clientesDetalle.aspx.vb" Inherits="CBA_PLACAS_BS.clientesDetalle" theme="default"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnMod"), $("#btnEl")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
+        })
+    </script>
     <div class="page-header">
         <h1 class="text-center">Administrar Cliente <br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -15,8 +24,11 @@
         <!--botones grupo -->
         <div class="btn-group" role="group" aria-label="...">
             <asp:Button ID="btnVolver" runat="server" Text="Volver" />
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
+            <button id="btnMod" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
                 Modificar
+            </button>
+            <button id="btnEl" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlDetalle">
+                Eliminar
             </button>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlHistorial">
                 Historial de Pedidos

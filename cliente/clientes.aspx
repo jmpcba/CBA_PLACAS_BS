@@ -49,6 +49,12 @@
                 iniciarDropDowns([$("#" + '<%= dpFiltroProv.ClientID %>'), ])
                 iniciarTextBoxes([$("#" + '<%= txtBuscarCuit.ClientID %>'),$("#" + '<%= txtBuscarNombre.ClientID %>')])
             })
+
+            if ($("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnNvo")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
         })
     </script>
     <div class="page-header">
@@ -60,11 +66,6 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label>
             <asp:HiddenField ID="HFMsg" runat="server" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button id="btnNvo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlDetalle">Nuevo Cliente</button>
         </div>
     </div>
     <br />
@@ -95,6 +96,7 @@
                     <div class="btn-group" role="group" aria-label="...">
                         <button id="btnLimpiarFiltro" type="button" class="btn btn-primary" data-dismiss="modal">Limpiar Filtro</button>
                         <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
+                        <button id="btnNvo" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#mdlDetalle">Nuevo Cliente</button>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.AspNet.Identity
+Imports Microsoft.AspNet.Identity.Owin
 
 Public Class SiteMaster
     Inherits MasterPage
@@ -46,7 +47,16 @@ Public Class SiteMaster
     End Sub
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Page.User.Identity.IsAuthenticated Then
+            Dim manager = Context.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
+            Try
+                Dim rol = manager.GetRoles(Page.User.Identity.GetUserId)(0)
+                HFRol.Value = rol
+            Catch ex As Exception
 
+            End Try
+
+        End If
     End Sub
 
     Protected Sub Unnamed_LoggingOut(sender As Object, e As LoginCancelEventArgs)

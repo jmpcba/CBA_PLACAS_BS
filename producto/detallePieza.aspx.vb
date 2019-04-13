@@ -101,4 +101,10 @@
             sb.writeError(ex.Message)
         End Try
     End Sub
+
+    Protected Sub grProductos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grProductos.SelectedIndexChanged
+        Dim idProducto As Integer
+        idProducto = grProductos.SelectedDataKey.Value
+        Response.Redirect("detalleProducto.aspx?idProducto=" & idProducto)
+    End Sub
 End Class

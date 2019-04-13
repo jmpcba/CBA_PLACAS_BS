@@ -9,11 +9,6 @@
         llenarGrillas()
     End Sub
 
-    Private Enum redireccion
-        produccion
-        modificar
-    End Enum
-
     Private Sub llenarGrillas()
         Try
             Dim dt As New DataTable
@@ -22,6 +17,7 @@
             dvNuevos = dt.DefaultView
 
             dvNuevos.RowFilter = "ID_ESTADO=0"
+            dvNuevos.Sort = "FECHA_RECIBIDO DESC"
             grNuevos.DataSource = dvNuevos
             grNuevos.DataBind()
 
@@ -42,50 +38,54 @@
         End Try
     End Sub
 
-    Private Sub redirigir(_idPedido As Integer, _tipo As redireccion)
+    Private Sub redirigir(_idPedido As Integer)
+        Dim url As String = ""
 
-        If _tipo = redireccion.modificar Then
+        If HttpContext.Current.User.IsInRole("ADMINISTRACION") Or HttpContext.Current.User.IsInRole("GERENCIA") Then
+            url = "modificarDetalle.aspx?idPedido="
+        ElseIf HttpContext.Current.User.IsInRole("ENCARGADO") Then
+            url = "administrar.aspx?idPedido="
+        End If
 
-            Response.Redirect("modificarDetalle.aspx?idPedido=" & _idPedido)
-        ElseIf _tipo = redireccion.produccion Then
-            Response.Redirect("administrar.aspx?idPedido=" & _idPedido)
+        If url <> "" Then
+            url += _idPedido.ToString
+            Response.Redirect(url)
+        Else
+            Throw New Exception("El usuario no tiene un rol asignado")
         End If
 
     End Sub
 
     Protected Sub grNuevos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grNuevos.SelectedIndexChanged
-        Dim row = grNuevos.SelectedRow
         Dim idPedido = Convert.ToInt32(grNuevos.SelectedDataKey.Value)
-        redirigir(idPedido, redireccion.produccion)
+
+        Try
+            redirigir(idPedido)
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
+
     End Sub
 
-    Protected Sub grNuevos_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grNuevos.RowEditing
-        Dim idPedido As Integer
-        idPedido = Convert.ToInt32(grNuevos.DataKeys(e.NewEditIndex).Value)
-        redirigir(idPedido, redireccion.modificar)
-    End Sub
-
-    Protected Sub grDeposito_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grDeposito.RowEditing
-        Dim idPedido As Integer
-        idPedido = Convert.ToInt32(grDeposito.DataKeys(e.NewEditIndex).Value)
-        redirigir(idPedido, redireccion.modificar)
-    End Sub
 
     Protected Sub grDeposito_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grDeposito.SelectedIndexChanged
-        Dim row = grDeposito.SelectedRow
-        Dim idPedido = Convert.ToInt32(grDeposito.SelectedDataKey.Value)
-        redirigir(idPedido, redireccion.produccion)
-    End Sub
 
-    Protected Sub grEnCurso_RowEditing(sender As Object, e As GridViewEditEventArgs) Handles grEnCurso.RowEditing
-        Dim idPedido As Integer
-        idPedido = Convert.ToInt32(grEnCurso.DataKeys(e.NewEditIndex).Value)
-        redirigir(idPedido, redireccion.modificar)
+        Dim idPedido = Convert.ToInt32(grDeposito.SelectedDataKey.Value)
+
+        Try
+            redirigir(idPedido)
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 
     Protected Sub grEnCurso_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grEnCurso.SelectedIndexChanged
-
         Dim idPedido = Convert.ToInt32(grEnCurso.SelectedDataKey.Value)
-        redirigir(idPedido, redireccion.produccion)
+
+        Try
+            redirigir(idPedido)
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class

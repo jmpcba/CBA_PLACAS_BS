@@ -11,14 +11,5 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class WebForm1
-    
-    '''<summary>
-    '''Control grDeposito.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents grDeposito As Global.System.Web.UI.WebControls.GridView
+Partial Public Class _401
 End Class

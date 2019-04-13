@@ -11,23 +11,23 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class SiteMaster
+Partial Public Class buscarPedido
     
     '''<summary>
-    '''Control HFRol.
+    '''Control lblMessage.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents HFRol As Global.System.Web.UI.WebControls.HiddenField
+    Protected WithEvents lblMessage As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''Control MainContent.
+    '''Control HFMsg.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents MainContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents HFMsg As Global.System.Web.UI.WebControls.HiddenField
 End Class

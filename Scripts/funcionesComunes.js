@@ -51,3 +51,13 @@ function iniciarTextBoxes(txtBoxes) {
         txtBoxes[i].val("")
     }
 }
+
+function inHabilitarControles(controles) {
+    for (i = 0; i < controles.length; i++) {
+        controles[i].addClass("disabled")
+        controles[i].prop("disabled", true)
+        controles[i].removeAttr("href")
+        console.log("desabilitando: " + controles[i])
+    }
+}
+

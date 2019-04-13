@@ -6,15 +6,15 @@
 
             var dropdowns = [$("#" + '<%= dpCliente.ClientID %>'), $("#" + '<%= cbLinea.ClientID %>')]
 
+            console.log("POSTBACK " + $("#" + '<%= HFIsPostBack.ClientID %>').val())
+            console.log("CBLINEA " + $("#" + '<%= cbLinea.ClientID %>').val())
             if ($("#" + '<%= HFIsPostBack.ClientID %>').val() == 0) {
                 iniciarDropDowns(dropdowns)
             }
+            console.log("CBLINEA " + $("#" + '<%= cbLinea.ClientID %>').val())
             //ABRIR ULTIMO PANEL
             var pnlActual = $("#" + '<%= HFPanelActual.ClientID %>').val()
             var pnlAnterior = $("#" + '<%= HFPanelAnterior.ClientID %>').val()
-            console.log("PANELES SEGUN HF")
-            console.log(pnlActual)
-            console.log(pnlAnterior)
             if (pnlActual != "") {
                 $("#" + pnlActual).addClass("in")
                 $("#" + pnlAnterior).removeClass("in")
@@ -42,6 +42,7 @@
             
 
             //HABILITAR PANEL PEDIDO SI SE ELIGIO UN CLIENTE
+
             if ($("#" + '<%= hfCliente.ClientID %>').val() != "inicial") {
                 $("#aPedido").prop("disabled", false);
                 $("#btnSigCliente").prop("disabled", false);
@@ -89,13 +90,29 @@
                 console.log($("#" + '<%= HFStock.ClientID %>').val())
             }
         })
+
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+
+        prm.add_endRequest(function () {
+            console.log($("#" + '<%= hfCliente.ClientID %>').val())
+            if ($("#" + '<%= hfCliente.ClientID %>').val() != "inicial") {
+                $("#aPedido").prop("disabled", false);
+                $("#btnSigCliente").prop("disabled", false);
+                $("#headingPedido").addClass("panel-primary")
+                
+            } else {
+                $("#aPedido").prop("disabled", true);
+                $("#btnSigCliente").prop("disabled", true);
+                $("#headingPedido").removeClass("panel-primary")
+            }
+        });
+
     </script>
         <!--HIDDEN FIELDS-->
         <asp:HiddenField ID="HFStock" value="0" runat="server" />
         <asp:HiddenField ID="HFPanelActual" runat="server" />
         <asp:HiddenField ID="HFPos" runat="server" />
         <asp:HiddenField ID="HFPanelAnterior" runat="server" />
-        <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
         <asp:HiddenField ID="hfPedido" runat="server" Value="0" />
         <asp:HiddenField ID="HFIsPostBack" runat="server" Value="0" />
         <div class="page-header">
@@ -121,8 +138,11 @@
                 </div>
                 <div id="pnlCliente" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>
+                                <asp:HiddenField ID="hfCliente" runat="server" Value="inicial" />
                                 <div class="form-group">
-                                <div class="row">
+                                    <div class="row">
                                     <div class="col-md-2">
                                         Seleccione un Cliente
                                     </div>
@@ -132,7 +152,10 @@
                                     <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="dpCliente" CssClass="validators" ErrorMessage="Debe elegir un cliente de la lista" Operator="NotEqual" ValidationGroup="vgCliente" ValueToCompare="">*</asp:CompareValidator>
                                     </div>
                                 </div>
-                            <asp:Panel ID="pnlDatosCliente" Visible="False" runat="server">
+                                    <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+                                        <ProgressTemplate><div class="validators">Cargando</div></ProgressTemplate>
+                                    </asp:UpdateProgress>
+                                    <asp:Panel ID="pnlDatosCliente" Visible="False" runat="server">
                                 <hr />
                                 <div class="panel panel-info">
                                     <div class="panel-heading">
@@ -171,7 +194,9 @@
                                 </div>
                                 <br />
                             </asp:Panel>
-                        </div>
+                                </div>    
+                            </ContentTemplate>
+                        </asp:UpdatePanel>                    
                         <button id="btnSigCliente" class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-parent="#accordion" data-target="#pnlPedido" aria-expanded="false" aria-controls="pnlPedido">
                         Siguiente</button>                
                     </div>
@@ -329,7 +354,7 @@
                                         <asp:Label ID="lblCantTotal" runat="server" Text="Label"></asp:Label></h5>
                                 </div>
                                 <div class="col-md-4">
-                                    <h5><strong>Monto Total: </strong>
+                                    <h5><strong>Monto Total: $ </strong>
                                         <asp:Label ID="lblMontoTotal" runat="server" Text="Label"></asp:Label></h5>
                                 </div>
                             </div>

@@ -6,22 +6,25 @@
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim idPedido = Request.QueryString("idPedido")
-
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
-        lblSubtitulo.Text = ""
-        HFCrystal.Value = ""
-        HFStock.Value = "n"
 
-        ViewState("idPedido") = idPedido
-        llenarGrillasDetalle()
+        If Not IsPostBack Then
+            If idPedido = "" Then
+                Response.Redirect("panelPedidos")
+            Else
+                lblSubtitulo.Text = ""
+                HFCrystal.Value = ""
+                HFStock.Value = "n"
+                HFIDPedido.Value = idPedido
 
+                ViewState("idPedido") = idPedido
+                llenarGrillasDetalle()
 
-        lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", idPedido)
-
-        sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", idPedido))
-
-
+                lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", idPedido)
+                sb.write(String.Format("Carga de datos Pedido {0} - EXITOSA", idPedido))
+            End If
+        End If
     End Sub
 
     Private Sub calcularRangeValidatorsGrillasStock(_gp)

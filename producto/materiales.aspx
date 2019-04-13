@@ -64,6 +64,12 @@
                     $("#" + '<%= btnNvo.ClientID %>').attr("disabled", true)
                 }
             }
+
+            if ($("input[id$=HFRol]").val() == "ENCARGADO" || $("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnMdlNvo")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
         })
     </script>
     <div class="page-header">
@@ -95,7 +101,7 @@
     </div>
     <hr>
     <div class="row">
-            <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#mdlNvo">
+            <button id= "btnMdlNvo" type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#mdlNvo">
                 Nueva Pieza</button>
     </div><br />
     <div class="row">    

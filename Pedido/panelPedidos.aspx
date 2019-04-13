@@ -53,8 +53,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                     </Columns>
                 </asp:GridView>
@@ -65,7 +65,7 @@
             <div class="panel-heading" role="tab" id="headingTwo">
               <h4 class="panel-title">
                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  En Curso <span class="badge">
+                  En Produccion <span class="badge">
                       <asp:Label ID="lblEnCurso" runat="server" Text="Label"></asp:Label></span>
                 </a>
               </h4>
@@ -89,8 +89,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>
@@ -123,8 +123,8 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                         <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="Ultima Modificacion" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
-                        <asp:CommandField ShowCancelButton="False" ShowEditButton="True" ShowSelectButton="True" ButtonType="Image" EditImageUrl="~/images/edit.png" SelectImageUrl="~/images/produccion.png">
-                            <ControlStyle CssClass="imageButtons"></ControlStyle>
+                        <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
+                            <ControlStyle CssClass="imageButtons" />
                         </asp:CommandField>
                         </Columns>
                     </asp:GridView>

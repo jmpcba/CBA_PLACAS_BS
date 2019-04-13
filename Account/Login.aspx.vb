@@ -17,6 +17,13 @@ Partial Public Class Login
         If Not [String].IsNullOrEmpty(returnUrl) Then
             RegisterHyperLink.NavigateUrl += "?ReturnUrl=" & returnUrl
         End If
+
+
+        If Not IsPostBack Then
+            If Page.User.Identity.IsAuthenticated Then
+                Response.Redirect("~/errors/401")
+            End If
+        End If
     End Sub
 
     Protected Sub LogIn(sender As Object, e As EventArgs)
@@ -31,6 +38,10 @@ Partial Public Class Login
 
             Select Case result
                 Case SignInStatus.Success
+                    'Dim id = signinManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId
+                    'Dim rol = manager.GetRoles(id)(0)
+                    'Session("rol") = rol
+                    'Dim usr = New Usuario(HttpContext.Current.User.Identity.GetUserId)
                     IdentityHelper.RedirectToReturnUrl(Request.QueryString("ReturnUrl"), Response)
                     Exit Select
                 Case SignInStatus.LockedOut

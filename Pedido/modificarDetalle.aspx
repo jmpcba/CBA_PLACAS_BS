@@ -15,14 +15,14 @@
                 $("#liItem").addClass("disabled")
                 $("#liAgregar").addClass("disabled")
                 $("#liModificar").addClass("disabled")
-
             }
 
-            //if ($("#" + '<%= HFAgregar.ClientID %>').val() ==1){
-            //    $('#mdlAgregar').modal('show')
-            //} else {
-            //    $('#mdlAgregar').modal('hide')
-            //}
+            if ($("input[id$=HFRol]").val() == "GERENCIA") {
+                var controles = [$("#btnEliminarGrupo"), $("#btnModificarGrupo")]
+                console.log(controles)
+                inHabilitarControles(controles)
+            }
+
          })
     </script>
     <!--HIDDEN FIELDS-->
