@@ -64,7 +64,8 @@ input[type="select"] {
 
 .validators
 {
-    color: red;
+    color: #a94442;
+    font-weight: bold;
 }
 
 .txtConsumo{
