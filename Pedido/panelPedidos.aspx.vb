@@ -39,21 +39,11 @@
     End Sub
 
     Private Sub redirigir(_idPedido As Integer)
-        Dim url As String = ""
-
-        If HttpContext.Current.User.IsInRole("ADMINISTRACION") Or HttpContext.Current.User.IsInRole("GERENCIA") Then
-            url = "modificarDetalle.aspx?idPedido="
-        ElseIf HttpContext.Current.User.IsInRole("ENCARGADO") Then
-            url = "administrar.aspx?idPedido="
-        End If
-
-        If url <> "" Then
-            url += _idPedido.ToString
-            Response.Redirect(url)
-        Else
-            Throw New Exception("El usuario no tiene un rol asignado")
-        End If
-
+        Try
+            Response.Redirect(redireccion.redireccionarPedido(_idPedido))
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 
     Protected Sub grNuevos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grNuevos.SelectedIndexChanged

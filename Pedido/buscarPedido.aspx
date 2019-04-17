@@ -8,27 +8,30 @@
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
+            var txtBoxes = [
+                    $("#" + '<%= txtFecModDesde.ClientID %>'),
+                    $("#" + '<%= txtFecModHasta.ClientID %>'),
+                    $("#" + '<%= txtFecRecDesde.ClientID %>'),
+                    $("#" + '<%= txtFecRecHasta.ClientID %>'),
+                    $("#" + '<%= txtNroPedido.ClientID %>')
+            ]
+
+            var dropdowns = [
+                            $("#" + '<%= dpCliente.ClientID %>'),
+                            $("#" + '<%= dpEstado.ClientID %>')
+            ]
+
             //iniciar controles si es postback
             if ($("#" + '<%= HFPostback.ClientID %>').val() == 1) {
-                var txtBoxes = [
-                            $("#" + '<%= txtFecModDesde.ClientID %>'),
-                            $("#" + '<%= txtFecModHasta.ClientID %>'),
-                            $("#" + '<%= txtFecRecDesde.ClientID %>'),
-                            $("#" + '<%= txtFecRecHasta.ClientID %>'),
-                            $("#" + '<%= txtNroPedido.ClientID %>')
-                ]
-
-                var dropdowns = [
-                                $("#" + '<%= dpCliente.ClientID %>'),
-                                $("#" + '<%= dpEstado.ClientID %>')
-                ]
-
-                iniciarDropDowns(dropdowns)
+                //iniciarDropDowns(dropdowns)
                 iniciarTextBoxes(txtBoxes)
             }
             $("#btnLimpiarFiltro").click(function () {
-                iniciarDropDowns(dropdowns)
                 iniciarTextBoxes(txtBoxes)
+                for (i = 0; i < dropdowns.length; i++) {
+                    var num = dropdowns[i].find("option").length
+                    dropdowns[i].prop('selectedIndex', num - 1);
+                }
             })
         })
     </script>
@@ -52,7 +55,7 @@
         <div class="col-md-3">
             <strong>Numero:</strong><br />
             <asp:TextBox ID="txtNroPedido" runat="server"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="vgBuscar" ErrorMessage="Ingrese un numero entero" ControlToValidate="txtNroPedido" CssClass="validators">Ingrese un numero entero</asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ValidationGroup="vgBuscar" ErrorMessage="Ingrese un numero entero" ControlToValidate="txtNroPedido" CssClass="validators" ValidationExpression="\d+">Ingrese un numero entero</asp:RegularExpressionValidator>
         </div>
         <div class="col-md-4">
             <strong>Cliente</strong><br />
@@ -164,11 +167,11 @@
     <div class="row text-right">
         <asp:Button ID="btnBuscar" runat="server" Text="Buscar" ValidationGroup="vgBuscar" />
         <input id="btnLimpiarFiltro" class="btn btn-primary" type="button" value="Limpiar Filtros" />
-        
+        <hr />
     </div>
     <asp:Panel ID="pnlResultado" runat="server" CssClass="row">
         <div class="table-responsive">
-            <asp:GridView ID="grNuevos" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed">
+            <asp:GridView ID="grResultadoBusqueda" runat="server" AutoGenerateColumns="False" ToolTip="Pedidos en estado RECIBIDO" DataKeyNames="ID" CssClass="table-condensed">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="NRO" SortExpression="ID" />
                     <asp:BoundField DataField="Cliente" HeaderText="Cliente" SortExpression="Cliente" />
@@ -181,14 +184,9 @@
                         <HeaderStyle CssClass="hiddencol" />
                         <ItemStyle CssClass="hiddencol" />
                     </asp:BoundField>
-                    <asp:BoundField DataField="ID_ESTADO" HeaderText="ID_ESTADO" SortExpression="ID_ESTADO" >
-                        <ControlStyle CssClass="hiddencol" />
-                        <FooterStyle CssClass="hiddencol" />
-                        <HeaderStyle CssClass="hiddencol" />
-                        <ItemStyle CssClass="hiddencol" />
-                    </asp:BoundField>
                     <asp:BoundField DataField="Estado" HeaderText="Estado" SortExpression="Estado" />
                     <asp:BoundField DataField="FECHA_RECIBIDO" HeaderText="Recibido" SortExpression="FECHA_RECIBIDO" DataFormatString="{0:d}" />
+                    <asp:BoundField DataField="FECHA_MODIFICADO" HeaderText="MODIFICADO" SortExpression="FECHA_MODIFICADO" DataFormatString="{0:d}" />
                     <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
                         <ControlStyle CssClass="imageButtons" />
                     </asp:CommandField>

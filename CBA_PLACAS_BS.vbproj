@@ -494,6 +494,7 @@
     <Compile Include="App_Code\Mano.vb" />
     <Compile Include="App_Code\Marco.vb" />
     <Compile Include="App_Code\material.vb" />
+    <Compile Include="App_Code\redireccion.vb" />
     <Compile Include="App_Code\StatusBar.vb" />
     <Compile Include="App_Code\Pedido.vb" />
     <Compile Include="App_Code\pieza.vb" />

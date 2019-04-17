@@ -275,11 +275,11 @@ Partial Public Class buscarPedido
     Protected WithEvents pnlResultado As Global.System.Web.UI.WebControls.Panel
     
     '''<summary>
-    '''Control grNuevos.
+    '''Control grResultadoBusqueda.
     '''</summary>
     '''<remarks>
     '''Campo generado automáticamente.
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
-    Protected WithEvents grNuevos As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents grResultadoBusqueda As Global.System.Web.UI.WebControls.GridView
 End Class

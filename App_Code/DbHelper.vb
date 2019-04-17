@@ -1298,18 +1298,14 @@ Public Class DbHelper
     Public Function buscarPedidos(ByVal _nroPedido As Integer, _fecRecDesde As Date, ByVal _fecRecHasta As Date, _fecModDesde As Date,
                                   ByVal _fecModHasta As Date, ByVal _cliente As Object, ByVal _estado As Object) As DataTable
         Dim dt = New DataTable
-        Dim query = "select P.id AS 'Nro Pedido', C.nombre as Cliente, P.cant_total as Cantidad, P.precio_total as Precio, E.ID as ID_ESTADO, E.nombre as Estado, P.fecha_recibido as 'Fecha Recibido', 
-                     P.fecha_modificado as 'Ultima Modificacion', P.fecha_entregado as 'Fecha entregado' from pedidos P 
-                     inner join clientes C on p.id_cliente = c.id
-                     inner join estados E on E.id = P.id_estado
-                     where "
+        Dim query = "SELECT * FROM VW_PEDIDOS_TODOS where "
         Dim firstParam = True
         'NUMERO DE PEDIDO
         If _nroPedido Then
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & "P.id=" & _nroPedido.ToString
+            query = query & "id=" & _nroPedido.ToString
             firstParam = False
         End If
 
@@ -1318,7 +1314,7 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & "P.id_cliente=" & _cliente.ToString
+            query = query & "id_cliente=" & _cliente.ToString
             firstParam = False
         End If
 
@@ -1327,12 +1323,12 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & "P.id_estado = " & _estado
+            query = query & "id_estado = " & _estado
         Else
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & "P.id_estado not in (5, 6, 7)" 'estado no cancelado, entregado
+            query = query & "id_estado not in (5, 6, 7)" 'estado no cancelado, entregado
             firstParam = False
         End If
 
@@ -1341,21 +1337,21 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_recibido BETWEEN '" & _fecRecDesde & "' AND '" & _fecRecHasta & "'"
+            query = query & " fecha_recibido BETWEEN '" & _fecRecDesde & "' AND '" & _fecRecHasta & "'"
             firstParam = False
 
         ElseIf _fecRecHasta <> Date.MinValue Then
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_recibido <= '" & _fecRecHasta & "'"
+            query = query & " fecha_recibido <= '" & _fecRecHasta & "'"
             firstParam = False
 
         ElseIf _fecRecDesde <> Date.MinValue Then
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_recibido >= '" & _fecRecDesde & "'"
+            query = query & " fecha_recibido >= '" & _fecRecDesde & "'"
             firstParam = False
         End If
 
@@ -1364,21 +1360,21 @@ Public Class DbHelper
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_modificado BETWEEN '" & _fecModDesde & "' AND '" & _fecModHasta & "'"
+            query = query & " fecha_modificado BETWEEN '" & _fecModDesde & "' AND '" & _fecModHasta & "'"
             firstParam = False
 
         ElseIf _fecModHasta <> Date.MinValue Then
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_modificado <= '" & _fecModHasta & "'"
+            query = query & " fecha_modificado <= '" & _fecModHasta & "'"
             firstParam = False
 
         ElseIf _fecModDesde <> Date.MinValue Then
             If Not firstParam Then
                 query = query & " AND "
             End If
-            query = query & " P.fecha_modificado >= '" & _fecModDesde & "'"
+            query = query & " fecha_modificado >= '" & _fecModDesde & "'"
             firstParam = False
         End If
 

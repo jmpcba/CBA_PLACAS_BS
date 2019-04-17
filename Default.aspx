@@ -36,7 +36,7 @@
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
                   <li id="liNvo"><a id="aNvo" href="/pedido/nuevoPedido"><h4>Nuevo</h4></a></li>
                   <li><a href="/pedido/panelPedidos"><h4>En Curso</h4></a></li>
-                  <li><a href="/pedido/buscarPedidos"><h4>Buscar</h4></a></li>
+                  <li><a href="/pedido/buscarPedido"><h4>Buscar</h4></a></li>
               </ul>
             </div>
           </div>
