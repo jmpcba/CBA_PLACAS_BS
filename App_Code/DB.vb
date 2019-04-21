@@ -30,4 +30,16 @@ Public Class DB
         End Try
     End Function
 
+    Public Sub ejecutarNonQuery(SQL As String)
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = SQL
+        Try
+            cnn.Open()
+            cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
 End Class

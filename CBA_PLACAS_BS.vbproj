@@ -242,6 +242,8 @@
     <Content Include="Account\ResetPassword.aspx" />
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
+    <Content Include="Account\usuarioDetalle.aspx" />
+    <Content Include="Account\usuarios.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="cliente\clientes.aspx" />
     <Content Include="cliente\clientesDetalle.aspx" />
@@ -467,6 +469,20 @@
     </Compile>
     <Compile Include="Account\TwoFactorAuthenticationSignIn.aspx.vb">
       <DependentUpon>TwoFactorAuthenticationSignIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\usuarioDetalle.aspx.designer.vb">
+      <DependentUpon>usuarioDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\usuarioDetalle.aspx.vb">
+      <DependentUpon>usuarioDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Account\usuarios.aspx.designer.vb">
+      <DependentUpon>usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\usuarios.aspx.vb">
+      <DependentUpon>usuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.vb">
