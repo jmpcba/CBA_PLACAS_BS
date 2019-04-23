@@ -40,6 +40,6 @@ Public Class usuarios
     Protected Sub grUsuarios_SelectedIndexChanged(sender As Object, e As EventArgs) Handles grUsuarios.SelectedIndexChanged
         Dim idUsuario As String
         idUsuario = grUsuarios.SelectedDataKey.Value
-        Response.Redirect("detalleUsuario?idUsuario=" & idUsuario)
+        Response.Redirect("usuarioDetalle?idUsuario=" & idUsuario)
     End Sub
 End Class

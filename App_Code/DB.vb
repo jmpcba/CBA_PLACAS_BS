@@ -9,14 +9,24 @@ Public Class DB
     Private conStr As String
     Private CI As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
 
-    Public Sub New(conStr As String)
-        Me.conStr = conStr
+    Public Sub New(_tipo As conStrings)
+        If _tipo = conStrings.usuarios Then
+            Me.conStr = ConfigurationManager.ConnectionStrings("DefaultConnection").ConnectionString
+        Else
+            Me.conStr = ConfigurationManager.ConnectionStrings("cbaPlacasConnectionString1").ConnectionString
+        End If
+
         cnn = New SqlConnection(conStr)
         cmd = New SqlCommand()
         da = New SqlDataAdapter(cmd)
         ds = New DataSet()
         cmd.Connection = cnn
     End Sub
+
+    Public Enum conStrings
+        usuarios
+        datos
+    End Enum
 
     Public Function ejecutarSelect(SQL As String) As DataTable
         cmd.CommandText = SQL
@@ -36,6 +46,21 @@ Public Class DB
         Try
             cnn.Open()
             cmd.ExecuteNonQuery()
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+    End Sub
+
+    Public Sub ejecutarNonQueryMultiple(SQL As List(Of String))
+        cmd.CommandType = CommandType.Text
+        Try
+            cnn.Open()
+            For Each S In SQL
+                cmd.CommandText = S
+                cmd.ExecuteNonQuery()
+            Next
         Catch ex As Exception
             Throw
         Finally
