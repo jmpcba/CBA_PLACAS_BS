@@ -1,10 +1,5 @@
-﻿Imports System
-Imports System.Linq
-Imports System.Web
-Imports Microsoft.AspNet.Identity
-Imports Microsoft.AspNet.Identity.EntityFramework
+﻿Imports Microsoft.AspNet.Identity
 Imports Microsoft.AspNet.Identity.Owin
-Imports Owin
 
 Public Class usuarioDetalle
     Inherits System.Web.UI.Page
@@ -36,7 +31,7 @@ Public Class usuarioDetalle
         lblRol.Text = usr.rol
         lblNombreTitulo.Text = usr.mail
         txtModMail.Text = usr.mail
-
+        txtPass.Text = ""
     End Sub
 
     Protected Sub dpRoles_DataBound(sender As Object, e As EventArgs) Handles dpRoles.DataBound
@@ -56,6 +51,7 @@ Public Class usuarioDetalle
         If usr.rolid <> dpRoles.SelectedValue Then
             usr.rolid = dpRoles.SelectedValue
         End If
+
         Try
             usr.actualizar()
             llenarGrillas()
@@ -72,11 +68,16 @@ Public Class usuarioDetalle
         Dim manager = Context.GetOwinContext().GetUserManager(Of ApplicationUserManager)()
         Dim user = manager.FindByName(usr.mail)
 
-        If user Is Nothing Then
-            sb.writeError("No se encontró ningún usuario")
-        Else
-            Dim token = manager.GeneratePasswordResetToken(user.Id)
-            manager.ResetPassword(usr.id, token, txtPass.Text)
-        End If
+        Try
+            If user Is Nothing Then
+                sb.writeError("No se encontró ningún usuario")
+            Else
+                Dim token = manager.GeneratePasswordResetToken(user.Id)
+                manager.ResetPassword(usr.id, token, txtPass.Text)
+                sb.write("Clave Actualizada")
+            End If
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 End Class
