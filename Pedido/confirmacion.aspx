@@ -3,6 +3,6 @@
     <div class="jumbotron">
         <h1>Pedido Enviado!!!</h1>
         <p>Numero de pedido: <asp:Label ID="lblPedido" runat="server" Text="Label"></asp:Label></p>
-        <p><a class="btn btn-primary btn-lg" href="nuevo.aspx" role="button">Nuevo Pedido</a></p>
+        <p><a class="btn btn-primary btn-lg" href="nuevoPedido.aspx" role="button">Nuevo Pedido</a></p>
 </div>
 </asp:Content>

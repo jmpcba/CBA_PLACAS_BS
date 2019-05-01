@@ -293,7 +293,7 @@ Public Class DbHelper
             cnn.Open()
 
             For Each r In p.registro
-                query = String.Format("INSERT INTO REGISTRO_MATERIALES (CAMBIOS, COD_PIEZA, USUARIO) VALUES ('{0}', {1}, 'MANU')", r, p.id)
+                query = String.Format("INSERT INTO REGISTRO_MATERIALES (CAMBIOS, COD_PIEZA, USUARIO) VALUES ('{0}', {1}, '{2}')", r, p.id, HttpContext.Current.User.Identity.Name)
                 cmd.CommandText = query
                 cmd.ExecuteNonQuery()
             Next
