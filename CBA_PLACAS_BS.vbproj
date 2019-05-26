@@ -288,7 +288,8 @@
     <Content Include="producto\panelLinea.ascx" />
     <Content Include="producto\nuevoProducto.aspx" />
     <Content Include="producto\productos.aspx" />
-    <Content Include="reporte\reporting\WebForm1.aspx" />
+    <Content Include="reporting\pedidosCliente.aspx" />
+    <Content Include="reporting\pedidosProducto.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="producto\Web.config">
       <SubType>Designer</SubType>
@@ -306,6 +307,17 @@
     </None>
     <Content Include="cbaPlacasDataSet.xss">
       <DependentUpon>cbaPlacasDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="dsCbaPlacas.xsc">
+      <DependentUpon>dsCbaPlacas.xsd</DependentUpon>
+    </Content>
+    <None Include="dsCbaPlacas.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsCbaPlacas.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="dsCbaPlacas.xss">
+      <DependentUpon>dsCbaPlacas.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="images\add-512.png" />
@@ -390,7 +402,9 @@
     <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -590,6 +604,11 @@
     <Compile Include="Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="dsCbaPlacas.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsCbaPlacas.xsd</DependentUpon>
+    </Compile>
     <Compile Include="errors\401.aspx.designer.vb">
       <DependentUpon>401.aspx</DependentUpon>
     </Compile>
@@ -786,11 +805,18 @@
       <DependentUpon>reportesProducto.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="reporte\reporting\WebForm1.aspx.designer.vb">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="reporting\pedidosCliente.aspx.designer.vb">
+      <DependentUpon>pedidosCliente.aspx</DependentUpon>
     </Compile>
-    <Compile Include="reporte\reporting\WebForm1.aspx.vb">
-      <DependentUpon>WebForm1.aspx</DependentUpon>
+    <Compile Include="reporting\pedidosCliente.aspx.vb">
+      <DependentUpon>pedidosCliente.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="reporting\pedidosProducto.aspx.designer.vb">
+      <DependentUpon>pedidosProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporting\pedidosProducto.aspx.vb">
+      <DependentUpon>pedidosProducto.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.vb">
@@ -859,7 +885,6 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>reportesProducto.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="reporte\reporting\Report1.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">

@@ -94,9 +94,8 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
-                <li><a href="/producto/productos"><h4>Lista de Precios</h4></a></li>
-                <li><a href="/pedido/materiales"><h4>Materiales</h4></a></li>
-                <li><a href="/pedido/caracteristicas"><h4>Caracteristicas</h4></a></li>
+                <li><a href="/reporting/PedidosCliente"><h4>Pedidos por Cliente</h4></a></li>
+                <li><a href="/reporting/pedidosProducto"><h4>Pedidos por producto</h4></a></li>
               </ul>
             </div>
           </div>
