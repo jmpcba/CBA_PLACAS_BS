@@ -74,7 +74,8 @@ Public Class Item
     Public Sub setEstado(_est As Estado)
         db = New DbHelper()
         'DESCUENTA MATERIALES DE LA DB SI SE MUEVE EL PEDIDO A ESTADO "EN PRODUCCION" Y ACTUALIZA EL STOCK DEL PRODUCTO
-        'PARA ESTADO CANCELADO SE MUEVEN LOS PRODUCTOS ENSAMBLADOS A STOCK CON UN TRIGGER DE LA DB EN LA TABLA ITEMS
+        'PARA ESTADO CANCELADO SE MUEVEN LOS PRODUCTOS ENSAMBLADOS A STOCK EN EL SP SP_UPDATE_ITEMS
+        'PARA ESTADO STOCK IDEM ANTERIOR
         If _est.id = Estado.estados.enCola Then
             If IsNothing(despiece) Then
                 getDespiece()

@@ -92,7 +92,10 @@
         If gp.pedido.estado.id >= Estado.estados.deposito Then
             HFBtnProd.Value = "disabled"
 
-            If gp.pedido.estado.id = Estado.estados.deposito Then
+            If gp.pedido.cliente.id = 0 Then
+                lblModalDepo.Text = "Enviar Pedido a STOCK"
+
+            ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
                 lblModalDepo.Text = "El Pedido esta listo para ser enviado"
 
             ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
@@ -218,9 +221,14 @@
             HFDepo.Value = "almc"
 
         ElseIf _gp.pedido.estado.id = Estado.estados.deposito Then
-            btnAccionDepo.Text = "Enviar a Cliente"
-            HFDepo.Value = "remito"
 
+            If _gp.pedido.cliente.id = 0 Then
+                btnAccionDepo.Text = "Enviar a Stock"
+                HFDepo.Value = "remito"
+            Else
+                btnAccionDepo.Text = "Enviar a Cliente"
+                HFDepo.Value = "remito"
+            End If
         ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
             btnAccionDepo.Text = "Confirmar Recepcion"
             HFDepo.Value = "recepcion"
@@ -256,6 +264,9 @@
             Dim gp As GestorPedidos
 
             Dim idPedido As Integer
+            HFCrystal.Value = ""
+            HFStock.Value = ""
+
             idPedido = ViewState("idPedido")
 
             gp = New GestorPedidos(idPedido)
@@ -295,11 +306,19 @@
                 sb.write(String.Format("Pedido {0} - ACTUALIZADO", gp.pedido.id))
 
             ElseIf gp.pedido.estado.id = Estado.estados.deposito Then
-                gp.actualizarEstado(New Estado(Estado.estados.enviado))
-                HFCrystal.Value = "remito"
-                sb.write(String.Format("Pedido {0} - ENVIADO A CLIENTE: {1}", gp.pedido.id, gp.pedido.cliente.nombre))
+
+                If gp.pedido.cliente.id = 0 Then
+                    gp.actualizarEstado(New Estado(Estado.estados.stock))
+                    HFCrystal.Value = "remito"
+                    sb.write(String.Format("Pedido {0} - GUARDADO EN STOCK STOCK: {1}", gp.pedido.id))
+                Else
+                    gp.actualizarEstado(New Estado(Estado.estados.enviado))
+                    HFCrystal.Value = "remito"
+                    sb.write(String.Format("Pedido {0} - ENVIADO A CLIENTE: {1}", gp.pedido.id, gp.pedido.cliente.nombre))
+                End If
 
             ElseIf gp.pedido.estado.id = Estado.estados.enviado Then
+                HFCrystal.Value = ""
                 gp.actualizarEstado(New Estado(Estado.estados.entregado))
                 sb.write(String.Format("Pedido {0} - ENTREGADO", gp.pedido.id))
             End If

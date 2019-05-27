@@ -27,7 +27,7 @@
         Seleccione un rango de fechas</small></h1>
     </div>
     <div class="row table-responsive  form-group">
-        <rsweb:ReportViewer ID="ReportViewer1" runat="server" ProcessingMode="Remote" Height="100%" ShowFindControls="False" ShowPageNavigationControls="False" ShowZoomControl="False" Width="100%">
+        <rsweb:ReportViewer ID="ReportViewer1" runat="server" BackColor="#99CCFF" CssClass="reportViewer" ProcessingMode="Remote" Height="100%" ShowFindControls="False" ShowPageNavigationControls="False" ShowZoomControl="False" Width="100%">
             <ServerReport ReportPath="/reportesCBA_Placas/VENTAS_POR_PRODUCTO" ReportServerUrl="http://localhost/reportserver_SSRS" />
         </rsweb:ReportViewer>
     </div>

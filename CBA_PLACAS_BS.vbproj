@@ -290,6 +290,9 @@
     <Content Include="producto\productos.aspx" />
     <Content Include="reporting\pedidosCliente.aspx" />
     <Content Include="reporting\pedidosProducto.aspx" />
+    <None Include="Resources\mailTemplate.txt" />
+    <None Include="Resources\mailTemplate.html.txt" />
+    <None Include="Resources\mailPedidoNuevo.txt" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="producto\Web.config">
       <SubType>Designer</SubType>
@@ -551,6 +554,7 @@
     <Compile Include="App_Code\linea.vb" />
     <Compile Include="App_Code\Madera.vb" />
     <Compile Include="App_Code\mail.vb" />
+    <Compile Include="App_Code\mailV2.vb" />
     <Compile Include="App_Code\Mano.vb" />
     <Compile Include="App_Code\Marco.vb" />
     <Compile Include="App_Code\redireccion.vb" />

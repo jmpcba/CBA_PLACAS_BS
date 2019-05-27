@@ -65,9 +65,8 @@ Public Class impresion
         Try
             If _rpt = GestorDatos.reportes.compras Then
                 Dim rowsToDelete = New List(Of DataRow)
-                gp = Session("gp")
 
-                dt = gp.pedido.despiece
+                dt = gp.pedido.calcularMateriales(False)
 
                 For Each r As DataRow In dt.Rows
                     If IsDBNull(r("FALTANTE")) Then

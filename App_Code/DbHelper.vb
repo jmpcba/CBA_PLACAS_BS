@@ -1324,6 +1324,7 @@ Public Class DbHelper
                 query = query & " AND "
             End If
             query = query & "id_estado = " & _estado
+            firstParam = False
         Else
             If Not firstParam Then
                 query = query & " AND "

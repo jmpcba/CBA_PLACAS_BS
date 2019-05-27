@@ -200,9 +200,10 @@ Public Class Pedido
         Dim cont As Integer
 
         For Each i As Item In items
-            cont += i.getEnsamblados - i.getEnDeposito
+            If i.getEstado.id <> Estado.estados.cancelado Then
+                cont += i.getEnsamblados - i.getEnDeposito
+            End If
         Next
-
         Return cont
 
     End Function
