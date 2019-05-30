@@ -57,72 +57,6 @@ Public Class GestorDatos
         End Try
     End Function
 
-    'PARA BORRAR
-    'Friend Function actualizarMateriales(_grMateriales As GridView) As List(Of Integer)
-    '    Dim db = New DbHelper()
-    '    Dim lineasActualizadas = New List(Of Integer)
-
-    '    For Each r As GridViewRow In _grMateriales.Rows
-    '        Dim txt As TextBox
-    '        Dim cant As Decimal
-    '        Dim idPieza As Integer
-
-    '        txt = r.FindControl("txtAgregar")
-    '        cant = txt.Text.Trim
-    '        idPieza = r.Cells(0).Text
-
-    '        If cant <> 0 Then
-    '            Try
-    '                db.updateMaterial(idPieza, cant)
-    '                lineasActualizadas.Add(r.RowIndex)
-    '            Catch ex As Exception
-    '                Throw
-    '            End Try
-    '        End If
-    '    Next
-
-    '    Return lineasActualizadas
-
-    'End Function
-
-    'Friend Function getDespiece(_prod As Producto) As DataTable
-    '    Try
-    '        db = New DbHelper
-    '        Return db.getDespiece(_prod)
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-
-    'End Function
-
-    'Friend Function getGrilla(_tipo As grillas) As DataTable
-    '    Dim db = New DbHelper
-    '    Dim dt = New DataTable()
-    '    Try
-    '        If _tipo = grillas.pedidosModificar Then
-    '            dt = db.getPedidosModificar()
-    '        ElseIf _tipo = grillas.productos Then
-    '            dt = db.getProductos()
-    '        End If
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    '    Return dt
-    'End Function
-
-    'Friend Sub buscarCliente(_cliente As Cliente, _gv As GridView)
-    '    Dim dt As New DataTable
-    '    db = New DbHelper("CLIENTES")
-
-    '    Try
-    '        dt = db.buscar(_cliente)
-    '        _gv.DataSource = dt
-    '        _gv.DataBind()
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Sub
-
     Public Sub fillCombos(ByVal _cbLinea As DropDownList, ByVal _cbChapa As DropDownList, ByVal _cbMarco As DropDownList, ByVal _cbMadera As DropDownList, ByVal _cbHoja As DropDownList, ByVal _cbMano As DropDownList)
         Dim db = New DbHelper()
 
@@ -599,25 +533,6 @@ Public Class GestorDatos
         End Try
     End Function
 
-    'Public Function getLineas() As DataTable
-    '    Try
-    '        Dim l As New Linea
-    '        Return l.getLineas
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Function
-
-    'Public Function getProductos(_idLinea As Integer) As DataTable
-    '    Try
-    '        Dim db As New DbHelper
-    '        Dim l As New Linea(_idLinea)
-    '        Return db.getProductos(l)
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Function
-
     Public Function getProductos() As DataTable
         Try
             Dim db As New DbHelper
@@ -645,5 +560,4 @@ Public Class GestorDatos
             Throw
         End Try
     End Function
-
 End Class

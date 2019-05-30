@@ -1,5 +1,7 @@
 ﻿Imports System.Data
 Imports System.Web
+Imports QRCoder
+Imports System.Drawing
 
 Imports System.Data.SqlClient
 Imports CBA_PLACAS_BS
@@ -10,7 +12,7 @@ Public Class DbHelper
     Private da As SqlDataAdapter
     Private ds As DataSet
     Private table As String
-    Private conStr As String = "Data Source=USER-PC;Initial Catalog=cbaPlacas;Integrated Security=True"
+    Private conStr As String = ConfigurationManager.ConnectionStrings("cbaPlacasConnectionString1").ConnectionString
     Private CI As System.Globalization.CultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture
 
     Public Enum tablas
@@ -1129,8 +1131,27 @@ Public Class DbHelper
             cmd.Parameters.AddWithValue("@PRECIO", _pedido.precioTotal)
 
             cnn.Open()
+            cnn.Open()
 
-            Return cmd.ExecuteScalar()
+            Dim idPedido As Integer
+
+            idPedido = cmd.ExecuteScalar()
+
+            Dim qrRemito As New SqlClient.SqlParameter("@QR_REMITO", SqlDbType.Image)
+            qrRemito.Value = generarQR("algo" & _pedido.id)
+
+            Dim qrPedido As New SqlClient.SqlParameter("@QR_PEDIDO", SqlDbType.Image)
+            qrPedido.Value = generarQR("redireccion pedido " & _pedido.id)
+
+            cmd.Parameters.Clear()
+            cmd.Parameters.Add(qrPedido)
+            cmd.Parameters.Add(qrRemito)
+
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = "UPDATE PEDIDOS SET QR_REMITO=@QR_REMITO, QR_PEDIDO=@QR_PEDIDO WHERE ID=" & idPedido
+            cmd.ExecuteNonQuery()
+
+            Return idPedido
 
         Catch ex As SqlException
             Throw
@@ -1929,6 +1950,19 @@ Public Class DbHelper
         End If
 
         Return String.Format("{0} {1} ESTA {2} A PRODUCTOS EXISTENTES Y NO PUEDE SER {3}", estaEste, strTipo.Substring(0, strTipo.Length - 1), asoc, borr)
+
+    End Function
+
+    Public Function generarQR(str As String) As Byte()
+        Dim ms As New IO.MemoryStream
+        Dim gen As New QRCodeGenerator
+        Dim data = gen.CreateQrCode(str, QRCodeGenerator.ECCLevel.Q)
+        Dim code As New QRCode(data)
+        Dim img As Image
+        img = code.GetGraphic(20)
+        img.Save(ms, Imaging.ImageFormat.Jpeg)
+
+        Return ms.GetBuffer
 
     End Function
 

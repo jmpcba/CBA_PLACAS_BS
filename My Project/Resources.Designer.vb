@@ -80,11 +80,30 @@ Namespace My.Resources
         '''      &lt;table width=&quot;100%&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;&gt;
         '''        &lt;tbody&gt;
         '''        &lt;tr&gt;
-        '''          &lt;td class=&quot;m_1474314348712033062logo&quot; styl [resto de la cadena truncado]&quot;;.
+        '''          &lt;td class=&quot;m_1474314348712033062 [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend ReadOnly Property mailPedidoNuevo() As String
             Get
                 Return ResourceManager.GetString("mailPedidoNuevo", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a &lt;table style=&quot;padding:0px;margin:0 auto;width:100%;max-width:640px&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;&gt;
+        '''  &lt;tbody&gt;&lt;tr&gt;
+        '''    &lt;td colspan=&quot;3&quot; style=&quot;padding:0px;margin:0px;font-size:1px;height:1px&quot; height=&quot;1&quot;&gt;&amp;nbsp;&lt;/td&gt;
+        '''  &lt;/tr&gt;
+        '''  &lt;tr&gt;
+        '''    &lt;td style=&quot;padding:0px;margin:0px;font-size:1px&quot;&gt;&amp;nbsp;&lt;/td&gt;
+        '''    &lt;td style=&quot;padding:0px;margin:0px&quot; width=&quot;590&quot;&gt;    
+        '''      &lt;table width=&quot;100%&quot; cellspacing=&quot;0&quot; cellpadding=&quot;0&quot; border=&quot;0&quot;&gt;
+        '''        &lt;tbody&gt;
+        '''        &lt;tr&gt;
+        '''          &lt;td class=&quot;m_1474314348712033062 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property mailPedidoNuevo_txt() As String
+            Get
+                Return ResourceManager.GetString("mailPedidoNuevo.txt", resourceCulture)
             End Get
         End Property
     End Module
