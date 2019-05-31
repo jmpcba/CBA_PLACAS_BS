@@ -287,11 +287,15 @@
     <Content Include="images\puerta.png" />
     <Content Include="images\puerta_mail.png" />
     <Content Include="Pedido\buscarPedido.aspx" />
+    <Content Include="Pedido\codigosQRparaTodes.aspx" />
     <Content Include="Pedido\confirmacion.aspx" />
     <Content Include="Pedido\modificar.aspx" />
     <Content Include="Pedido\modificarDetalle.aspx" />
     <Content Include="Pedido\nuevoPedido.aspx" />
     <Content Include="Pedido\panelPedidos.aspx" />
+    <Content Include="Pedido\recepcionQR.aspx" />
+    <Content Include="Pedido\recepcionQRRecibida.aspx" />
+    <Content Include="Pedido\redireccionQR.aspx" />
     <Content Include="Pedido\tests.aspx" />
     <Content Include="producto\caracteristicas.aspx" />
     <Content Include="producto\detallePieza.aspx" />
@@ -692,6 +696,13 @@
       <DependentUpon>buscarPedido.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="Pedido\codigosQRparaTodes.aspx.designer.vb">
+      <DependentUpon>codigosQRparaTodes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\codigosQRparaTodes.aspx.vb">
+      <DependentUpon>codigosQRparaTodes.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Pedido\confirmacion.aspx.designer.vb">
       <DependentUpon>confirmacion.aspx</DependentUpon>
     </Compile>
@@ -725,6 +736,27 @@
     </Compile>
     <Compile Include="Pedido\panelPedidos.aspx.vb">
       <DependentUpon>panelPedidos.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\recepcionQR.aspx.designer.vb">
+      <DependentUpon>recepcionQR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\recepcionQR.aspx.vb">
+      <DependentUpon>recepcionQR.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\recepcionQRRecibida.aspx.designer.vb">
+      <DependentUpon>recepcionQRRecibida.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\recepcionQRRecibida.aspx.vb">
+      <DependentUpon>recepcionQRRecibida.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="Pedido\redireccionQR.aspx.designer.vb">
+      <DependentUpon>redireccionQR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedido\redireccionQR.aspx.vb">
+      <DependentUpon>redireccionQR.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Pedido\tests.aspx.designer.vb">

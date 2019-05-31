@@ -1131,17 +1131,16 @@ Public Class DbHelper
             cmd.Parameters.AddWithValue("@PRECIO", _pedido.precioTotal)
 
             cnn.Open()
-            cnn.Open()
 
             Dim idPedido As Integer
 
             idPedido = cmd.ExecuteScalar()
 
             Dim qrRemito As New SqlClient.SqlParameter("@QR_REMITO", SqlDbType.Image)
-            qrRemito.Value = generarQR("algo" & _pedido.id)
+            qrRemito.Value = generarQR("URL:http://192.168.43.100/Pedido/recepcionQR?idpedido=" & idPedido)
 
             Dim qrPedido As New SqlClient.SqlParameter("@QR_PEDIDO", SqlDbType.Image)
-            qrPedido.Value = generarQR("redireccion pedido " & _pedido.id)
+            qrPedido.Value = generarQR("URL:http://192.168.43.100/Pedido/redireccionQR?idPedido= " & idPedido)
 
             cmd.Parameters.Clear()
             cmd.Parameters.Add(qrPedido)
@@ -1966,4 +1965,38 @@ Public Class DbHelper
 
     End Function
 
+    Public Sub codigosQMasivo()
+        Dim query = "SELECT ID FROM PEDIDOS"
+
+        cmd.CommandType = CommandType.Text
+        cmd.CommandText = query
+
+        Try
+            da.Fill(ds, "PEDIDOS")
+
+            cnn.Open()
+
+            For Each r As DataRow In ds.Tables("PEDIDOS").Rows
+                Dim idPedido As Integer
+                idPedido = r("id")
+
+                cmd.Parameters.Clear()
+
+                Dim qrRemito As New SqlClient.SqlParameter("@QR_REMITO", SqlDbType.Image)
+                qrRemito.Value = generarQR("URL:http://192.168.43.100/Pedido/recepcionQR?idpedido=" & idPedido)
+
+                Dim qrPedido As New SqlClient.SqlParameter("@QR_PEDIDO", SqlDbType.Image)
+                qrPedido.Value = generarQR("URL:http://192.168.43.100/Pedido/redireccionQR?idPedido= " & idPedido)
+
+                cmd.Parameters.Add(qrPedido)
+                cmd.Parameters.Add(qrRemito)
+
+                cmd.CommandText = "UPDATE PEDIDOS SET QR_REMITO=@QR_REMITO, QR_PEDIDO=@QR_PEDIDO WHERE ID=" & idPedido
+                cmd.ExecuteNonQuery()
+            Next
+        Catch ex As Exception
+            cnn.Close()
+            Throw New Exception("ERROR DE BASE DE DATOS: " & ex.Message)
+        End Try
+    End Sub
 End Class

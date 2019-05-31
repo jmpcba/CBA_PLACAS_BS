@@ -234,7 +234,8 @@
         <asp:HiddenField ID="HFStock" runat="server"/>
         <div class="row">
             <!--botones grupo -->
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="col-md-12">
+                <div class="btn-group" role="group" aria-label="...">
                 <asp:Button ID="btnVolver" runat="server" Text="Volver" />
                 <button id="btnEnviarProd" class="btn btn-primary" type="button" value="" data-toggle="modal" data-target="#enviarProd">
                     Enviar a Produccion <span id="spBtnEnviarProd" class="glyphicon" aria-hidden="true"></span>
@@ -258,6 +259,7 @@
                   </ul>
                 </div>
                 <asp:Button ID="btnRefrescar" runat="server" Text="Refrescar" />
+            </div>
             </div>
         </div>
         <div class="row">
