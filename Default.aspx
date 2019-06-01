@@ -23,22 +23,16 @@
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <ul class="nav nav-pills">
-                <li><a href="#"><span class="label label-default">Pedidos:</span>
-                    <ul class="nav nav-pills">
-                        <li role="presentation">Nuevos<span class="badge">12</span></li>
-                        <li role="presentation">En Produccion<span class="badge">12</span></li>
-                        <li role="presentation">Deposito & en Transito<span class="badge">12</span></li>
-                    </ul>
-                </a></li>
-            </ul>
-        </div>
-        <div class="col-md-6 label label-danger">
-            <ul class="nav nav-pills">
-                <li><a href="#">Materiales Stock Critico<span class="badge">12<br></span></a></li>
-            </ul>
-        </div>
+        <ul class="nav nav-pills">
+            <li><a href="#">Pedidos:
+                <ul class="nav nav-pills">
+                    <li role="presentation">Nuevos<span class="badge">12</span></li>
+                    <li role="presentation">En Produccion<span class="badge">12</span></li>
+                    <li role="presentation">Deposito & en Transito<span class="badge">12</span></li>
+                </ul>
+            </a></li>
+                <li><span class="label label-danger"><a href="#">Materiales Stock Critico<span class="badge">12<br></span></a></span></li>
+        </ul>
         <hr />
     </div>
     <div class="row">
