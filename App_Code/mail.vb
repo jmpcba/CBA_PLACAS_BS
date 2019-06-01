@@ -44,9 +44,9 @@ Public Class mail
             mm.Attachments.Add(puerta)
             client.Send(mm)
 
-            Catch ex As Exception
-                Throw New Exception("Error enviando mail: " & ex.Message)
-            End Try
+        Catch ex As Exception
+            'Throw New Exception("Error enviando mail al cliente: " & ex.Message)
+        End Try
     End Sub
 
 End Class

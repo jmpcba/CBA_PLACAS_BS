@@ -212,11 +212,11 @@ Public Class GestorPedidos
                 mail.send(String.Format("Su pedido {0} fue CANCELADO", pedido.id))
             End If
 
-            pedido.calcularTotales()
-            pedido.actualizar()
-
         Catch ex As Exception
             Throw
+        Finally
+            pedido.calcularTotales()
+            pedido.actualizar()
         End Try
     End Sub
 
