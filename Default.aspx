@@ -2,9 +2,15 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
+
+            //BARRA DE MENSAJES
+            var err = $("#" + '<%= HFMsg.ClientID %>').val();
+            barraEstado(err, $("#msg"))
+
             console.log($("#hfRol > input"))
             console.log($("#hfRol > input").val())
             
+            //DESACTIVAR BOTONES
             if ($("input[id$=HFRol]").val() == "ENCARGADO"){
                 var controles = [$("#liCar"), $("#dpReportes"), $("#dpClientes"), $("#liNvo"), $("#aCar"), $("#aNvo"), $("#liNvoProd"), $("#aNvoProd")]
                 console.log(controles)
@@ -18,29 +24,35 @@
             }
         })
     </script>
+    <asp:HiddenField ID="HFMateriales" runat="server" />
     <div class="page-header">
         <h1 class="text-center">MG Placas SRL<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div id="msg" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label>
+            <asp:HiddenField ID="HFMsg" runat="server" Value="success" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-3">
             <ul class="nav nav-pills">
-                <li><a href="#"><span class="label label-default">Pedidos:</span>
+                <li><a class="label label-primary" href="/pedido/panelPedidos">
                     <ul class="nav nav-pills">
-                        <li role="presentation">Nuevos<span class="badge">12</span></li>
-                        <li role="presentation">En Produccion<span class="badge">12</span></li>
-                        <li role="presentation">Deposito & en Transito<span class="badge">12</span></li>
+                        <li role="presentation">Pedidos Nuevos<span class="badge"><asp:Label ID="lblnvos" runat="server" Text="Label"></asp:Label></span></li>
+                        <li role="presentation">En Produccion<span class="badge"><asp:Label ID="lblProd" runat="server" Text="Label"></asp:Label></span></li>
+                        <li role="presentation">En Deposito & En Transito<span class="badge"><asp:Label ID="lblDepo" runat="server" Text="Label"></asp:Label></span></li>
                     </ul>
                 </a></li>
-            </ul>
+            <li>
+                <a href="#" class="label label-primary">Materiales Stock Critico<span class="badge">0 <br></span></a>
+            </li>
+        </ul>
         </div>
-        <div class="col-md-6 label label-danger">
-            <ul class="nav nav-pills">
-                <li><a href="#">Materiales Stock Critico<span class="badge">12<br></span></a></li>
-            </ul>
-        </div>
-        <hr />
     </div>
+    <hr />
     <div class="row">
       <div class="col-md-4 col-md-offset-2 text-center">
         <div class="img-responsive center-block">

@@ -68,6 +68,15 @@ Partial Public Class materiales
     Protected WithEvents AutoCompleteExtender1 As Global.AjaxControlToolkit.AutoCompleteExtender
     
     '''<summary>
+    '''Control txtStockMin.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtStockMin As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
     '''Control btnNvo.
     '''</summary>
     '''<remarks>

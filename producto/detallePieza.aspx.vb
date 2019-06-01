@@ -32,9 +32,11 @@
             lblUnidad.Text = p.unidad
             lblStock.Text = p.stock
             txtStock.Text = p.stock
+            txtStockMin.Text = p.stockMinimo
             txtModNombre.Text = p.nombre
             txtModUnidad.Text = p.unidad
             lblModUnidad.Text = p.unidad
+            lblStockMin.Text = p.stockMinimo
 
             grProductos.DataSource = gd.getProductos(p)
             grProductos.DataBind()
@@ -76,6 +78,10 @@
 
             If p.unidad <> txtModUnidad.Text.Trim Then
                 p.unidad = txtModUnidad.Text.Trim.ToUpper
+            End If
+
+            If p.stockMinimo <> txtStockMin.Text.Trim Then
+                p.stockMinimo = txtStockMin.Text.Trim
             End If
 
             p.actualizar()

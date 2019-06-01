@@ -62,6 +62,12 @@ input[type="select"] {
    float: none;
 }
 
+.hcenter {
+   display: inline-block;
+   margin: auto;
+   float: none;
+}
+
 .validators
 {
     color: #a94442;

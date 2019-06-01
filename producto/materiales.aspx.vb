@@ -24,7 +24,7 @@
 
     Protected Sub btnNvo_Click(sender As Object, e As EventArgs) Handles btnNvo.Click
         Try
-            Dim p As New Pieza(txtNombre.Text.Trim.ToUpper, txtUnidad.Text.Trim.ToUpper)
+            Dim p As New Pieza(txtNombre.Text.Trim.ToUpper, txtUnidad.Text.Trim.ToUpper, txtStockMin.Text.Trim)
             p.insertar()
             sb.write("Nueva pieza agregada a la lista de materiales")
             llenarGrilla()

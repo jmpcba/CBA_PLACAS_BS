@@ -135,8 +135,9 @@
                   <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox><br />
                   <strong>UNIDAD:</strong><br />
                   <asp:TextBox ID="txtUnidad" runat="server"></asp:TextBox>
-                  <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtUnidad" ServiceMethod="getUnidades"></ajaxToolkit:AutoCompleteExtender>
-                  <br />
+                  <ajaxToolkit:AutoCompleteExtender ID="AutoCompleteExtender1" runat="server" TargetControlID="txtUnidad" ServiceMethod="getUnidades"></ajaxToolkit:AutoCompleteExtender><br />
+                  <strong>STOCK MINIMO:</strong><br />
+                  <asp:TextBox ID="txtStockMin" runat="server"></asp:TextBox>
               </div>
           </div>
           <div class="modal-footer">

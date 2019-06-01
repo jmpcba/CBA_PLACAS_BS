@@ -402,7 +402,7 @@ Public Class DbHelper
     End Sub
 
     Friend Sub actualizar(_p As Pieza)
-        cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}', STOCK_DISPONIBLE = {2} WHERE ID={3}", _p.nombre, _p.unidad, _p.stock, _p.id)
+        cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}', STOCK_DISPONIBLE = {2}, STOCK_MINIMO={3} WHERE ID={4}", _p.nombre, _p.unidad, _p.stock, _p.stockMinimo, _p.id)
         cmd.CommandType = CommandType.Text
         Try
             cnn.Open()
@@ -869,7 +869,7 @@ Public Class DbHelper
 
     Public Function insertar(_pieza As Pieza) As DataTable
         Try
-            Dim query = String.Format("INSERT INTO MATERIALES (nombre, UNIDAD) VALUES ('{0}', '{1}')", _pieza.nombre, _pieza.unidad)
+            Dim query = String.Format("INSERT INTO MATERIALES (nombre, UNIDAD, STOCK_MINIMO) VALUES ('{0}', '{1}', {2})", _pieza.nombre, _pieza.unidad, _pieza.stockMinimo)
 
             cmd.CommandType = CommandType.Text
             cmd.CommandText = query

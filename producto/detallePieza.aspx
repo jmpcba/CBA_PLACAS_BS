@@ -64,17 +64,20 @@
 		<div id="detalle" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong>Codigo: </strong><asp:Label ID="lblCodigo" runat="server" Text="Label"></asp:Label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong>Nombre: </strong><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong>Stock: </strong><asp:Label ID="lblStock" runat="server" Text="Label"></asp:Label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <strong>Unidad: </strong><asp:Label ID="lblUnidad" runat="server" Text="Label"></asp:Label>
+                </div>
+                <div class="col-md-2">
+                    <strong>Stock Minimo: </strong><asp:Label ID="lblStockMin" runat="server" Text="Label"></asp:Label>
                 </div>
             </div>
 			</div>
@@ -177,6 +180,16 @@
                 </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtModUnidad" runat="server"></asp:TextBox>
+                </div>
+            </div>
+              <br />
+              <div class="row">
+                <div class="col-md-3"><strong>Stock Minimo</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Ingrese valor para Stock minimo" Text="*" CssClass="validators" ControlToValidate="txtStockMin" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ErrorMessage="Ingrese un valor valido" ValidationExpression="(\d+|\d*,\d*)+" CssClass="validators" ValidationGroup="VGMod" ControlToValidate="txtStockMin" Text="*"></asp:RegularExpressionValidator>
+                </div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtStockMin" runat="server"></asp:TextBox>
                 </div>
             </div>
           <asp:ValidationSummary ID="ValidationSummary2" runat="server" CssClass="validators" ValidationGroup="VGMod" />

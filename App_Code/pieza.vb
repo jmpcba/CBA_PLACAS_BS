@@ -6,18 +6,19 @@
     Private _stock As Decimal
     Private _unidad As String
     Public _modificado As Boolean
+    Private _stockMin As Decimal
     Shadows db As DbHelper = New DbHelper("materiales")
 
     Public Sub New()
 
     End Sub
 
-    Public Sub New(_nombre As String, _unidad As String)
+    Public Sub New(_nombre As String, _unidad As String, _stockMin As Decimal)
         MyBase.New()
         Me._nombre = _nombre
         Me._unidad = _unidad
         _modificado = False
-
+        Me._stockMin = _stockMin
     End Sub
 
     Public Sub New(_id As Integer)
@@ -27,6 +28,7 @@
         _unidad = t.Rows(0)("UNIDAD")
         _stock = t.Rows(0)("STOCK_DISPONIBLE")
         _stockReservado = t.Rows(0)("STOCK_RESERVADO")
+        _stockMin = t.Rows(0)("STOCK_MINIMO")
     End Sub
 
     Public Property nombre As String
@@ -59,6 +61,17 @@
         End Set
         Get
             Return _stock
+        End Get
+    End Property
+
+    Public Property stockMinimo As Decimal
+        Set(value As Decimal)
+            _modificado = True
+            registro.Add(String.Format("STOCK MINIMO ANTERIOR: {0}, NUEVO: {1}", _stockMin, value))
+            _stockMin = value
+        End Set
+        Get
+            Return _stockMin
         End Get
     End Property
 
