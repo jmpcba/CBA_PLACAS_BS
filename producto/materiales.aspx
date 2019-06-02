@@ -113,6 +113,9 @@
                     <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="STOCK"  DataFormatString="{0:F2}">
                         <ItemStyle CssClass="numCol" />
                     </asp:BoundField>
+                    <asp:BoundField DataField="STOCK_MINIMO" HeaderText="STOCK MINIMO"  DataFormatString="{0:F2}">
+                        <ItemStyle CssClass="numCol" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="UNIDAD" HeaderText="UNIDAD" />
                     <asp:CommandField ButtonType="Image" SelectImageUrl="~/images/zoom_in.png" ShowSelectButton="True">
                         <ControlStyle CssClass="imageButtons" />

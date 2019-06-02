@@ -22,6 +22,14 @@
                 console.log(controles)
                 inHabilitarControles(controles)
             }
+
+            if ($("#" + '<%= HFMateriales.ClientID %>').val() == 1) {
+                $("#aMat").removeClass("label-primary")
+                $("#aMat").addClass("label-danger")
+            } else {
+                $("#aMat").removeClass("label-danger")
+                $("#aMat").addClass("label-primary")
+            }
         })
     </script>
     <asp:HiddenField ID="HFMateriales" runat="server" />
@@ -47,7 +55,7 @@
                     </ul>
                 </a></li>
             <li>
-                <a href="#" class="label label-primary">Materiales Stock Critico<span class="badge">0 <br></span></a>
+                <a id="aMat" href="/producto/materiales" class="label label-primary">Materiales Stock Critico<span class="badge"><asp:Label ID="lblMat" runat="server" Text="Label"></asp:Label><br></span></a>
             </li>
         </ul>
         </div>

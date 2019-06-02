@@ -39,6 +39,12 @@ Public Class GestorDatos
         modificar
     End Enum
 
+    Public Enum resultadoMateriales
+        ok
+        critico
+        faltante
+    End Enum
+
     Public Sub New()
         chapa = New Chapa()
         marco = New Marco()
@@ -133,11 +139,6 @@ Public Class GestorDatos
 
     End Sub
 
-    'Friend Function buscarProductos(_idLinea As Object, _idChapa As Object, _idHoja As Object, _idMarco As Object, _idMadera As Object, _idMano As Object) As DataTable
-    '    db = New DbHelper()
-    '    Return db.buscarPedidos(_idLinea, _idChapa, _idHoja, _idMarco, _idMadera, _idMano)
-    'End Function
-
     Public Sub getCombos(ByVal _cb As DropDownList, ByVal _comboName As combos)
         Try
             If _comboName = combos.estados Then
@@ -166,29 +167,6 @@ Public Class GestorDatos
             Throw
         End Try
     End Sub
-
-    'Public Sub getCombos(ByVal _lst As ListBox, ByVal _comboName As combos)
-    '    Try
-    '        If _comboName = combos.estados Then
-
-    '            Dim estado As New Estado()
-    '            _lst.DataSource = estado.getEstados()
-    '            _lst.DataTextField = "nombre"
-    '            _lst.DataValueField = "id"
-    '            _lst.DataBind()
-
-    '        ElseIf _comboName = combos.clientes Then
-
-    '            Dim cliente As New Cliente()
-    '            _lst.DataSource = cliente.getClientes()
-    '            _lst.DataTextField = "nombre"
-    '            _lst.DataValueField = "id"
-    '            _lst.DataBind()
-    '        End If
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Sub
 
     Public Sub mostrarGrillaItems(ByVal _grilla As GridView, ByVal _pedido As Pedido, Optional _withStock As Boolean = False)
         'definicion de tabla
@@ -265,30 +243,6 @@ Public Class GestorDatos
         End Try
     End Function
 
-    'Public Function getItems(_pedido As Integer, _estado As Estado, Optional _stock As Boolean = False) As DataTable
-    '    Try
-    '        Dim db = New DbHelper("ITEMS")
-
-    '        Return db.getItems(_pedido, _estado, _stock)
-
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Function
-
-    'Public Function getItems(_idPedido As Integer, _tipo As tipoItems) As DataTable
-    '    Dim db = New DbHelper()
-    '    Dim dt As DataTable
-    '    dt = New DataTable
-
-    '    If _tipo = tipoItems.busqueda Then
-    '        dt = db.getItemsBusqueda(_idPedido)
-    '    End If
-
-    '    Return dt
-
-    'End Function
-
     Public Function getItems(_pedido As Integer) As DataTable
         Try
             Dim db = New DbHelper("ITEMS")
@@ -321,74 +275,12 @@ Public Class GestorDatos
         End Try
     End Function
 
-    'Public Function getStock(_item As Item) As DataTable
-    '    Dim db = New DbHelper("Stock")
-    '    Return db.getStock(_item.getProducto.hoja.id, _item.getProducto.marco.id, _item.getProducto.madera.id, _item.getProducto.chapa.id, _item.getProducto.mano.id, _item.getProducto.linea.id)
-    'End Function
-
-    'Public Function calcularMateriales(_item As Item, gr As GridView) As Boolean
-    '    Dim materiales = _item.getDespiece()
-    '    Dim result = True
-    '    Dim redRows = New List(Of Integer)
-
-    '    materiales.Columns.Add("REQUERIDO", GetType(Decimal))
-    '    materiales.Columns.Add("FALTANTE", GetType(Decimal))
-
-    '    Dim i = 0
-
-    '    For Each r As DataRow In materiales.Rows
-    '        Dim requerido = r("CONSUMO") * _item.getCant()
-
-    '        r("REQUERIDO") = requerido
-
-    '        If requerido > r("STOCK_DISPONIBLE") Then
-    '            result = False
-    '            r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
-    '            redRows.Add(i)
-    '        End If
-    '        i += 1
-    '    Next
-
-    '    gr.DataSource = materiales
-    '    gr.DataBind()
-
-    '    For Each i In redRows
-    '        gr.Rows(i).ForeColor = Drawing.Color.Red
-    '    Next
-
-    '    Return result
-    'End Function
-
-    'Public Function calcularMateriales(_item As Item) As Boolean
-    '    Dim materiales = _item.getDespiece()
-    '    Dim result = True
-    '    Dim redRows = New List(Of Integer)
-
-    '    materiales.Columns.Add("REQUERIDO", GetType(Decimal))
-    '    materiales.Columns.Add("FALTANTE", GetType(Decimal))
-
-    '    Dim i = 0
-
-    '    For Each r As DataRow In materiales.Rows
-    '        Dim requerido = r("CONSUMO") * _item.getCant()
-
-    '        r("REQUERIDO") = requerido
-
-    '        If requerido > r("STOCK_DISPONIBLE") Then
-    '            result = False
-    '            r("FALTANTE") = r("STOCK_DISPONIBLE") - requerido
-    '            redRows.Add(i)
-    '        End If
-    '        i += 1
-    '    Next
-    '    Return result
-    'End Function
-
-    Public Function calcularMateriales(_pedido As Pedido, _gr As GridView, Optional _recalc As Boolean = False) As Boolean
+    Public Function calcularMateriales(_pedido As Pedido, _gr As GridView, Optional _recalc As Boolean = False) As resultadoMateriales
 
         Dim materiales = _pedido.calcularMateriales(_recalc)
-        Dim result = True
+        Dim result As New List(Of resultadoMateriales)
         Dim redRows = New List(Of Integer)
+
 
         Try
 
@@ -398,78 +290,41 @@ Public Class GestorDatos
                 Dim requerido = r("CONSUMO")
 
                 If requerido > r("STOCK_DISPONIBLE") Then
-                    result = False
+                    If Not result.Contains(resultadoMateriales.faltante) Then
+                        result.Add(resultadoMateriales.faltante)
+                    End If
                     redRows.Add(i)
+                ElseIf r("STOCK_DISPONIBLE") < r("STOCK_MINIMO") Then
+                    redRows.Add(i)
+                    If Not result.Contains(resultadoMateriales.critico) Then
+                        result.Add(resultadoMateriales.critico)
+                    End If
+                Else
+                    result.Add(resultadoMateriales.ok)
                 End If
+
                 i += 1
             Next
 
             _gr.DataSource = materiales
             _gr.DataBind()
 
-            For Each i In redRows
-                _gr.Rows(i).ForeColor = Drawing.Color.Red
-            Next
+            If redRows.Count > 0 Then
+                For Each i In redRows
+                    _gr.Rows(i).ForeColor = Drawing.Color.Red
+                Next
+            End If
+
+            If result.Count = 0 Then
+                result.Add(resultadoMateriales.ok)
+            End If
+
         Catch ex As Exception
             Throw
         End Try
 
-        Return result
+        Return result.Max
     End Function
-
-    'Friend Function getItemsEnsamblados(_id As Integer) As DataTable
-    '    Dim db = New DbHelper()
-    '    Try
-    '        Return db.getItemsEnsamblados(_id)
-    '    Catch ex As Exception
-    '        Throw
-    '    End Try
-    'End Function
-
-    'Public Sub consultarPedido(_pedido As Pedido, grDetalle As GridView, _grRegistro As GridView)
-    '    Dim dt = New DataTable()
-
-    '    'GRILLA DETALLE
-    '    dt.Columns.Add("ID", GetType(String))
-    '    dt.Columns.Add("ESTADO", GetType(String))
-    '    dt.Columns.Add("LINEA", GetType(String))
-    '    dt.Columns.Add("HOJA", GetType(String))
-    '    dt.Columns.Add("MARCO", GetType(String))
-    '    dt.Columns.Add("MADERA", GetType(String))
-    '    dt.Columns.Add("CHAPA", GetType(String))
-    '    dt.Columns.Add("MANO", GetType(String))
-    '    dt.Columns.Add("MONTO", GetType(Decimal))
-    '    dt.Columns.Add("CANTIDAD", GetType(Integer))
-    '    dt.Columns.Add("STOCK", GetType(Decimal))
-    '    dt.Columns.Add("ENSAMBLADAS", GetType(Decimal))
-    '    dt.Columns.Add("PENDIENTES", GetType(Decimal))
-
-    '    For Each item As Item In _pedido.items
-    '        Dim row = dt.NewRow()
-    '        row("ID") = item.id
-    '        row("ESTADO") = item.getEstado().nombre
-    '        row("LINEA") = item.getProducto.linea.nombre
-    '        row("HOJA") = item.getProducto.hoja.nombre
-    '        row("MARCO") = item.getProducto.marco.nombre
-    '        row("MADERA") = item.getProducto.madera.nombre
-    '        row("CHAPA") = item.getProducto.chapa.nombre
-    '        row("MANO") = item.getProducto.mano.nombre
-    '        row("CANTIDAD") = item.getCant()
-    '        row("MONTO") = item.monto
-    '        row("STOCK") = item.stock
-    '        row("ENSAMBLADAS") = item.getEnsamblados
-    '        row("PENDIENTES") = item.getCant() - item.getEnsamblados() - item.stock
-
-    '        dt.Rows.Add(row)
-    '    Next
-
-    '    'actualizacion de grilla
-    '    grDetalle.DataSource = dt
-    '    grDetalle.DataBind()
-
-    '    'GRILLA REGISTRO
-    '    getRegistro(_pedido, _grRegistro)
-    'End Sub
 
     Public Sub getRegistro(_pedido As Pedido, _grRegistro As GridView)
         Dim DTR = New DataTable
@@ -556,6 +411,15 @@ Public Class GestorDatos
         Dim db As New DbHelper
         Try
             Return db.getPiezas()
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
+    Public Function materialesCriticos() As Integer
+        Try
+            Dim db As New DB(DB.conStrings.datos)
+            Return db.ejecutarScalar("SELECT COUNT(*) FROM MATERIALES WHERE STOCK_DISPONIBLE < STOCK_MINIMO")
         Catch ex As Exception
             Throw
         End Try

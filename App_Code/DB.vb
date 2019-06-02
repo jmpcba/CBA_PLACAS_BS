@@ -67,4 +67,22 @@ Public Class DB
             cnn.Close()
         End Try
     End Sub
+
+    Friend Function ejecutarScalar(query As String) As Integer
+        Dim re As Integer
+        Try
+            cmd.CommandType = CommandType.Text
+            cmd.CommandText = query
+            cnn.Open()
+            re = cmd.ExecuteScalar()
+
+        Catch ex As Exception
+            Throw
+        Finally
+            cnn.Close()
+        End Try
+
+        Return re
+
+    End Function
 End Class

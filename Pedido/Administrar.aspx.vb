@@ -163,100 +163,109 @@
 
     Public Sub llenarGrillasDetalle()
         Dim items As DataTable
-        Dim materiales As Boolean
+        Dim materiales As GestorDatos.resultadoMateriales
         Dim _gp As GestorPedidos
         Dim idPedido As Integer
 
-        idPedido = ViewState("idPedido")
+        Try
+            idPedido = ViewState("idPedido")
 
-        'refrescar el objeto pedidos desde la DB
-        _gp = New GestorPedidos(idPedido)
-        items = gd.getItems(_gp.pedido.id)
+            'refrescar el objeto pedidos desde la DB
+            _gp = New GestorPedidos(idPedido)
+            items = gd.getItems(_gp.pedido.id)
 
-        grDetalle.DataSource = items
-        grStock.DataSource = items
-        grCambiarStock.DataSource = items
-        grDeposito.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.detalle)
-        grEnviarProd.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.enviarProd)
-        grAlmc.DataSource = items
-        grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
-        grImprimir.DataSource = items
-        grEtiquetasStock.DataSource = items
+            grDetalle.DataSource = items
+            grStock.DataSource = items
+            grCambiarStock.DataSource = items
+            grDeposito.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.detalle)
+            grEnviarProd.DataSource = gd.getItems(_gp.pedido.id, DbHelper.tipoItem.enviarProd)
+            grAlmc.DataSource = items
+            grEnCurso.DataSource = gd.getItems(_gp.pedido.id, _enCurso:=True)
+            grImprimir.DataSource = items
+            grEtiquetasStock.DataSource = items
 
-        grDetalle.DataBind()
-        grStock.DataBind()
-        grDeposito.DataBind()
-        grEnviarProd.DataBind()
-        grEnCurso.DataBind()
-        grAlmc.DataBind()
-        grImprimir.DataBind()
-        materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
-        grEtiquetasStock.DataBind()
-        grCambiarStock.DataBind()
+            grDetalle.DataBind()
+            grStock.DataBind()
+            grDeposito.DataBind()
+            grEnviarProd.DataBind()
+            grEnCurso.DataBind()
+            grAlmc.DataBind()
+            grImprimir.DataBind()
+            materiales = gd.calcularMateriales(_gp.pedido, grMateriales)
+            grEtiquetasStock.DataBind()
+            grCambiarStock.DataBind()
 
-        If _gp.pedido.estado.id = Estado.estados.recibido Then
-            If materiales Then
-                HFMat.Value = "True"
-                lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
-                btnImprimirCompra.Visible = False
-                btnEnviar.Visible = True
+            If _gp.pedido.estado.id = Estado.estados.recibido Then
+                If materiales = GestorDatos.resultadoMateriales.ok Then
+                    HFMat.Value = "True"
+                    lblMatModalOrden.Text = "Dispone de Materiales Suficientes"
+                    btnImprimirCompra.Visible = False
+                    btnEnviar.Visible = True
+                ElseIf materiales = GestorDatos.resultadoMateriales.critico Then
+                    HFMat.Value = "False"
+                    lblMatModalOrden.Text = "Algunos materiales estan por agotarse"
+                    btnEnviar.Visible = True
+                    btnImprimirCompra.Visible = True
+                ElseIf materiales = GestorDatos.resultadoMateriales.faltante Then
+                    HFMat.Value = "False"
+                    lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
+                    btnEnviar.Visible = False
+                    btnImprimirCompra.Visible = True
+                End If
+            End If
+
+            gd.getRegistro(_gp.pedido, grLog)
+            lblnroPedidoDet.Text = _gp.pedido.id.ToString
+            lblEstadoDet.Text = _gp.pedido.estado.nombre
+            lblCantDet.Text = _gp.pedido.cantTotal.ToString
+            lblRecibidoDet.Text = _gp.pedido.recibido.ToShortDateString
+            lblClienteDet.Text = _gp.pedido.cliente.nombre.ToUpper
+
+            'BOTON MODAL DEPOSITO
+            If _gp.pedido.getPAlmacenar > 0 Then
+                btnAccionDepo.Text = "Almacenar"
+                HFDepo.Value = "almc"
+
+            ElseIf _gp.pedido.estado.id = Estado.estados.deposito Then
+
+                If _gp.pedido.cliente.id = 0 Then
+                    btnAccionDepo.Text = "Enviar a Stock"
+                    HFDepo.Value = "remito"
+                Else
+                    btnAccionDepo.Text = "Enviar a Cliente"
+                    HFDepo.Value = "remito"
+                End If
+            ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
+                btnAccionDepo.Text = "Confirmar Recepcion"
+                HFDepo.Value = "recepcion"
+            End If
+
+
+            'PEDIENTES
+            bltPendientes.Items.Clear()
+
+            For Each msg As String In _gp.pendientes(HFExIcon)
+                bltPendientes.Items.Add(msg)
+            Next
+
+            If _gp.pedido.modificado <> DateTime.MinValue Then
+                lblModificadoDet.Text = _gp.pedido.modificado.ToShortDateString
             Else
-                HFMat.Value = "False"
-                lblMatModalOrden.Text = "NO Dispone de Materiales Suficientes"
-                btnEnviar.Visible = False
-                btnImprimirCompra.Visible = True
+                lblModificadoDet.Text = ""
             End If
-        End If
+            'range validators de enviar a prod y cambiar stock
+            calcularRangeValidatorsGrillasStock(_gp)
 
-        gd.getRegistro(_gp.pedido, grLog)
-        lblnroPedidoDet.Text = _gp.pedido.id.ToString
-        lblEstadoDet.Text = _gp.pedido.estado.nombre
-        lblCantDet.Text = _gp.pedido.cantTotal.ToString
-        lblRecibidoDet.Text = _gp.pedido.recibido.ToShortDateString
-        lblClienteDet.Text = _gp.pedido.cliente.nombre.ToUpper
-
-        'BOTON MODAL DEPOSITO
-        If _gp.pedido.getPAlmacenar > 0 Then
-            btnAccionDepo.Text = "Almacenar"
-            HFDepo.Value = "almc"
-
-        ElseIf _gp.pedido.estado.id = Estado.estados.deposito Then
-
-            If _gp.pedido.cliente.id = 0 Then
-                btnAccionDepo.Text = "Enviar a Stock"
-                HFDepo.Value = "remito"
-            Else
-                btnAccionDepo.Text = "Enviar a Cliente"
-                HFDepo.Value = "remito"
-            End If
-        ElseIf _gp.pedido.estado.id = Estado.estados.enviado Then
-            btnAccionDepo.Text = "Confirmar Recepcion"
-            HFDepo.Value = "recepcion"
-        End If
-
-
-        'PEDIENTES
-        bltPendientes.Items.Clear()
-
-        For Each msg As String In _gp.pendientes(HFExIcon)
-            bltPendientes.Items.Add(msg)
-        Next
-
-        If _gp.pedido.modificado <> DateTime.MinValue Then
-            lblModificadoDet.Text = _gp.pedido.modificado.ToShortDateString
-        Else
-            lblModificadoDet.Text = ""
-        End If
-        'range validators de enviar a prod y cambiar stock
-        calcularRangeValidatorsGrillasStock(_gp)
-
-        For Each r As GridViewRow In grDeposito.Rows
-            Dim idEstado = grDeposito.DataKeys(r.RowIndex).Values(1)
-            If idEstado = Estado.estados.cancelado Then
-                r.ForeColor = Drawing.Color.Gray
-            End If
-        Next
-        validar()
+            For Each r As GridViewRow In grDeposito.Rows
+                Dim idEstado = grDeposito.DataKeys(r.RowIndex).Values(1)
+                If idEstado = Estado.estados.cancelado Then
+                    r.ForeColor = Drawing.Color.Gray
+                End If
+            Next
+            validar()
+        Catch ex As Exception
+            sb.writeError(ex.Message)
+        End Try
     End Sub
 
     Protected Sub btnActualizarProd_Click(sender As Object, e As EventArgs) Handles btnActualizarProd.Click

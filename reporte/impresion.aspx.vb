@@ -9,6 +9,11 @@ Public Class impresion
         Dim rptType As GestorDatos.reportes
         Dim rpt = Request.QueryString("rpt")
         Dim idPedido = Request.QueryString("idPedido")
+
+        If IsNothing(idPedido) Then
+            Response.Redirect("../default.aspx")
+        End If
+
         Dim idsItems As String()
 
         If rpt = "etiquetaSimple" Then
@@ -69,7 +74,10 @@ Public Class impresion
                 dt = gp.pedido.calcularMateriales(False)
 
                 For Each r As DataRow In dt.Rows
-                    If IsDBNull(r("FALTANTE")) Then
+
+                    If r("STOCK_DISPONIBLE") < r("STOCK_MINIMO") Then
+                        Continue For
+                    ElseIf IsDBNull(r("FALTANTE")) Then
                         rowsToDelete.Add(r)
                     End If
                 Next

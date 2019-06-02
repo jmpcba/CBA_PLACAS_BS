@@ -426,13 +426,17 @@
                             <asp:BoundField DataField="ID_PIEZA" HeaderText="CODIGO" />
                             <asp:BoundField DataField="NOMBRE" HeaderText="NOMBRE" />
                             <asp:BoundField DataField="CONSUMO" HeaderText="CONSUMO">
-                            <ItemStyle CssClass="numCol" />
+                                <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                             <asp:BoundField DataField="STOCK_DISPONIBLE" HeaderText="DISPONIBLE" DataFormatString="{0:F2}">
-                            <ItemStyle CssClass="numCol" />
+                                <ItemStyle CssClass="numCol" />
                             </asp:BoundField>
                             <asp:BoundField DataField="FALTANTE" HeaderText="FALTANTE" DataFormatString="{0:F2}">
-                            <ItemStyle CssClass="numCol" />
+                                <ItemStyle CssClass="numCol" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="STOCK_MINIMO" HeaderText="STOCK MINIMO" >
+                                <ControlStyle Font-Bold="True" />
+                                <ItemStyle Font-Bold="True" CssClass="numCol" />
                             </asp:BoundField>
                         </Columns>
                     </asp:GridView>

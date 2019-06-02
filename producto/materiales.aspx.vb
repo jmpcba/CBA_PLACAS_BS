@@ -15,8 +15,24 @@
 
     Private Sub llenarGrilla()
         Try
-            grMateriales.DataSource = gd.getPiezas
+            Dim dt As New DataTable
+            Dim rojas As New List(Of Integer)
+            Dim i As Integer = 0
+            dt = gd.getPiezas
+            grMateriales.DataSource = dt
             grMateriales.DataBind()
+
+            For Each r As DataRow In dt.Rows
+                If r("STOCK_DISPONIBLE") < r("STOCK_MINIMO") Then
+                    rojas.Add(i)
+                End If
+                i += 1
+            Next
+
+            For Each e In rojas
+                grMateriales.Rows(e).ForeColor = Drawing.Color.Red
+            Next
+
         Catch ex As Exception
             sb.writeError(ex.Message)
         End Try

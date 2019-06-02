@@ -75,4 +75,13 @@ Partial Public Class _Default
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents lblDepo As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''Control lblMat.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents lblMat As Global.System.Web.UI.WebControls.Label
 End Class
