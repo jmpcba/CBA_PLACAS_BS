@@ -110,14 +110,18 @@ Public Class Item
     End Function
 
     Public Sub setEnsamblados(_val As Integer)
-        db = New DbHelper()
-        getDespiece()
-        db.consumirMateriales(despiece, _val - ensamblados, True)
-        ensamblados = _val
+        Try
+            db = New DbHelper()
+            getDespiece()
+            db.consumirMateriales(despiece, _val - ensamblados, True)
+            ensamblados = _val
 
-        If estado.id = Estado.estados.enCola And ensamblados <> 0 Then
-            estado.id = Estado.estados.enProduccion
-        End If
+            If estado.id = Estado.estados.enCola And ensamblados <> 0 Then
+                estado.id = Estado.estados.enProduccion
+            End If
+        Catch ex As Exception
+            Throw
+        End Try
     End Sub
 
     Public Sub insertar()
@@ -139,10 +143,6 @@ Public Class Item
     Public Sub setStock(_newStock As Integer)
         db = New DbHelper
         stock = _newStock
-
-        If cant - stock - ensamblados > 0 Then
-            estado = New Estado(Estado.estados.enProduccion)
-        End If
 
         db.updateStock(id, stock)
 
