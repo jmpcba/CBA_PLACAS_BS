@@ -310,6 +310,7 @@
     <None Include="Resources\mailTemplate.html.txt" />
     <None Include="Resources\mailPedidoNuevo.txt" />
     <None Include="Resources\mailPedidoNuevo.txt.txt" />
+    <Content Include="reporting\registroStockMaterial.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="producto\Web.config">
       <SubType>Designer</SubType>
@@ -888,6 +889,13 @@
     </Compile>
     <Compile Include="reporting\pedidosProducto.aspx.vb">
       <DependentUpon>pedidosProducto.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="reporting\registroStockMaterial.aspx.designer.vb">
+      <DependentUpon>registroStockMaterial.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporting\registroStockMaterial.aspx.vb">
+      <DependentUpon>registroStockMaterial.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.vb">

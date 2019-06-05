@@ -135,6 +135,7 @@
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
                 <li><a href="/reporting/PedidosCliente"><h4>Pedidos por Cliente</h4></a></li>
                 <li><a href="/reporting/pedidosProducto"><h4>Pedidos por producto</h4></a></li>
+                <li><a href="/reporting/registroStockMaterial"><h4>Stock Materiales</h4></a></li>
               </ul>
             </div>
           </div>
