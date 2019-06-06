@@ -136,6 +136,7 @@
                 <li><a href="/reporting/PedidosCliente"><h4>Pedidos por Cliente</h4></a></li>
                 <li><a href="/reporting/pedidosProducto"><h4>Pedidos por producto</h4></a></li>
                 <li><a href="/reporting/registroStockMaterial"><h4>Stock Materiales</h4></a></li>
+                <li><a href="/reporting/tiempoEntrega"><h4>Tiempo de entrega pedidos</h4></a></li>
               </ul>
             </div>
           </div>
