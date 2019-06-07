@@ -311,6 +311,7 @@
     <None Include="Resources\mailPedidoNuevo.txt" />
     <None Include="Resources\mailPedidoNuevo.txt.txt" />
     <Content Include="reporting\registroStockMaterial.aspx" />
+    <Content Include="reporting\stockProductos.aspx" />
     <Content Include="reporting\tiempoEntrega.aspx" />
     <Content Include="Scripts\funcionesComunes.js" />
     <Content Include="producto\Web.config">
@@ -897,6 +898,13 @@
     </Compile>
     <Compile Include="reporting\registroStockMaterial.aspx.vb">
       <DependentUpon>registroStockMaterial.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="reporting\stockProductos.aspx.designer.vb">
+      <DependentUpon>stockProductos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="reporting\stockProductos.aspx.vb">
+      <DependentUpon>stockProductos.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="reporting\tiempoEntrega.aspx.designer.vb">

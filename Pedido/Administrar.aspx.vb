@@ -319,7 +319,7 @@
                 If gp.pedido.cliente.id = 0 Then
                     gp.actualizarEstado(New Estado(Estado.estados.stock))
                     HFCrystal.Value = "remito"
-                    sb.write(String.Format("Pedido {0} - GUARDADO EN STOCK STOCK: {1}", gp.pedido.id))
+                    sb.write(String.Format("Pedido {0} - GUARDADO EN STOCK STOCK", gp.pedido.id))
                 Else
                     gp.actualizarEstado(New Estado(Estado.estados.enviado))
                     HFCrystal.Value = "remito"

@@ -23,7 +23,7 @@
 
     </script>
     <div class="page-header">
-        <h1 class="text-center">Ventas Por Producto<br /><small>
+        <h1 class="text-center">Stock de Materiales<br /><small>
         Seleccione un rango de fechas</small></h1>
     </div>
     <div class="row table-responsive  form-group">
