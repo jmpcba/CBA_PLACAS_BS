@@ -402,6 +402,7 @@ Public Class DbHelper
     End Sub
 
     Friend Sub actualizar(_p As Pieza)
+        CIEN()
         cmd.CommandText = String.Format("UPDATE MATERIALES SET NOMBRE = '{0}', UNIDAD= '{1}', STOCK_DISPONIBLE = {2}, STOCK_MINIMO={3} WHERE ID={4}", _p.nombre, _p.unidad, _p.stock, _p.stockMinimo, _p.id)
         cmd.CommandType = CommandType.Text
         Try
@@ -411,6 +412,7 @@ Public Class DbHelper
             Throw
         Finally
             cnn.Close()
+            CIES()
         End Try
     End Sub
 

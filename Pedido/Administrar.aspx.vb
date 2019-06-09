@@ -27,18 +27,24 @@
         End If
     End Sub
 
-    Private Sub calcularRangeValidatorsGrillasStock(_gp)
+    Private Sub calcularRangeValidatorsGrillasStock(_gp As GestorPedidos)
 
 
         For Each r As GridViewRow In grEnviarProd.Rows
 
             Dim val As RangeValidator
+            Dim txt As TextBox
             Dim stock = Convert.ToInt32(r.Cells(8).Text)
             Dim cant = Convert.ToInt32(r.Cells(7).Text)
             Dim numeroLinea = r.RowIndex + 1
 
+            txt = r.FindControl("txtStockRow")
             val = r.FindControl("rvStockNvo")
             val.MinimumValue = 0
+
+            If _gp.pedido.cliente.id = 0 Then
+                txt.Enabled = False
+            End If
 
             If stock > cant Then
                 val.MaximumValue = cant
@@ -53,12 +59,20 @@
             Dim idItem = r.Cells(12).Text
             Dim index = _gp.pedido.itemIndex(idItem)
             Dim val As RangeValidator
+            Dim txt As TextBox
             Dim stock = Convert.ToInt32(r.Cells(8).Text)
             Dim cant = Convert.ToInt32(r.Cells(7).Text)
             Dim ensamblados = _gp.pedido.items(index).getEnsamblados
             Dim numeroLinea = r.RowIndex + 1
+
             val = r.FindControl("rvStockNvo")
             val.MinimumValue = 0
+
+            txt = r.FindControl("txtStockRow")
+
+            If _gp.pedido.cliente.id = 0 Then
+                txt.Enabled = False
+            End If
 
             If ensamblados > 0 Then
                 If stock > cant - ensamblados Then
