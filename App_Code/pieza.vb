@@ -111,4 +111,10 @@
             Throw
         End Try
     End Sub
+
+    Public Sub actualizarStock(_s As Decimal, _m As String)
+        stock = _s
+        registro.Add(String.Format("STOCK ANTERIOR: {0}, NUEVO: {1} - ORDEN DE COMPRA/MOTIVO: {2}", _stock, _s, _m))
+
+    End Sub
 End Class

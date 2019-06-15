@@ -54,7 +54,7 @@
             p = New Pieza(idPieza)
 
             If p.stock <> txtStock.Text.Trim Then
-                p.stock = txtStock.Text.Trim
+                p.actualizarStock(txtStock.Text.Trim, txtMotivo.text.trim)
                 p.actualizar()
             End If
 

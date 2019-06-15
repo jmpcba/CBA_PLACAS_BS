@@ -9,15 +9,20 @@
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
             $(":text").removeAttr("style");
+            $("select").addClass("form-control")
         })
 
+        var prm = Sys.WebForms.PageRequestManager.getInstance()
         prm.add_endRequest(function () {
+            console.log("postback parcial")
             $(":submit").addClass("btn")
             $(":submit").addClass("btn-primary")
             $(":submit").removeAttr("style");
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
-            $(":text").removeAttr("style");
+            $(":text").removeAttr("style")
+            $("#contenedor").addClass("form-group")
+            $("select").addClass("form-control")
         })
 
     </script>
@@ -25,7 +30,7 @@
         <h1 class="text-center">Tiempos de entrega de pedidos<br /><small>
         Seleccione un rango de fechas</small></h1>
     </div>
-    <div class="row table-responsive  form-group">
+    <div id="contenedor" class="row table-responsive  form-group">
         <rsweb:ReportViewer ID="ReportViewer1" runat="server" BackColor="#99CCFF" CssClass="reportViewer" ProcessingMode="Remote" Height="100%" ShowFindControls="False" ShowPageNavigationControls="False" ShowZoomControl="False" Width="100%">
             <ServerReport ReportPath="/reportesCBA_Placas/TIEMPO_ENTREGA_PRODUCTOS" ReportServerUrl="http://localhost/reportserver_SSRS" />
         </rsweb:ReportViewer>

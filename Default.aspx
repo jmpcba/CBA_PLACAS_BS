@@ -114,7 +114,7 @@
               </button>
               <ul class="dropdown-menu col-xs-12" aria-labelledby="dropdownMenu1">
                 <li id="liNvoProd"><a id="aNvoProd" href="/producto/nuevoProducto"><h4>Nuevo Producto</h4></a></li>
-                <li><a href="/producto/productos"><h4>Lista de Precios</h4></a></li>
+                <li><a href="/producto/productos"><h4>Lista de Productos</h4></a></li>
                 <li><a href="/producto/materiales"><h4>Materiales</h4></a></li>
                 <li id="liCar"><a id="aCar" href="/producto/caracteristicas"><h4>Caracteristicas</h4></a></li>
               </ul>

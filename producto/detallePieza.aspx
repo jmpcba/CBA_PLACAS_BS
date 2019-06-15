@@ -133,17 +133,26 @@
           </div>
           <div class="modal-body form-group">
             <div class="row">
-            <div class="col-md-3"><strong>Stock</strong>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ErrorMessage="Ingrese valor para Stock" Text="*" CssClass="validators" ControlToValidate="txtStock" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
-                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Ingrese un valor valido" ValidationExpression="(\d+|\d*,\d*)+" CssClass="validators" ValidationGroup="VGMod" ControlToValidate="txtStock" Text="*"></asp:RegularExpressionValidator>
+                <div class="col-md-3"><strong>Stock</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ErrorMessage="Ingrese valor para Stock" Text="*" CssClass="validators" ControlToValidate="txtStock" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Ingrese un valor valido" ValidationExpression="(\d+|\d*,\d*)+" CssClass="validators" ValidationGroup="VGMod" ControlToValidate="txtStock" Text="*"></asp:RegularExpressionValidator>
+                </div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtStock" runat="server"></asp:TextBox>
+                </div>
+                <div class="col-md-4">
+                    <asp:Label ID="lblModUnidad" runat="server" Text="Label"></asp:Label>
+                </div>
             </div>
-            <div class="col-md-4">
-                <asp:TextBox ID="txtStock" runat="server"></asp:TextBox>
+              <br />
+              <div class="row">
+                <div class="col-md-3"><strong>Motivo/Orden de compra</strong>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Ingrese motivo u orden de compra" Text="*" CssClass="validators" ControlToValidate="txtMotivo" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
+                </div>
+                <div class="col-md-4">
+                    <asp:TextBox ID="txtMotivo" runat="server"></asp:TextBox>
+                </div>
             </div>
-            <div class="col-md-4">
-                <asp:Label ID="lblModUnidad" runat="server" Text="Label"></asp:Label>
-            </div>
-        </div>
               <br />
               <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="validators" ValidationGroup="VGMod" />
           </div>

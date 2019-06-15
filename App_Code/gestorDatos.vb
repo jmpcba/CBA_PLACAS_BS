@@ -21,6 +21,7 @@ Public Class GestorDatos
     Public Enum reportes
         ordenTrabajo
         remito
+        remitoInterno
         compras
         etiquetaDeposito
         etiquetaDepositoUnica

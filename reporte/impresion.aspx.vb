@@ -29,7 +29,12 @@ Public Class impresion
         ElseIf rpt = "stock" Then
             rptType = GestorDatos.reportes.etiquetaDepositoStock
         ElseIf rpt = "remito" Then
-            rptType = GestorDatos.reportes.remito
+            Dim gp As New GestorPedidos(idPedido)
+            If gp.pedido.cliente.id = 0 Then
+                rptType = GestorDatos.reportes.remitoInterno
+            Else
+                rptType = GestorDatos.reportes.remito
+            End If
         ElseIf rpt = "etiquetaSimple" Then
             rptType = GestorDatos.reportes.etiquetaDepositoUnica
         End If
@@ -61,6 +66,8 @@ Public Class impresion
             rptPath = "OrdenDeTrabajo.rpt"
         ElseIf _rpt = GestorDatos.reportes.remito Then
             rptPath = "remito_filtrado.rpt"
+        ElseIf _rpt = GestorDatos.reportes.remitoInterno Then
+            rptPath = "ingresoStock.rpt"
         ElseIf _rpt = GestorDatos.reportes.etiquetaDepositoInterna Then
             rptPath = "etiquetasInternas.rpt"
         ElseIf _rpt = GestorDatos.reportes.compras Then

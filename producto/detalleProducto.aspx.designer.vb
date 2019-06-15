@@ -23,6 +23,24 @@ Partial Public Class modificarProducto
     Protected WithEvents HFEliminar As Global.System.Web.UI.WebControls.HiddenField
     
     '''<summary>
+    '''Control HFidProducto.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents HFidProducto As Global.System.Web.UI.WebControls.HiddenField
+    
+    '''<summary>
+    '''Control FLImagen.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents FLImagen As Global.System.Web.UI.WebControls.FileUpload
+    
+    '''<summary>
     '''Control lblSubtitulo.
     '''</summary>
     '''<remarks>
@@ -489,4 +507,13 @@ Partial Public Class modificarProducto
     '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
     '''</remarks>
     Protected WithEvents btnUPHidden As Global.System.Web.UI.WebControls.Button
+    
+    '''<summary>
+    '''Control btncambiarImagen.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents btncambiarImagen As Global.System.Web.UI.WebControls.Button
 End Class

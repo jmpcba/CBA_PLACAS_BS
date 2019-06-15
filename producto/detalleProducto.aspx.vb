@@ -17,6 +17,7 @@
                 Response.Redirect("productos.aspx")
             Else
                 ViewState("idProducto") = idProducto
+                HFidProducto.Value = idProducto
                 llenarGrillaDetalle()
                 sb.write(String.Format("Carga de datos Producto {0} - EXITOSA", gp.producto.codigo))
             End If
@@ -262,5 +263,32 @@
         Dim idPieza As Integer
         idPieza = grMateriales.SelectedDataKey.Value
         Response.Redirect("detallePieza.aspx?idPieza=" & idPieza)
+    End Sub
+
+
+    Protected Sub btncambiarImagen_Click(sender As Object, e As EventArgs) Handles btncambiarImagen.Click
+        Dim idProd As Integer
+        idProd = ViewState("idProducto")
+
+        If FLImagen.HasFile Then
+            Dim ext As String = System.IO.Path.GetExtension(FLImagen.FileName)
+            ext = ext.ToLower
+            Dim tam As Integer = FLImagen.PostedFile.ContentLength
+            Try
+                If ext = ".jpg" Then
+                    If tam <= 10485760 Then
+                        FLImagen.SaveAs(Server.MapPath(String.Format("~/images/productos/{0}.jpg", idProd)))
+                        sb.write("Nueva imagen subida - Si no ve los cambios refresque la pagina con ctrl + F5")
+                    Else
+                        sb.writeError("El tamaño del archivo no puede ser mayor a 10 MB")
+                    End If
+                Else
+                    sb.writeError("Solo se permiten archivos .jpg")
+                End If
+            Catch ex As Exception
+                sb.writeError(ex.Message)
+            End Try
+
+        End If
     End Sub
 End Class

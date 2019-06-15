@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="productos.aspx.vb" Inherits="CBA_PLACAS_BS.productos1" Theme="default" %>
+﻿<%@ Page Title="" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="listaDePrecios.aspx.vb" Inherits="CBA_PLACAS_BS.listaDePrecios" theme="default"%>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
 
@@ -218,8 +218,8 @@
 
     </script>
     <div class="page-header">
-        <h1 class="text-center">PRODUCTOS<br /><small>
-        Listado de Productos</small></h1>
+        <h1 class="text-center">Lista de Precios<br /><small>
+        Lista de Precios</small></h1>
     </div>
     <div class="row">
         <div id="msg" class="alert alert-success alert-dismissible" role="alert">
@@ -275,11 +275,6 @@
         </div>
     </div>
     <hr>
-    <div class="row">
-        <input id="btnSel" class="btn btn-primary pull-left" type="button" value="Seleccionar Todos" />
-        <button id="btnMdlPrecio" type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#mdlPrecio">
-                Actualizar Precio</button>
-    </div><br />
     <div class="row">    
         <div class="table-responsive">
             <asp:GridView ID="grProductos" runat="server" AutoGenerateColumns="False" ToolTip="Productos" CssClass="table" DataKeyNames="ID">
@@ -348,64 +343,4 @@
             </asp:GridView>
         </div>
     </div>
-<!--modal actualizar precio-->
-<div class="modal fade" id="mdlPrecio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Actualizar precio en los elementos seleccionados</h4>
-      </div>
-      <div class="modal-body">
-          <div class="row">
-              <div class="col-md-4 radio-inline">
-                     <asp:RadioButtonList ID="rbOpcionPrecio" runat="server" CssClass="radio-inline">
-                        <asp:ListItem Value="PORCENTAJE" Text="PORCENTAJE" Selected="True"></asp:ListItem>
-                        <asp:ListItem Value="PRECIO" Text="PRECIO"></asp:ListItem>
-                    </asp:RadioButtonList>
-                </div>
-                <div class="col-md-4">
-                    <p id="msgAyuda">Ingrese un numero mayor a 100 para aumentar el precio o menor para disminuirlo</p>
-                </div>
-                <br />
-            </div>
-          <div class="row">
-            <div class="col-md-12">
-                <div class="text-center" style="float:left; width:10%;">
-                    <h5 id="preTxtPrecio">%</h5>
-                </div>
-                <div id="divTextBox" style="float: left; padding-left: 10px; width: 90%;">
-                    <asp:TextBox ID="txtPrecio" runat="server"></asp:TextBox>
-                </div>
-                <div id="msgValidar" class="text-left has-error" style="float:left;padding-left: 10px; width:90%; display:none">
-                    <label class="control-label" for="<%= txtPrecio.ClientID %>"> Ingrese un valor numerico</label>
-                </div>
-            </div>
-          </div>    
-      </div>
-      <div class="modal-footer">
-          <button id="btnGuardarPrecio" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfPrecio" data-dismiss="modal">Guardar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!--CONFIRMAR ACTUALIZAR PRECIO-->
-<div class="modal fade" tabindex="-1" role="dialog" id="mdlConfPrecio">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-danger"">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Confirme</h4>
-                </div>
-            <div class="modal-body">
-                    <h4 id="msgConfirmar">...</h4>
-                </div>
-            <div class="modal-footer">
-                <asp:Button ID="btnActualizarPrecio" runat="server" Text="Si" />
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlPrecio" data-dismiss="modal">No</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 </asp:Content>

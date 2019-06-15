@@ -6,6 +6,15 @@
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
+            //IMAGEN
+            if ($("#" + '<%= HFidProducto.ClientID %>').val() != "") {
+                var idProducto = $("#" + '<%= HFidProducto.ClientID %>').val()
+                $("#imgCroquis").attr("src", "../images/productos/" + idProducto + ".jpg")
+            } else {
+                $("#imgCroquis").attr("src", "../images/productos/general.jpg")
+            }
+            
+
             //botondeshacer
             if ($("#" + '<%= HFEliminar.ClientID %>').val() == 0) {
                 $("#" + '<%= aUndo.ClientID %>').hide()
@@ -29,6 +38,7 @@
                 inHabilitarControles(controles)
             }
 
+            //validacion
             $("td > input").keyup(function (event) {
                 var val = $(this).val()
                 var td = $(this).parent("td")
@@ -43,9 +53,24 @@
                     $("#" + '<%= btnModMat.ClientID %>').attr("disabled", false)
                 }
             })
+
+            //subir imagen
+            $("#aImg").click(function () {
+                 console.log("click en boton")
+                 $("#" + '<%= FLImagen.ClientID %>').click()
+            })
+
+            $("#" + '<%= FLImagen.ClientID %>').change(function () {
+                console.log("abrir el modal")
+                 $('#mdlImagen').modal('show')
+            })
+
         })
+
     </script>
     <asp:HiddenField ID="HFEliminar" runat="server" Value="0" />
+    <asp:HiddenField ID="HFidProducto" runat="server" Value="" />
+    <asp:FileUpload style="display:none" ID="FLImagen" runat="server" />
     <div class="page-header">
         <h1 class="text-center">Administrar Producto<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
@@ -68,6 +93,7 @@
                   <ul class="dropdown-menu">
                     <li ><a href="#" data-target="#mdlDetalle" data-toggle="modal">Detalle</a></li>
                     <li ><a href="#" data-target="#mdlMateriales" data-toggle="modal">Materiales</a></li>
+                    <li ><a id="aImg" href="#">Imagen</a></li>
                   </ul>
                 </div>
             <button id="btnMdlEl" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfEliminar">
@@ -87,33 +113,37 @@
 		<div id="detalle" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<div class="row">
-                <div class="col-md-3">
-                    <strong>Linea: </strong><asp:Label ID="lblLinea" runat="server" Text="Label"></asp:Label>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <strong>Linea: </strong><asp:Label ID="lblLinea" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Chapa: </strong><asp:Label ID="lblChapa" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Madera: </strong><asp:Label ID="lblMadera" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Hoja: </strong><asp:Label ID="lblHoja" runat="server" Text="Label"></asp:Label><br />
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Marco: </strong><asp:Label ID="lblMarco" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Mano: </strong><asp:Label ID="lblMano" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Precio: </strong><asp:Label ID="lblPrecio" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                    <strong>Stock: </strong><asp:Label ID="lblStock" runat="server" Text="Label"></asp:Label><br />
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="thumbnail">
+                            <img id="imgCroquis" src="" alt="IMAGEN NO DISPONIBLE">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <strong>Chapa: </strong><asp:Label ID="lblChapa" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="col-md-3">
-                    <strong>Madera: </strong><asp:Label ID="lblMadera" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="col-md-3">
-                    <strong>Hoja: </strong><asp:Label ID="lblHoja" runat="server" Text="Label"></asp:Label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>Marco: </strong><asp:Label ID="lblMarco" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="col-md-3">
-                    <strong>Mano: </strong><asp:Label ID="lblMano" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="col-md-3">
-                    <strong>Precio: </strong><asp:Label ID="lblPrecio" runat="server" Text="Label"></asp:Label>
-                </div>
-                <div class="col-md-3">
-                    <strong>Stock: </strong><asp:Label ID="lblStock" runat="server" Text="Label"></asp:Label>
-                </div>
-            </div>
 			</div>
 		</div>
 	</div>
@@ -403,4 +433,22 @@
         </div>
       </div>
     </div>
+<!--confirmacion cambio imagen-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="mdlImagen">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-danger"">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Confirme</h4>
+                    </div>
+                <div class="modal-body">
+                        <p>Desea cambiar la imagen? </p>
+                    </div>
+                <div class="modal-footer">
+                    <asp:Button ID="btncambiarImagen" runat="server" Text="Si" />
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlModificarItems" data-dismiss="modal">No</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </asp:Content>

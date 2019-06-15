@@ -10,7 +10,10 @@
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
             $(":text").removeAttr("style");
+            $("select").addClass("form-control")
         })
+
+        var prm = Sys.WebForms.PageRequestManager.getInstance()
 
         prm.add_endRequest(function () {
             $(":submit").addClass("btn")
@@ -18,7 +21,9 @@
             $(":submit").removeAttr("style");
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
-            $(":text").removeAttr("style");
+            $(":text").removeAttr("style")
+            $("#contenedor").addClass("form-group")
+            $("select").addClass("form-control")
         })
 
     </script>
@@ -26,7 +31,7 @@
         <h1 class="text-center">Ventas Por Producto<br /><small>
         Seleccione un rango de fechas</small></h1>
     </div>
-    <div class="row table-responsive  form-group">
+    <div id="contenedor" class="row table-responsive  form-group">
         <rsweb:ReportViewer ID="ReportViewer1" runat="server" BackColor="#99CCFF" CssClass="reportViewer" ProcessingMode="Remote" Height="100%" ShowFindControls="False" ShowPageNavigationControls="False" ShowZoomControl="False" Width="100%">
             <ServerReport ReportPath="/reportesCBA_Placas/VENTAS_POR_PRODUCTO" ReportServerUrl="http://localhost/reportserver_SSRS" />
         </rsweb:ReportViewer>

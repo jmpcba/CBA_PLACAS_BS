@@ -140,6 +140,24 @@ Partial Public Class detallePieza
     Protected WithEvents lblModUnidad As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''Control RequiredFieldValidator4.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents RequiredFieldValidator4 As Global.System.Web.UI.WebControls.RequiredFieldValidator
+    
+    '''<summary>
+    '''Control txtMotivo.
+    '''</summary>
+    '''<remarks>
+    '''Campo generado automáticamente.
+    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+    '''</remarks>
+    Protected WithEvents txtMotivo As Global.System.Web.UI.WebControls.TextBox
+    
+    '''<summary>
     '''Control ValidationSummary1.
     '''</summary>
     '''<remarks>

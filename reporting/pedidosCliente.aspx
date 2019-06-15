@@ -10,19 +10,26 @@
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
             $(":text").removeAttr("style");
+            $("select").addClass("form-control")
         })
 
+        var prm = Sys.WebForms.PageRequestManager.getInstance()
+
         prm.add_endRequest(function () {
+            console.log("postback parcial")
             $(":submit").addClass("btn")
             $(":submit").addClass("btn-primary")
             $(":submit").removeAttr("style");
             $(":text").addClass("form-control")
             $(":text").removeClass("null")
             $(":text").removeAttr("style");
+            $("#contenedor").addClass("form-group")
+            $("select").addClass("form-control")
+
         })
 
     </script>
-    <div class="page-header">
+    <div id="contenedor" class="page-header">
         <h1 class="text-center">Ventas Por Cliente<br /><small>
         Seleccione un rango de fechas</small></h1>
     </div>

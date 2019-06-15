@@ -564,7 +564,7 @@ Public Class DbHelper
 
         If _tipo = GestorDatos.reportes.remito Then
             query = "SELECT * FROM VW_REMITOS WHERE PEDIDO=" & _pedido.id.ToString
-        ElseIf _tipo = GestorDatos.reportes.ordenTrabajo Then
+        ElseIf _tipo = GestorDatos.reportes.ordenTrabajo Or _tipo = GestorDatos.reportes.remitoInterno Then
             query = "SELECT * FROM VW_ORDENES WHERE PEDIDO=" & _pedido.id.ToString
         ElseIf _tipo = GestorDatos.reportes.etiquetaDeposito Then
             query = "SELECT * FROM VW_ETIQUETAS WHERE ID_ESTADO <> 7 AND ID=" & _pedido.id.ToString
