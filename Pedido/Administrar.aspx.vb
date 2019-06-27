@@ -9,13 +9,14 @@
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
 
+        HFStock.Value = ""
+
         If Not IsPostBack Then
             If idPedido = "" Then
                 Response.Redirect("panelPedidos")
             Else
                 lblSubtitulo.Text = ""
                 HFCrystal.Value = ""
-                HFStock.Value = "n"
                 HFIDPedido.Value = idPedido
 
                 ViewState("idPedido") = idPedido
@@ -123,7 +124,7 @@
             lblModalDepo.Text = "El Pedido NO esta listo para ser enviado"
         End If
 
-        If gp.pedido.estado.id = Estado.estados.entregado Then
+        If gp.pedido.estado.id = Estado.estados.entregado Or gp.pedido.estado.id = Estado.estados.stock Then
             HFBtnDepo.Value = "disabled"
             HFBtnProd.Value = "disabled"
         Else
