@@ -284,6 +284,17 @@
     <Content Include="images\cliente.png" />
     <Content Include="images\grafico.png" />
     <Content Include="images\logo_mail.png" />
+    <Content Include="images\productos\1.jpg" />
+    <Content Include="images\productos\2.jpg" />
+    <Content Include="images\productos\3.jpg" />
+    <Content Include="images\productos\4.jpg" />
+    <Content Include="images\productos\41.jpg" />
+    <Content Include="images\productos\42.jpg" />
+    <Content Include="images\productos\43.jpg" />
+    <Content Include="images\productos\5.jpg" />
+    <Content Include="images\productos\6.jpg" />
+    <Content Include="images\productos\7.jpg" />
+    <Content Include="images\productos\8.jpg" />
     <Content Include="images\puerta.png" />
     <Content Include="images\puerta_mail.png" />
     <Content Include="Pedido\buscarPedido.aspx" />

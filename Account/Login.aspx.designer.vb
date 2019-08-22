@@ -59,15 +59,6 @@ Partial Public Class Login
     Protected WithEvents RememberMe As Global.System.Web.UI.WebControls.CheckBox
     
     '''<summary>
-    '''Control RegisterHyperLink.
-    '''</summary>
-    '''<remarks>
-    '''Campo generado automáticamente.
-    '''Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-    '''</remarks>
-    Protected WithEvents RegisterHyperLink As Global.System.Web.UI.WebControls.HyperLink
-    
-    '''<summary>
     '''Control OpenAuthLogin.
     '''</summary>
     '''<remarks>

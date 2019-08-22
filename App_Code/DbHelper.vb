@@ -1431,6 +1431,7 @@ Public Class DbHelper
         cmd.Parameters.AddWithValue("@HOJA_TER", _item.hojasTerminadas)
         cmd.Parameters.AddWithValue("@ENSAMBLADO", _item.getEnsamblados())
         cmd.Parameters.AddWithValue("@EN_DEPOSITO", _item.getEnDeposito())
+        cmd.Parameters.AddWithValue("@USR", HttpContext.Current.User.Identity.Name)
 
         Try
             cnn.Open()
@@ -1759,7 +1760,7 @@ Public Class DbHelper
     End Function
 
     Public Function getRegistroItem(_idItem As Integer) As DataTable
-        Dim query = "SELECT FECHA, ENTRADA FROM REGISTRO_ITEMS WHERE ID_ITEM=" & _idItem
+        Dim query = "SELECT FECHA, ENTRADA, USUARIO FROM REGISTRO_ITEMS WHERE ID_ITEM=" & _idItem
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query

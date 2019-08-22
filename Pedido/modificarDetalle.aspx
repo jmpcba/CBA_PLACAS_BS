@@ -228,8 +228,8 @@
                         <p>Desea cancelar los items seleccionados?</p>
                     </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlEliminarItems" data-dismiss="modal">No</button>
                     <asp:Button ID="btnEliminarItems" runat="server" Text="Si" />
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#mdlEliminarItems" data-dismiss="modal">No</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

@@ -9,9 +9,8 @@
 
         gd = New GestorDatos()
         sb = New StatusBar(HFMsg, lblMessage)
-
+        gp = New GestorPedidos(idPedido)
         ViewState("idPedido") = idPedido
-        llenarGrillaDetalle()
 
         lblSubtitulo.Text = String.Format("Detalles Pedido: {0}", gp.pedido.id)
 
@@ -21,6 +20,7 @@
             HFAgregar.Value = 0
             HFIsPostBack.Value = 1
         Else
+            llenarGrillaDetalle()
             gd.getCombos(cbLinea, GestorDatos.combos.lineas)
             HFIsPostBack.Value = 0
         End If
