@@ -1460,6 +1460,7 @@ Public Class DbHelper
         cmd.Parameters.AddWithValue("@CANT_TOTAL", _pedido.cantTotal)
         cmd.Parameters.AddWithValue("@PRECIO_TOTAL", strPrecio)
         cmd.Parameters.AddWithValue("@ID_ESTADO", _pedido.estado.id)
+        cmd.Parameters.AddWithValue("@USR", HttpContext.Current.User.Identity.Name)
 
         If _pedido.entregado <> Date.MinValue Then
             cmd.Parameters.AddWithValue("@FECHA_ENTREGADO", _pedido.entregado)
@@ -1774,7 +1775,7 @@ Public Class DbHelper
     End Function
 
     Public Function getRegistroPedido(_idPedido As Integer) As DataTable
-        Dim query = "SELECT FECHA, ENTRADA FROM REGISTRO_PEDIDOS WHERE ID_PEDIDO=" & _idPedido
+        Dim query = "SELECT FECHA, ENTRADA, USUARIO FROM REGISTRO_PEDIDOS WHERE ID_PEDIDO=" & _idPedido
 
         cmd.CommandType = CommandType.Text
         cmd.CommandText = query
