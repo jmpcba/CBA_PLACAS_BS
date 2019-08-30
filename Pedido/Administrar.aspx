@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-
+            console.log($("#" + '<%= HFEstado.ClientID%>').val())
             //BARRA DE ESTADO
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
@@ -58,7 +58,7 @@
                 newWindow.blur();
                 window.focus()
             
-            }else if ($("#" + '<%= HFCrystal.ClientID%>').val() == "remito") {
+            }else if ($("#" + '<%= HFCrystal.ClientID%>').val() == "remito" && $("#" + '<%= HFEstado.ClientID%>').val() < 5 ) {
                 var newWindow = window.open("../reporte/impresion.aspx?rpt=remito&idPedido=" + $("#" + '<%= HFIDPedido.ClientID %>').val(), '', "width=800, height=1000");
                 newWindow.blur();
                 window.focus()

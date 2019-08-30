@@ -1131,6 +1131,7 @@ Public Class DbHelper
             cmd.Parameters.AddWithValue("@CLIENTE", _pedido.cliente.id)
             cmd.Parameters.AddWithValue("@CANT", _pedido.cantTotal)
             cmd.Parameters.AddWithValue("@PRECIO", _pedido.precioTotal)
+            cmd.Parameters.AddWithValue("@USR", HttpContext.Current.User.Identity.Name)
 
             cnn.Open()
 

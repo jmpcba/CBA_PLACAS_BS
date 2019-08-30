@@ -3,11 +3,17 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            var dropdowns = [$("#" + '<%= cbLinea.ClientID %>'),]
+            iniciarDropDowns(dropdowns)
+            $("#btnCancelarItem").addClass("disabled")
+
             var err = $("#" + '<%= HFMsg.ClientID %>').val();
             barraEstado(err, $("#msg"))
 
             var estado = parseInt($("#" + '<%= HFEstado.ClientID %>').val(), 10)
             console.log("estado: " + estado)
+
+            $("#" + '<%= btnGuardar.ClientID %>').addClass("disabled")
 
             if (estado >= 4) {
 
@@ -23,6 +29,20 @@
                 inHabilitarControles(controles)
             }
 
+            $("#" + '<%= cbLinea.ClientID %>').change(function() {
+                if ($("#" + '<%= cbLinea.ClientID %>').val() != "-1") {
+                    $("#" + '<%= btnGuardar.ClientID %>').removeClass("disabled")
+                }
+            })
+
+            $("input[type=checkbox]").click(function () {
+                if ($("input:checked").length > 0)
+                {
+                    $("#btnCancelarItem").removeClass("disabled")
+                } else {
+                    $("#btnCancelarItem").addClass("disabled")
+                }
+            });
          })
     </script>
     <!--HIDDEN FIELDS-->
@@ -287,7 +307,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Cancelar Items</button>
+            <button id="btnCancelarItem" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlConfirmacionItem" data-dismiss="modal">Cancelar Items</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

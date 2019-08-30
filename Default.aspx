@@ -34,7 +34,7 @@
     </script>
     <asp:HiddenField ID="HFMateriales" runat="server" />
     <div class="page-header">
-        <h1 class="text-center">MG Placas SRL<br /><small>
+        <h1 class="text-center">CBA Placas SRL<br /><small>
         <asp:Label ID="lblSubtitulo" runat="server" Text=""></asp:Label></small></h1>
     </div>
     <div class="row">

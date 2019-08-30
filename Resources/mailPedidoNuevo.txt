@@ -37,7 +37,7 @@
             
             <div id="m_1474314348712033062responsive-width" class="m_1474314348712033062responsive-width" width="78.2% !important" style="width:77.8%!important;margin:0 auto;background:#ffffff;border-left:1px solid #ededed">
               <div style="height:50px;border-width:0!important;border-style:solid;border-color:#f1f1f1;margin:0 auto">&nbsp; <br /><span colspan="3" style="font-family:'Proxima Nova',Arial,Helvetica,sans-serif;font-size:14px;font-weight:300;line-height:1.08;text-align:center;color:#cccccc;margin:0 auto;width:100%;text-align:center" align="center">
-            ¿Necesitás ayuda?
+            Si Necesitas ayuda
             <a href="mailto:mgplacas@gmail.com" style="color:#3065ff;color:#3483fa;text-decoration:none" target="_blank">Contactanos</a>
           </span></div>
             </div>

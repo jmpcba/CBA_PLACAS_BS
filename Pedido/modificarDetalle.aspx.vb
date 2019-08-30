@@ -219,7 +219,9 @@
 
         Catch ex As Exception
             sb.writeError(ex.Message)
+
         Finally
+            pnlCombos.Visible = False
             llenarGrillaDetalle()
         End Try
     End Sub
