@@ -30,7 +30,7 @@ Public Class mail
             mail = mail.Replace("[MENSAJE]", _body)
 
             mm.From = New MailAddress(NetworkCred.UserName)
-            mm.Subject = "MG PLACAS - PEDIDO: " & pedido.id
+            mm.Subject = "CORDOBA PLACAS - PEDIDO: " & pedido.id
             mm.IsBodyHtml = True
             mm.Body = mail
             mm.To.Add(New MailAddress(pedido.cliente.mail))
