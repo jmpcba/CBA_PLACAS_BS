@@ -135,7 +135,7 @@
             <div class="row">
                 <div class="col-md-3"><strong>Stock</strong>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ErrorMessage="Ingrese valor para Stock" Text="*" CssClass="validators" ControlToValidate="txtStock" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
-                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Ingrese un valor valido" ValidationExpression="(\d+|\d*,\d*)+" CssClass="validators" ValidationGroup="VGMod" ControlToValidate="txtStock" Text="*"></asp:RegularExpressionValidator>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Ingrese un valor valido" ValidationExpression="(\d+|\d*,\d*)+" CssClass="validators" ValidationGroup="VGMod1" ControlToValidate="txtStock" Text="*"></asp:RegularExpressionValidator>
                 </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtStock" runat="server"></asp:TextBox>
@@ -147,17 +147,17 @@
               <br />
               <div class="row">
                 <div class="col-md-3"><strong>Motivo/Orden de compra</strong>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Ingrese motivo u orden de compra" Text="*" CssClass="validators" ControlToValidate="txtMotivo" ValidationGroup="VGMod"></asp:RequiredFieldValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Ingrese motivo u orden de compra" Text="*" CssClass="validators" ControlToValidate="txtMotivo" ValidationGroup="VGMod1"></asp:RequiredFieldValidator>
                 </div>
                 <div class="col-md-4">
                     <asp:TextBox ID="txtMotivo" runat="server"></asp:TextBox>
                 </div>
             </div>
               <br />
-              <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="validators" ValidationGroup="VGMod" />
+              <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="validators" ValidationGroup="VGMod1" />
           </div>
           <div class="modal-footer">
-            <asp:Button ID="btnGuardarStock" runat="server" Text="Guardar Cambios" ValidationGroup="VGMod" />
+            <asp:Button ID="btnGuardarStock" runat="server" Text="Guardar Cambios" ValidationGroup="VGMod1" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
